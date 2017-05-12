@@ -8,7 +8,7 @@ resource "aws_subnet" "main" {
 }
 
 resource "aws_route_table" "public" {
-  count = "${igwcount == 1 ? 1 : 0}"
+  count = "${var.igwcount == 1 ? 1 : 0}"
   vpc_id = "${var.vpc_id}"
   route {
         cidr_block =  "0.0.0.0/0"
