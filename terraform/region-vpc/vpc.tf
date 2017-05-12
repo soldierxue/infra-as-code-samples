@@ -14,7 +14,7 @@ resource "aws_internet_gateway" "main" {
 }
 
 # Definition for two Subnets
-module "public_subnet" {
+module "public_subnet1" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
@@ -22,7 +22,7 @@ module "public_subnet" {
   igwid = "${aws_internet_gateway.main.id}"
 }
 
-module "public_subnet" {
+module "public_subnet2" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
@@ -30,14 +30,14 @@ module "public_subnet" {
   igwid = "${aws_internet_gateway.main.id}"
 }
 
-module "private_subnet" {
+module "private_subnet2" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
 }
 
-module "private_subnet" {
+module "private_subnet1" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
