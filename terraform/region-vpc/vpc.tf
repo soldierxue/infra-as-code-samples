@@ -1,6 +1,6 @@
 # To Create a New VPC
 resource "aws_vpc" "main" {
-  cidr_block = "${cidrsubnet(var.base_cidr_block, 2, 1)}"
+  cidr_block = "${var.base_cidr_block}"
 }
 
 # To Create a IGW binding with the above VPC
@@ -16,12 +16,14 @@ data "aws_availability_zones" "all" {
 module "primary_subnet" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
+  cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
 }
 
 module "secondary_subnet" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
+  cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
 }
 

@@ -7,7 +7,7 @@ variable "region" {
   default = "us-east-1"
 }
 
-## The CIDR option
+## The VPC CIDR option
 variable "base_cidr_block" {
   default = "10.0.0.0/12"
 }
