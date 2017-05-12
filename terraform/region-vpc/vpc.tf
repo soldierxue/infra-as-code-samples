@@ -35,7 +35,6 @@ module "private_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  igwid = ""
 }
 
 module "private_subnet1" {
@@ -43,7 +42,6 @@ module "private_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  igwid = ""
 }
 
 # SGs definition
