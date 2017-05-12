@@ -4,6 +4,10 @@ variable "region" {
 
 variable "base_cidr_block" {}
 
+# Data for AZs
+data "aws_availability_zones" "all" {
+}
+
 /*
 
 provider "aws" {

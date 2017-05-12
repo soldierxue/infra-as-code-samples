@@ -1,6 +1,11 @@
 # To Create a New VPC
 resource "aws_vpc" "main" {
   cidr_block = "${var.base_cidr_block}"
+  enable_dns_hostnames = true
+  tags {
+        Name = "terraform-aws-vpc"
+        Owner = "Jason"
+  }
 }
 
 # To Create a IGW binding with the above VPC
@@ -8,22 +13,34 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 }
 
-# Data for AZs
-data "aws_availability_zones" "all" {
-}
-
 # Definition for two Subnets
-module "primary_subnet" {
+module "public_subnet" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
+  igwid = "${aws_internet_gateway.main.id}"
 }
 
-module "secondary_subnet" {
+module "public_subnet" {
+  source            = "./subnet"
+  vpc_id            = "${aws_vpc.main.id}"
+  cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
+  availability_zone = "${data.aws_availability_zones.all.names[1]}"
+  igwid = "${aws_internet_gateway.main.id}"
+}
+
+module "private_subnet" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
+  availability_zone = "${data.aws_availability_zones.all.names[0]}"
+}
+
+module "private_subnet" {
+  source            = "./subnet"
+  vpc_id            = "${aws_vpc.main.id}"
+  cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
 }
 

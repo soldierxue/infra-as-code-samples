@@ -12,7 +12,7 @@ variable "base_cidr_block" {
   default = "10.0.0.0/12"
 }
 
-# models
+# models VPC
 
 module "aws-vpc" {
   source          = "./region-vpc"
