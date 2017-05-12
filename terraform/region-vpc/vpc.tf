@@ -20,6 +20,7 @@ module "public_subnet1" {
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
   igwid = "${aws_internet_gateway.main.id}"
+  igwcount=1
 }
 
 module "public_subnet2" {
@@ -28,6 +29,7 @@ module "public_subnet2" {
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
   igwid = "${aws_internet_gateway.main.id}"
+  igwcount=1
 }
 
 module "private_subnet2" {
