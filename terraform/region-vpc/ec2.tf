@@ -60,5 +60,3 @@ resource "aws_instance" "database" {
   mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('terraform with aws great');" test
 HEREDOC
 }
-
-mysql -h mydatabase.jasondemo.internal -u root -p test -P secret
