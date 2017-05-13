@@ -33,7 +33,7 @@ module "public_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  route_tb_id = ${aws_route_table.public.id}
+  route_tb_id = "${aws_route_table.public.id}"
 }
 
 module "public_subnet2" {
@@ -41,7 +41,7 @@ module "public_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  route_tb_id = ${aws_route_table.public.id}
+  route_tb_id = "${aws_route_table.public.id}"
 }
 
 module "private_subnet2" {
@@ -49,7 +49,7 @@ module "private_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  route_tb_id = ${aws_route_table.default.id}
+  route_tb_id = "${aws_route_table.default.id}"
 }
 
 module "private_subnet1" {
@@ -57,6 +57,6 @@ module "private_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  route_tb_id = ${aws_route_table.default.id}
+  route_tb_id = "${aws_route_table.default.id}"
 }
 
