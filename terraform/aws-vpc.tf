@@ -47,7 +47,7 @@ variable "mysqlPrefix" {
 
 variable "ec2keyname"  {
   default = "uswest1key"
-  description "key name to login to the ec2"
+  description = "key name to login to the ec2"
   type = "String"
 }
 
