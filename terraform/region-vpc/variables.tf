@@ -20,7 +20,6 @@ variable "mysqlPrefix" {}
 
 data "aws_ami" "amazonlinux_ami" {
   most_recent      = true
-  executable_users = ["self"]
 
   filter {
     name   = "owner-alias"
@@ -29,7 +28,7 @@ data "aws_ami" "amazonlinux_ami" {
 
   filter {
     name   = "name"
-    values = ["amzn-ami-hvm*2017*x86_64*"]
+    values = ["amzn-ami-hvm*2017*x86_64*ebs*"]
   }
 
   owners     = ["amazon"]

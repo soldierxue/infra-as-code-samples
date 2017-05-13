@@ -1,0 +1,1 @@
+aws ec2 describe-images --filter Name="owner-alias",Values="amazon" --filter Name="name",Values="amzn-ami-hvm*2017*x86_64*ebs*"

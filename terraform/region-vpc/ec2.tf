@@ -5,6 +5,18 @@ resource "aws_instance" "phpapp" {
   subnet_id = "${module.public_subnet1.subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
   key_name = "${var.ec2keyname}"
+  root_block_device  {
+     volume_type ="gp2"
+     volume_size ="20"
+     delete_on_termination="true"
+  }
+  ebs_block_device {
+     device_name = "sda-ebs"
+     volume_type ="gp2"
+     volume_size ="10"
+     delete_on_termination="true"  
+  }
+  
   tags {
         Name = "phpapp"
         Owner = "Jason"
