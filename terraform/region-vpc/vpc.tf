@@ -15,7 +15,7 @@ resource "aws_internet_gateway" "main" {
 
 # To Create a route table for ec2 in public subnet to access internet from IGW
 resource "aws_route_table" "public" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.main.id}"
   route {
         cidr_block =  "0.0.0.0/0"
         gateway_id = "${aws_internet_gateway.main.id}"
@@ -24,7 +24,7 @@ resource "aws_route_table" "public" {
 
 # To Create a default route table
 resource "aws_route_table" "default" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = "${aws_vpc.main.id}"
 }
 
 # Definition for 4 Subnets: 2 public subnets/2 private subnets across two AZs
