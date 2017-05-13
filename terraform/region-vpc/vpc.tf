@@ -67,7 +67,7 @@ resource "aws_eip" "fornat" {
 
 resource "aws_nat_gateway" "natgw" {
   allocation_id = "${aws_eip.fornat.id}"
-  subnet_id     = "${module.public1_subnet.subnet_id}"
+  subnet_id     = "${module.public_subnet1.subnet_id}"
   depends_on = ["aws_internet_gateway.main","module.public1_subnet"]
   tags {
         Name = "terraform-nat-gatway"
@@ -104,7 +104,3 @@ module "private_subnet1" {
   route_tb_id = "${aws_route_table.private.id}"
   subnet_name = "private_subnet1"
 }
-
-
-
-
