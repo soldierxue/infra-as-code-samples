@@ -13,14 +13,27 @@ resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 }
 
-# Definition for two Subnets
+# To Create a route table for ec2 in public subnet to access internet from IGW
+resource "aws_route_table" "public" {
+  vpc_id = "${var.vpc_id}"
+  route {
+        cidr_block =  "0.0.0.0/0"
+        gateway_id = "${aws_internet_gateway.main.id}"
+  }
+}
+
+# To Create a default route table
+resource "aws_route_table" "default" {
+  vpc_id = "${var.vpc_id}"
+}
+
+# Definition for 4 Subnets: 2 public subnets/2 private subnets across two AZs
 module "public_subnet1" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  igwid = "${aws_internet_gateway.main.id}"
-  igwcount=1
+  route_tb_id = ${aws_route_table.public.id}
 }
 
 module "public_subnet2" {
@@ -28,8 +41,7 @@ module "public_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  igwid = "${aws_internet_gateway.main.id}"
-  igwcount=1
+  route_tb_id = ${aws_route_table.public.id}
 }
 
 module "private_subnet2" {
@@ -37,6 +49,7 @@ module "private_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
+  route_tb_id = ${aws_route_table.default.id}
 }
 
 module "private_subnet1" {
@@ -44,32 +57,6 @@ module "private_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-}
-
-# SGs definition
-resource "aws_security_group" "region" {
-  name        = "region"
-  description = "Open access within this region"
-  vpc_id      = "${aws_vpc.main.id}"
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["${aws_vpc.main.cidr_block}"]
-  }
-}
-
-resource "aws_security_group" "internal-all" {
-  name        = "internal-all"
-  description = "Open access within the full internal network"
-  vpc_id      = "${aws_vpc.main.id}"
-
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["${var.base_cidr_block}"]
-  }
+  route_tb_id = ${aws_route_table.default.id}
 }
 

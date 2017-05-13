@@ -4,12 +4,12 @@
 variable "region" {
   type = "string"
   description = "the region where to create the VPC networking resources"
-  default = "us-east-1"
+  default = "us-west-1"
 }
 
 ## The VPC CIDR option
 variable "base_cidr_block" {
-  default = "10.0.0.0/16"
+  default = "10.0.0.0/14"
 }
 
 # models VPC
