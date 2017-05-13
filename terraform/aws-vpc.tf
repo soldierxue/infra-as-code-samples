@@ -9,7 +9,7 @@ variable "region" {
 
 ## The VPC CIDR option
 variable "base_cidr_block" {
-  default = "10.0.0.0/14"
+  default = "10.0.0.0/16"
 }
 
 # models VPC
