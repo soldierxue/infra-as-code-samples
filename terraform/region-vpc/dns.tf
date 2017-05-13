@@ -21,7 +21,7 @@ resource "aws_route53_zone" "main" {
 
 resource "aws_route53_record" "database" {
    zone_id = "${aws_route53_zone.main.zone_id}"
-   name = "mydatabase.${var.DnsZoneName}"
+   name = "${var.mysqlPrefix}.${var.DnsZoneName}"
    type = "A"
    ttl = "300"
    records = ["${aws_instance.database.private_ip}"]
