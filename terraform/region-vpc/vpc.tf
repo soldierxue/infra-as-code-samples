@@ -58,21 +58,13 @@ module "public_subnet2" {
 # To Create a NAT Gateway
 
 resource "aws_eip" "fornat" {
-  vpc      = true
-  tags {
-        Name = "terraform-nat-eip"
-        Owner = "Jason"
-  }    
+  vpc      = true 
 }
 
 resource "aws_nat_gateway" "natgw" {
   allocation_id = "${aws_eip.fornat.id}"
   subnet_id     = "${module.public_subnet1.subnet_id}"
-  depends_on = ["aws_internet_gateway.main","module.public_subnet1"]
-  tags {
-        Name = "terraform-nat-gatway"
-        Owner = "Jason"
-  }    
+  depends_on = ["aws_internet_gateway.main","module.public_subnet1"] 
 }
 
 resource "aws_route_table" "private" {
