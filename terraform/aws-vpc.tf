@@ -15,22 +15,26 @@ variable "base_cidr_block" {
 }
 
 variable "subnet_pub1_cidr"{
-  default = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
+  # default = "${cidrsubnet(var.base_cidr_block, 4, 0)}"
+  default = "10.0.0.0/20"
   type = "string"
   description = "The CIDR block for the public subnet1"
 }
 variable "subnet_pub2_cidr"{
-  default = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
+  # default = "${cidrsubnet(var.base_cidr_block, 4, 2)}"
+  default="10.0.16.0/20"
   type = "string"
   description = "The CIDR block for the public subnet2"
 }
 variable "subnet_private1_cidr"{
-  default = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
+  # default = "${cidrsubnet(var.base_cidr_block, 4, 1)}"
+  default="10.0.48.0/20"
   type = "string"
   description = "The CIDR block for the private subnet1"
 }
 variable "subnet_private2_cidr"{
-  default = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
+  # default = "${cidrsubnet(var.base_cidr_block, 4, 3)}"
+  default="10.0.112.0/20"
   type = "string"
   description = "The CIDR block for the private subnet2" 
 }
