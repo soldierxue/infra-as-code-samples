@@ -68,7 +68,7 @@ resource "aws_eip" "fornat" {
 resource "aws_nat_gateway" "natgw" {
   allocation_id = "${aws_eip.fornat.id}"
   subnet_id     = "${module.public_subnet1.subnet_id}"
-  depends_on = ["aws_internet_gateway.main","module.public1_subnet"]
+  depends_on = ["aws_internet_gateway.main","module.public_subnet1"]
   tags {
         Name = "terraform-nat-gatway"
         Owner = "Jason"
