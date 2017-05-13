@@ -8,9 +8,30 @@ variable "base_cidr_block" {}
 data "aws_availability_zones" "all" {
 }
 
-/*
+variable "subnet_pub1_cidr"{}
+variable "subnet_pub2_cidr"{}
+variable "subnet_private1_cidr"{}
+variable "subnet_private2_cidr"{}
 
-provider "aws" {
-  region = "${var.region}"
+variable "DnsZoneName" {}
+
+variable "ec2keyname" = {}
+variable "mysqlPrefix"={}
+
+data "aws_ami" "amazonlinux_ami" {
+  most_recent      = true
+  executable_users = ["self"]
+  architecture  = "x86_64"
+
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
+
+  filter {
+    name   = "name"
+    values = ["amzn-ami-hvm*2017*"]
+  }
+
+  owners     = ["amazon"]
 }
-*/
