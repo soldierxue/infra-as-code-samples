@@ -45,7 +45,7 @@ variable "mysqlPrefix" {
   description = "the prefix name for mysql server"
 }
 
-variable "ec2keyname" = {
+variable "ec2keyname"  {
   default = "uswest1key"
   description "key name to login to the ec2"
   type = "String"

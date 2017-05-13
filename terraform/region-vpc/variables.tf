@@ -15,8 +15,8 @@ variable "subnet_private2_cidr"{}
 
 variable "DnsZoneName" {}
 
-variable "ec2keyname" = {}
-variable "mysqlPrefix"={}
+variable "ec2keyname"  {}
+variable "mysqlPrefix" {}
 
 data "aws_ami" "amazonlinux_ami" {
   most_recent      = true
