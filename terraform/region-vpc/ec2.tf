@@ -11,7 +11,7 @@ resource "aws_instance" "phpapp" {
      delete_on_termination="true"
   }
   ebs_block_device {
-     device_name = "sdaebs"
+     device_name = "/mnt"
      volume_type ="gp2"
      volume_size ="10"
      delete_on_termination="true"  
