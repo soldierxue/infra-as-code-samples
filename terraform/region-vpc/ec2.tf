@@ -1,5 +1,5 @@
 resource "aws_instance" "phpapp" {
-  ami           = "${var.aws_ami.amazonlinux_ami.image_id}"
+  ami           = "${var.aws_ami.amazonlinux_ami[1].image_id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "true"
   subnet_id = "${module.public_subnet1.subnet_id}"
@@ -26,7 +26,7 @@ HEREDOC
 }
 
 resource "aws_instance" "database" {
-  ami           = "${var.aws_ami.amazonlinux_ami.image_id}"
+  ami           = "${var.aws_ami.amazonlinux_ami[1].image_id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "false"
   subnet_id = "${module.private_subnet1.subnet_id}"
