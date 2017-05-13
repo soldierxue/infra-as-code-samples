@@ -28,7 +28,7 @@ resource "aws_instance" "phpapp" {
   service httpd start
   chkconfig httpd on
   echo "<?php" >> /var/www/html/calldb.php
-  echo "\$conn = new mysqli('${var.mysqlPrefix}.$${var.DnsZoneName}', 'root', 'secret', 'test');" >> /var/www/html/calldb.php
+  echo "\$conn = new mysqli('${var.mysqlPrefix}.${var.DnsZoneName}', 'root', 'secret', 'test');" >> /var/www/html/calldb.php
   echo "\$sql = 'SELECT * FROM mytable'; " >> /var/www/html/calldb.php
   echo "\$result = \$conn->query(\$sql); " >>  /var/www/html/calldb.php
   echo "while(\$row = \$result->fetch_assoc()) { echo 'the value is: ' . \$row['mycol'] ;} " >> /var/www/html/calldb.php
@@ -48,6 +48,7 @@ resource "aws_instance" "database" {
         Name = "mysql-database"
         Owner = "Jason"
   }
+  depends_on = ["aws_nat_gateway.natgw"] 
   user_data = <<HEREDOC
   #!/bin/bash
   yum update -y
@@ -56,6 +57,8 @@ resource "aws_instance" "database" {
   /usr/bin/mysqladmin -u root password 'secret'
   mysql -u root -psecret -e "create user 'root'@'%' identified by 'secret';" mysql
   mysql -u root -psecret -e 'CREATE TABLE mytable (mycol varchar(255));' test
-  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('terraform with aws great!') ;" test
+  mysql -u root -psecret -e "INSERT INTO mytable (mycol) values ('terraform with aws great');" test
 HEREDOC
 }
+
+mysql -h mydatabase.jasondemo.internal -u root -p test -P secret
