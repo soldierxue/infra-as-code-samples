@@ -12,3 +12,8 @@ ec2keyname= {
   "ap-northeast-1" = "ap-north1-key"
   "us-west-1" = "uswest1key"
 }
+
+cluster_name ="ecs-jason-demo"
+ecs_instance_type = "t2.micro"
+asg_min = "1"
+asg_max = "4"

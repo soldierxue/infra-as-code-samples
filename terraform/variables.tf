@@ -31,3 +31,23 @@ variable "ec2keyname"  {
   description = "key name to login to the ec2"
   type = "map"
 }
+
+## Variables for ECS Cluster
+
+variable "cluster_name"{
+  type = "string"
+  description = "The name of the ecs cluster" 
+}
+
+variable "asg_min"{
+  type = "string"
+  description = "The minimal number of the ASG group" 
+}
+variable "asg_max"{
+  type = "string"
+  description = "The max number of instances of the ASG group" 
+}
+variable "ecs_instance_type"{
+  type = "string"
+  description = "The instance type of the ecs instance" 
+}

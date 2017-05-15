@@ -21,6 +21,7 @@ module "aws-vpc" {
 module "securities" {
   source          = "./infra-security"
   vpc_id          = "${module.aws-vpc.vpc_id}"
+  vpc_cidr_block  = "${var.base_cidr_block}"
 }
 
 # model : demo for PHP app(public subnet) + MySql db(private subnet)
@@ -37,3 +38,27 @@ module "demo-php" {
   ec2keyname = "${var.ec2keyname["${var.region}"]}"
 }
 
+# model ALB for ECS Service
+
+module "alb" {
+  source = "./infra-alb"
+
+  security_group_internal_id = "${module.securities.sg_internal_id}"
+  security_group_inbound_id = "${module.securities.sg_frontend_id}"
+  alb_subnet_ids = "${module.vpc.subnet_public_ids}"
+  vpc_id = "${module.aws-vpc.vpc_id}"
+}
+
+module "ecs_cluster" {
+  source = "./infra-ecs"
+  cluster_name = "${var.cluster_name}"
+
+  instance_type = "${var.ecs_instance_type}"
+  key_pair_name = "${var.ec2keyname["${var.region}"]}"
+  instance_profile_name = "${module.securities.ecs_instance_profile_name}"
+  security_group_ecs_instance_id = "${module.securities.sg_internal_id}"
+  asg_min = "${var.asg_min}"
+  asg_max = "${var.asg_max}"
+  ecs_cluster_subnet_ids = "${module.aws-vpc.subnet_private_ids}"
+  target_group_arn = "${module.alb.target_group_arn}"
+}
