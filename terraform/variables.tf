@@ -31,8 +31,3 @@ variable "ec2keyname"  {
   description = "key name to login to the ec2"
   type = "string"
 }
-
-# For AWS Cloud
-provider "aws" {
-  region = "${var.region}"
-}

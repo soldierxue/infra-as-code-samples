@@ -21,11 +21,11 @@ module "aws-vpc" {
 module "demo-php" {
   source          = "./demo-php"
   vpc_id          = "${module.aws-vpc.aws_vpc.main.id}"
-  public_subnet_id = "${module.aws-vpc.aws_vpc.main.module.public_subnet1.subnet_id}"
-  fronend_web_sgid = "${module.aws-vpc.aws_vpc.main.aws_security_group.frontend.id}"
+  public_subnet_id = "${module.aws-vpc.module.public_subnet1.subnet_id}"
+  fronend_web_sgid = "${module.aws-vpc.aws_security_group.frontend.id}"
   
-  private_subnet_id = "${module.aws-vpc.aws_vpc.main.module.private_subnet1.subnet_id}"
-  database_sgid = "${module.aws-vpc.aws_vpc.main.aws_security_group.database.id}"
+  private_subnet_id = "${module.aws-vpc.module.private_subnet1.subnet_id}"
+  database_sgid = "${module.aws-vpc.aws_security_group.database.id}"
   
   ec2keyname = "${var.ec2keyname}"
 }
