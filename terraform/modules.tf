@@ -45,7 +45,7 @@ module "alb" {
 
   security_group_internal_id = "${module.securities.sg_internal_id}"
   security_group_inbound_id = "${module.securities.sg_frontend_id}"
-  alb_subnet_ids = "${module.vpc.subnet_public_ids}"
+  alb_subnet_ids = "${module.aws-vpc.subnet_public_ids}"
   vpc_id = "${module.aws-vpc.vpc_id}"
 }
 
