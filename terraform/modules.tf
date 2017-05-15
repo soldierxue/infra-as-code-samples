@@ -62,3 +62,5 @@ module "ecs-cluster" {
   ecs_cluster_subnet_ids = "${module.aws-vpc.subnet_private_ids}"
   target_group_arn = "${module.alb.target_group_arn}"
 }
+
+
