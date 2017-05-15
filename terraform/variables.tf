@@ -29,5 +29,5 @@ variable "subnet_private2_cidr"{
 
 variable "ec2keyname"  {
   description = "key name to login to the ec2"
-  type = "string"
+  type = "map"
 }
