@@ -1,8 +1,7 @@
-
 # models VPC
 
 module "aws-vpc" {
-  source          = "./region-vpc"
+  source          = "./infra-vpc"
   region          = "${var.region}"
   base_cidr_block = "${var.base_cidr_block}"
   ec2keyname = "${var.ec2keyname}"
