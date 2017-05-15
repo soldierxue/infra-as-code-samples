@@ -16,16 +16,23 @@ module "aws-vpc" {
   subnet_pub1_cidr = "${var.subnet_pub1_cidr}"
 }
 
+# model: securities like Security Groups, IAM roles
+
+module "securities" {
+  source          = "./infra-security"
+  vpc_id          = "${module.aws-vpc.vpc_id}"
+}
+
 # model : demo for PHP app(public subnet) + MySql db(private subnet)
 
 module "demo-php" {
   source          = "./demo-php"
-  vpc_id          = "${module.aws-vpc.aws_vpc.main.id}"
-  public_subnet_id = "${module.aws-vpc.module.public_subnet1.subnet_id}"
-  fronend_web_sgid = "${module.aws-vpc.aws_security_group.frontend.id}"
+  vpc_id          = "${module.aws-vpc.vpc_id}"
+  public_subnet_id = "${module.aws-vpc.public_subnet1_id}"
+  fronend_web_sgid = "${module.securities.sg_frontend_id}"
   
-  private_subnet_id = "${module.aws-vpc.module.private_subnet1.subnet_id}"
-  database_sgid = "${module.aws-vpc.aws_security_group.database.id}"
+  private_subnet_id = "${module.aws-vpc.private_subnet1_id}"
+  database_sgid = "${module.securities.sg_database_id}"
   
   ec2keyname = "${var.ec2keyname}"
 }

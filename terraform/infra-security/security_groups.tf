@@ -1,7 +1,7 @@
 resource "aws_security_group" "frontend" {
   name        = "dmz-sg"
   description = "Open access for Internet HTTP/SSH connection inbound"
-  vpc_id      = "${aws_vpc.main.id}"
+  vpc_id      = "${var.vpc_id}"
   tags{
      Name = "terraform-sg-dmz"
      Owner = "Jason"
@@ -35,7 +35,7 @@ resource "aws_security_group" "database" {
         Owenr = "Jason"
   }
   description = "SG for db access from internal tcp CONNECTION INBOUND"
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${var.vpc_id}"
   ingress {
       from_port = 3306
       to_port = 3306
