@@ -1,3 +1,11 @@
+variable vpc_id {}
+variable public_subnet_id{}
+variable fronend_web_sgid{}
+variable private_subnet_id{}
+variable database_sgid{}
+variable ec2keyname{}
+
+
 data "aws_ami" "amazonlinux_ami" {
   most_recent      = true
 

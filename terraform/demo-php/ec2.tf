@@ -2,8 +2,8 @@ resource "aws_instance" "phpapp" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "true"
-  subnet_id = "${module.aws_vpc.main.public_subnet1.subnet_id}"
-  vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
+  subnet_id = "${var.public_subnet_id}"
+  vpc_security_group_ids = ["${var.fronend_web_sgid}"]
   key_name = "${var.ec2keyname}"
   root_block_device  {
      volume_type ="gp2"
@@ -41,14 +41,13 @@ resource "aws_instance" "database" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "false"
-  subnet_id = "${module.private_subnet1.subnet_id}"
-  vpc_security_group_ids = ["${aws_security_group.database.id}"]
+  subnet_id = "${var.private_subnet_id}}"
+  vpc_security_group_ids = ["${var.database_sgid}"]
   key_name = "${var.ec2keyname}"
   tags {
         Name = "mysql-database"
         Owner = "Jason"
   }
-  depends_on = ["aws_nat_gateway.natgw"] 
   user_data = <<HEREDOC
   #!/bin/bash
   yum update -y
