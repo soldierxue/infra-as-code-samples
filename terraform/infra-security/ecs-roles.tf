@@ -5,7 +5,7 @@
 
 resource "aws_iam_instance_profile" "ecs_instance" {
   name = "ecs-instance"
-  roles = ["${aws_iam_role.ecs_instance.name}"]
+  role = "${aws_iam_role.ecs_instance.name}"
 
   lifecycle { create_before_destroy = true }
 }
