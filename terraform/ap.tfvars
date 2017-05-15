@@ -1,5 +1,5 @@
 ## The region option
-region = "us-west-1"
+region = "ap-northeast-1"
 
 ## The CIDR options
 base_cidr_block ="10.0.0.0/16"
