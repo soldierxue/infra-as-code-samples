@@ -8,4 +8,7 @@ subnet_pub2_cidr="10.0.16.0/20"
 subnet_private1_cidr="10.0.48.0/20"
 subnet_private2_cidr="10.0.112.0/20"
 
-ec2keyname="uswest1key"
+ec2keyname= {
+  "ap-northeast-1" = "ap-north1-key"
+  "us-west-1" = "uswest1key"
+}

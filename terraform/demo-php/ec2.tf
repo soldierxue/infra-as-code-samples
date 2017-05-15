@@ -41,7 +41,7 @@ resource "aws_instance" "database" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "false"
-  subnet_id = "${var.private_subnet_id}}"
+  subnet_id = "${var.private_subnet_id}"
   vpc_security_group_ids = ["${var.database_sgid}"]
   key_name = "${var.ec2keyname}"
   tags {

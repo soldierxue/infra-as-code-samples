@@ -34,6 +34,6 @@ module "demo-php" {
   private_subnet_id = "${module.aws-vpc.private_subnet1_id}"
   database_sgid = "${module.securities.sg_database_id}"
   
-  ec2keyname = "${var.ec2keyname}"
+  ec2keyname = "${var.ec2keyname["${var.region}"]}"
 }
 
