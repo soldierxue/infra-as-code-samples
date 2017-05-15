@@ -49,7 +49,7 @@ module "alb" {
   vpc_id = "${module.aws-vpc.vpc_id}"
 }
 
-module "ecs_cluster" {
+module "ecs-cluster" {
   source = "./infra-ecs"
   cluster_name = "${var.cluster_name}"
 
