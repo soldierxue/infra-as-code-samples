@@ -8,14 +8,14 @@ resource "aws_vpc_dhcp_options" "mydhcp" {
 }
 
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-    vpc_id = "${aws_vpc.main.id}"
+    vpc_id = "${module.aws_vpc.main.id}"
     dhcp_options_id = "${aws_vpc_dhcp_options.mydhcp.id}"
 }
 
 /* DNS PART ZONE AND RECORDS */
 resource "aws_route53_zone" "main" {
   name = "${var.DnsZoneName}"
-  vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${{module.aws_vpc.main.id}"
   comment = "Route 53 Private Zone Managed by terraform"
 }
 

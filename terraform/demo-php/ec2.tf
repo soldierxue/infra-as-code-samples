@@ -2,7 +2,7 @@ resource "aws_instance" "phpapp" {
   ami           = "${data.aws_ami.amazonlinux_ami.id}"
   instance_type = "t2.micro"
   associate_public_ip_address = "true"
-  subnet_id = "${module.public_subnet1.subnet_id}"
+  subnet_id = "${module.aws_vpc.main.public_subnet1.subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
   key_name = "${var.ec2keyname}"
   root_block_device  {

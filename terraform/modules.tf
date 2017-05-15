@@ -1,3 +1,8 @@
+# For AWS Cloud
+provider "aws" {
+  region = "${var.region}"
+}
+
 # models VPC
 
 module "aws-vpc" {
