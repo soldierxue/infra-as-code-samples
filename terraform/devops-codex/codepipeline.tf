@@ -48,4 +48,21 @@ resource "aws_codepipeline" "spring-ecs-demo" {
       }
     }
   }
+  stage {
+    name = "Build"
+
+    action {
+      name             = "spring-docker"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["spring-build"]
+      output_artifacts = ["spring-image"]
+      version          = "1"
+
+      configuration {
+        ProjectName = "${aws_codebuild_project.spring-docker.name}"
+      }
+    }
+  }  
 }
