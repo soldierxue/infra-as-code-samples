@@ -3,7 +3,7 @@ resource "aws_cloudwatch_log_group" "spring_hw_service_lg" {
 }
 
 data "template_file" "task_definition" {
-  template = "${file("${path.module}/task-definition.json")}"
+  template = "${file("${path.module}/hw-spring-task.json")}"
 
   vars {
     service_name = "${var.service_name}"
