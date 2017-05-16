@@ -24,7 +24,6 @@ resource "aws_codepipeline" "spring-ecs-demo" {
       output_artifacts = ["spring-source"]
 
       configuration {
-        Owner      = "jason-aws"
         Repo       = "jasoncc"
         Branch     = "master"
       }
@@ -32,7 +31,7 @@ resource "aws_codepipeline" "spring-ecs-demo" {
   }
 
   stage {
-    name = "Build"
+    name = "BuildJar"
 
     action {
       name             = "spring-compile"
@@ -49,7 +48,7 @@ resource "aws_codepipeline" "spring-ecs-demo" {
     }
   }
   stage {
-    name = "Build"
+    name = "BuildImage"
 
     action {
       name             = "spring-docker"
