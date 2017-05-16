@@ -13,7 +13,18 @@ ec2keyname= {
   "us-west-1" = "uswest1key"
 }
 
+# Init ECS Cluster parameters
+
 cluster_name ="ecs-jason-demo"
 ecs_instance_type = "t2.micro"
 asg_min = "1"
 asg_max = "4"
+
+# Spring Hello World ECS Demo
+service_name ="spring-hw-demo"
+docker_image = "188869792837.dkr.ecr.us-east-1.amazonaws.com/jasonreg"
+docker_tag = "spring-hw-1"
+container_cpu = "500"
+container_memory = "200"
+container_port ="8080"
+desired_count = "2"

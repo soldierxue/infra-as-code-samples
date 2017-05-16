@@ -49,6 +49,8 @@ module "alb" {
   vpc_id = "${module.aws-vpc.vpc_id}"
 }
 
+# Empty ECS Cluster with no tasks running
+
 module "ecs-cluster" {
   source = "./infra-ecs"
   cluster_name = "${var.cluster_name}"
@@ -61,6 +63,23 @@ module "ecs-cluster" {
   asg_max = "${var.asg_max}"
   ecs_cluster_subnet_ids = "${module.aws-vpc.subnet_private_ids}"
   target_group_arn = "${module.alb.target_group_arn}"
+}
+
+# Demo: ECS Spring Hello World sample service
+
+module "demo-hwservice" {
+  source = "./demo-ecs-hw-service"
+  cluster_name = "${var.cluster_name}"
+  region = "${var.region}"
+  service_name ="${var.service_name}"
+  docker_image ="${var.docker_image}"
+  docker_tag = "${var.docker_tag}"
+  container_cpu = "${var.container_cpu}"
+  container_memory = "${var.container_memory}"
+  container_port = "${var.container_port}"
+  desired_count ="${var.desired_count}"
+  ecs_service_role_arn = "${module.securities.ecs_service_role_arn}"
+  target_group_arn ="${module.alb.target_group_arn}"
 }
 
 
