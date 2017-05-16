@@ -92,22 +92,22 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
   lifecycle { create_before_destroy = true }
 }
 
-resource "aws_iam_role_policy_attachment"  {
+resource "aws_iam_role_policy_attachment"  role_att1{
   role = "${aws_iam_role.codepipeline_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitFullAccess"
 }
 
-resource "aws_iam_role_policy_attachment"  {
+resource "aws_iam_role_policy_attachment" role_att2 {
   role = "${aws_iam_role.codepipeline_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess"
 }
 
-resource "aws_iam_role_policy_attachment"  {
+resource "aws_iam_role_policy_attachment"  role_att3{
   role = "${aws_iam_role.codepipeline_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployFullAccess"
 }
 
-resource "aws_iam_role_policy_attachment"  {
+resource "aws_iam_role_policy_attachment"  role_att4{
   role = "${aws_iam_role.codepipeline_role.name}"
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
