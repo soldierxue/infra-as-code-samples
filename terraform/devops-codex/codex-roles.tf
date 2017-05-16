@@ -4,7 +4,7 @@
 resource "aws_iam_role" "codebuild_role" {
   name = "codebuild-role"
   
-  assume_role_policy = <<EOF
+  assume_role_policy = <<HEREDOC
   {
   "Version": "2012-10-17",
   "Statement": [
@@ -17,7 +17,7 @@ resource "aws_iam_role" "codebuild_role" {
     }
    ]
   }
-  EOF
+  HEREDOC
 
   lifecycle { create_before_destroy = true }
 }
@@ -36,7 +36,7 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
 resource "aws_iam_role" "codedeploy_role" {
   name = "codedeploy-role"
   
-  assume_role_policy = <<EOF
+  assume_role_policy = <<HEREDOC
   {
   "Version": "2012-10-17",
   "Statement": [
@@ -49,7 +49,7 @@ resource "aws_iam_role" "codedeploy_role" {
     }
    ]
   }
-  EOF
+  HEREDOC
 
   lifecycle { create_before_destroy = true }
 }
@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "codedeploy_role_policy" {
 resource "aws_iam_role" "codepipeline_role" {
   name = "codepipeline-role"
   
-  assume_role_policy = <<EOF
+  assume_role_policy = <<HEREDOC
   {
   "Version": "2012-10-17",
   "Statement": [
@@ -79,7 +79,7 @@ resource "aws_iam_role" "codepipeline_role" {
     }
    ]
   }
-  EOF
+  HEREDOC
 
   lifecycle { create_before_destroy = true }
 }
