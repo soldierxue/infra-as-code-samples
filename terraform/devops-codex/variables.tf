@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 variable ecr_region{
    default = "us-east-1"
 }
@@ -8,6 +12,4 @@ variable codex_region{
 variable ecr_repo{
   default = "jasonreg"
 }
-variable aws_accountid {
-  default = "188869792837"
-}
+variable aws_accountid {}
