@@ -81,11 +81,3 @@ variable "container_port" {
 variable "desired_count" {
   description = "Initial number of containers to run"
 }
-
-variable "ecs_service_role_arn" {
-  description = "ARN of IAM role for ECS service"
-}
-
-variable "target_group_arn" {
-  description = "ARN of ALB target group for service"
-}
