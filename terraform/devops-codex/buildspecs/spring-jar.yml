@@ -10,10 +10,11 @@ phases:
   build:
     commands:
       - echo Build started on `date`
+      - cd ./spring-hw-1
       - mvn clean package
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - target/spring-hw-1-1.0-SNAPSHOT.jar
+    - ./spring-hw-1/target/spring-hw-1-1.0-SNAPSHOT.jar
