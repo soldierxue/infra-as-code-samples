@@ -15,7 +15,8 @@
                 "codedeploy:GetDeploymentConfig",
                 "codedeploy:RegisterApplicationRevision",
                 "codebuild:BatchGetBuilds",
-                "codebuild:StartBuild"
+                "codebuild:StartBuild",
+                "lambda:Invoke"
             ],
             "Resource": "*",
             "Effect": "Allow"
