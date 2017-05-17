@@ -24,8 +24,8 @@ resource "aws_codepipeline" "spring-ecs-demo" {
       output_artifacts = ["spring-source"]
 
       configuration {
-        Repo       = "jasoncc"
-        Branch     = "master"
+        RepositoryName   = "jasoncc"
+        BranchName     = "master"
       }
     }
   }
