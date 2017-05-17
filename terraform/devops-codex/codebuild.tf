@@ -36,7 +36,7 @@ resource "aws_codebuild_project" "spring-docker" {
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
-    image        = "aws/codebuild/docker:1.12.6"
+    image        = "aws/codebuild/docker:1.12.1"
     type         = "LINUX_CONTAINER"
     environment_variable {
       "name"  = "ECR_REGION"
