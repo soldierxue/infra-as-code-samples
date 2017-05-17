@@ -12,7 +12,7 @@ phases:
     commands:
       - echo "building image with tag $(cat /tmp/build_tag.out)"
       - cd ./spring-hw-1
-      - docker build --tag --file ./Dockerfile "$(cat /tmp/build_tag.out)" . 
+      - docker build --tag "$(cat /tmp/build_tag.out)" --file ./Dockerfile . 
   post_build:
     commands:
       - echo "pushing image to $(cat /tmp/build_tag.out)"
