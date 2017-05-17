@@ -18,3 +18,4 @@ phases:
 artifacts:
   files:
     - ./spring-hw-1/target/spring-hw-1-1.0-SNAPSHOT.jar
+    - ./spring-hw-1/Dockerfile

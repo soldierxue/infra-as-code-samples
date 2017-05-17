@@ -11,6 +11,8 @@ phases:
   build:
     commands:
       - echo "building image with tag $(cat /tmp/build_tag.out)"
+      - mv ./spring-hw-1/Dockerfile ./spring-hw-1/target/
+      - cd ./spring-hw-1/target/
       - docker build --tag "$(cat /tmp/build_tag.out)" .
   post_build:
     commands:
