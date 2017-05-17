@@ -11,8 +11,6 @@ phases:
   build:
     commands:
       - echo "building image with tag $(cat /tmp/build_tag.out)"
-      - mkdir target
-      - mv ./*jar ./target
       - docker build --tag "$(cat /tmp/build_tag.out)" . 
   post_build:
     commands:
