@@ -13,7 +13,15 @@
         "s3:CreateBucket",
         "s3:GetObject",
         "s3:List*",
-        "s3:PutObject"
+        "s3:PutObject",
+        "ecr:GetAuthorizationToken",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:PutImage",
+        "ecr:InitiateLayerUpload",
+        "ecr:UploadLayerPart",
+        "ecr:CompleteLayerUpload"  
       ]
     }
   ]
