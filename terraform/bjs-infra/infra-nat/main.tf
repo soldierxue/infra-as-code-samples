@@ -3,7 +3,7 @@ resource "aws_instance" "nat1" {
     availability_zone = "${data.aws_availability_zones.all.names[0]}"
     instance_type = "m3.large"
     key_name = "${var.ec2_keyname}"
-    vpc_security_group_ids = ["${aws_security_group.nat.id}"]
+    vpc_security_group_ids = ["${var.sg_nat_id}"]
     subnet_id = "${var.sg_nat_id}"
     associate_public_ip_address = true
     source_dest_check = false

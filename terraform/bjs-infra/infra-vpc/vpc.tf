@@ -60,6 +60,7 @@ module "private_subnet2" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${var.subnet_private1_cidr}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
+  route_tb_id ="${aws_vpc.main.default_route_table_id}"
   subnet_name = "private_subnet2"
 }
 
@@ -68,5 +69,6 @@ module "private_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${var.subnet_private2_cidr}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
+  route_tb_id ="${aws_vpc.main.default_route_table_id}"
   subnet_name = "private_subnet1"
 }
