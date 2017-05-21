@@ -18,7 +18,7 @@ resource "aws_eip" "nat1" {
     vpc = true
 }
 
-resource "aws_route_table" "${data.aws_availability_zones.all.names[0]}-private" {
+resource "aws_route_table" "rt-private" {
     vpc_id = "${var.vpc_id}"
 
     route {
@@ -31,7 +31,7 @@ resource "aws_route_table" "${data.aws_availability_zones.all.names[0]}-private"
     }
 }
 
-resource "aws_route_table_association" "${data.aws_availability_zones.all.names[0]}-private" {
+resource "aws_route_table_association" "ass-rt-private" {
     subnet_id = "${var.private_subnet1_id}"
-    route_table_id = "${aws_route_table."${data.aws_availability_zones.all.names[0]}"-private}"
+    route_table_id = "${aws_route_table.rt-private.id}"
 }
