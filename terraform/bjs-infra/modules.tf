@@ -31,8 +31,11 @@ module "natgateways" {
   vpc_id          = "${module.aws-vpc.vpc_id}"
   private_subnet1_id  = "${var.subnet_private1_cidr}"
   private_subnet2_id = "${var.subnet_private2_cidr}"
+  public_subnet1_id  = "${var.subnet_pub1_cidr}"
+  public_subnet2_id = "${var.subnet_pub2_cidr}"
   sg_nat_id ="${module.securities.sg_nat_id}"
   ec2_keyname = "${var.ec2keyname["${var.region}"]}"
+  instance_profile_name = "${module.securities.role_nat_profile_name}"
 }
 
 # model : demo for PHP app(public subnet) + MySql db(private subnet)

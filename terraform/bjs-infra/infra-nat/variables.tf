@@ -6,3 +6,6 @@ variable sg_nat_id {}
 variable vpc_id {}
 variable private_subnet1_id {}
 variable private_subnet2_id {}
+variable public_subnet1_id {}
+variable public_subnet2_id {}
+variable instance_profile_name {}

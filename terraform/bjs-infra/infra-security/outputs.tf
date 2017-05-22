@@ -13,3 +13,7 @@ output "sg_internal_id" {
 output "sg_nat_id" {
   value = "${aws_security_group.natsg.id}"
 }
+
+output "role_nat_profile_name" {
+  value = "${aws_iam_instance_profile.nat_profile.name}"
+}
