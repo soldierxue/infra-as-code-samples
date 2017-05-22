@@ -37,18 +37,4 @@ module "natgateways" {
   aws_region = "${var.region}"
 }
 
-# model : demo for PHP app(public subnet) + MySql db(private subnet)
-
-module "demo-php" {
-  source          = "./demo-php"
-  vpc_id          = "${module.aws-vpc.vpc_id}"
-  public_subnet_id = "${module.aws-vpc.public_subnet1_id}"
-  fronend_web_sgid = "${module.securities.sg_frontend_id}"
-  
-  private_subnet_id = "${module.aws-vpc.private_subnet1_id}"
-  database_sgid = "${module.securities.sg_database_id}"
-  
-  ec2keyname = "${var.ec2keyname["${var.region}"]}"
-}
-
 

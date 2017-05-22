@@ -12,7 +12,7 @@ resource "aws_instance" "nat" {
     associate_public_ip_address = true
     source_dest_check = false
     monitoring = true
-    disable_api_termination = true
+    disable_api_termination = false
 
     tags {
         Name = "VPC NAT #${count.index + 1}"

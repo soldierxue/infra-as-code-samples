@@ -11,3 +11,8 @@ variable "subnet_private1_cidr"{}
 variable "subnet_private2_cidr"{}
 variable "ec2keyname"  {}
 
+variable "DnsZoneName" {
+  default = "jasondemo.internal"
+  description = "the internal dns name"
+}
+
