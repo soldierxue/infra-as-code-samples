@@ -27,7 +27,7 @@ resource "aws_eip" "eip" {
 }
 
 data "aws_route_table" "selected" {
-  count = "${length(var.private_subnets)}"
+  count = "${length(data.aws_availability_zones.all.names)}"
   
   subnet_id = "${element(var.private_subnets, count.index)}" 
 }
