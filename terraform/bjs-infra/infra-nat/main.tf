@@ -26,16 +26,11 @@ resource "aws_eip" "eip" {
     vpc = true
 }
 
-data "aws_route_table" "selected" {
-  count = "${length(data.aws_availability_zones.all.names)}"
-  
-  subnet_id = "${element(var.private_subnets, count.index)}" 
-}
 
 resource "aws_route" "nat" {
   count = "${length(data.aws_availability_zones.all.names)}"
 
-  route_table_id = "${element(data.aws_route_table.selected.*.id, count.index)}"
+  route_table_id = "${element(var.private_routes, count.index)}"
   destination_cidr_block = "0.0.0.0/0"
   
   instance_id = "${element(aws_instance.nat.*.id, count.index)}"
@@ -56,8 +51,8 @@ data "template_file" "nat-monitor-default" {
 
   vars {
     NAT_IDS = "${replace(join(" ", aws_instance.nat.*.id), "/\\s*${element(aws_instance.nat.*.id, count.index)}\\s*/", "")}"
-    NAT_RT_IDS = "${replace(join(" ", data.aws_route_table.selected.*.id), "/\\s*${element(data.aws_route_table.selected.*.id, count.index)}\\s*/", "")}"
-    My_RT_ID = "${element(data.aws_route_table.selected.*.id, count.index)}"
+    NAT_RT_IDS = "${replace(join(" ", var.private_routes), "/\\s*${element(var.private_routes, count.index)}\\s*/", "")}"
+    My_RT_ID = "${element(var.private_routes, count.index)}"
     EC2_REGION = "${var.aws_region}"
 
     Num_Pings="${var.nat_monitor_num_pings}"
@@ -116,7 +111,7 @@ TFEOF
     private_key = "${file("${path.module}/scripts/bjskey.pem")}"
   }
 
-  depends_on = ["null_resource.generate-nat-monitor-sh", "aws_instance.nat","data.aws_route_table.selected"]  
+  depends_on = ["null_resource.generate-nat-monitor-sh", "aws_instance.nat"]  
 }
 
 
