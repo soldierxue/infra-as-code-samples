@@ -52,6 +52,7 @@ resource "aws_route" "nat" {
 
   route_table_id = "${element(data.aws_route_table.selected.*.id, count.index)}"
   destination_cidr_block = "0.0.0.0/0"
+  
   instance_id = "${element(aws_instance.nat.*.id, count.index)}"
 }
 
@@ -91,7 +92,7 @@ resource "null_resource" "provision" {
   }
 
   provisioner "file" {
-    source = "scripts/nat-monitor.init"
+    source = "${path.module}/scripts/nat-monitor.init"
     destination = "/tmp/nat-monitor.init"
   }
 
@@ -101,7 +102,7 @@ resource "null_resource" "provision" {
   }
 
   provisioner "file" {
-    source = "scripts/nat-monitor.log-rotate"
+    source = "${path.module}/scripts/nat-monitor.log-rotate"
     destination = "/tmp/nat-monitor.log-rotate"
   }
   
