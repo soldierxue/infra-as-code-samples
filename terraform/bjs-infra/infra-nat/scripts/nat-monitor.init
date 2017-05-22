@@ -49,7 +49,7 @@ init() {
     if [[ "$EC2_REGION" == cn-* ]]; then
       EC2_URL_SUFFIX=".cn"
     fi
-    EC2_URL="https://ec2.${EC2_REGION}.amazonaws.com${EC2_URL_SUFFIX}"
+    EC2_URL="https://ec2.${EC2_REGION}.amazonaws.com.cn"
     /opt/aws/bin/ec2-replace-route "$My_RT_ID" -r 0.0.0.0/0 -i "$Instance_ID" -U "$EC2_URL" >> "$logfile" 2>&1
     # If replace-route failed, then the route might not exist and may need to be created instead
     if [ "$?" != "0" ]; then

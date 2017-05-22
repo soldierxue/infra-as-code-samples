@@ -17,7 +17,7 @@ if [["$EC2_REGION" == cn-*]]; then
    EC2_URL_SUFFIX=".cn"
 fi
 
-EC2_URL="https://ec2.${EC2_REGION}.amazonaws.com${EC2_URL_SUFFIX}"
+EC2_URL="https://ec2.${EC2_REGION}.amazonaws.com.cn"
 
 
 # Health Check variables
