@@ -26,5 +26,5 @@ output "subnet_public_ids" {
 }
 
 output "private_route_ids" {
-  value = ["${aws_route_table.private1.id},${aws_route_table.private2.id}"]
+  value = ["${aws_route_table.private1.id}","${aws_route_table.private2.id}"]
 }
