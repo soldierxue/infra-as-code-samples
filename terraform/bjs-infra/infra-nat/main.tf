@@ -1,7 +1,7 @@
 # Resources for NAT Nodes
 
 resource "aws_instance" "nat" {
-    count = "${length(data.aws_availability_zones.all)}"
+    count = "${length(data.aws_availability_zones.all.names)}"
     ami = "ami-0534fc68" # this is a special ami preconfigured to do NAT
     iam_instance_profile = "${var.instance_profile_name}"
     availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
@@ -21,14 +21,14 @@ resource "aws_instance" "nat" {
 }
 
 resource "aws_eip" "eip" {
-    count = "${length(data.aws_availability_zones.all)}"
+    count = "${length(data.aws_availability_zones.all.names)}"
     
     instance = "${element(aws_instance.nat.*.id,count.index)}"
     vpc = true
 }
 
 resource "aws_route_table" "rt-private-nat" {
-    count = "${length(data.aws_availability_zones.all)}"
+    count = "${length(data.aws_availability_zones.all.names)}"
     
     vpc_id = "${var.vpc_id}"
 
@@ -43,7 +43,7 @@ resource "aws_route_table" "rt-private-nat" {
 }
 
 resource "aws_route_table_association" "ass-rt-private" {
-    count = "${length(data.aws_availability_zones.all)}"
+    count = "${length(data.aws_availability_zones.all.names)}"
     
     subnet_id = "${element(var.private_subnets, count.index)}"
     route_table_id = "${element(aws_route_table.rt-private-nat.*.id,count.index)}"
@@ -58,7 +58,7 @@ resource "null_resource" "generate-nat-monitor-sh" {
 }
 
 data "template_file" "nat-monitor-default" {
-  count = "${length(data.aws_availability_zones.all)}"
+  count = "${length(data.aws_availability_zones.all.names)}"
 
   template = "${file("${path.module}/scripts/nat-monitor.default.template")}"
 
@@ -77,7 +77,7 @@ data "template_file" "nat-monitor-default" {
 }
 
 resource "null_resource" "provision" {
-  count = "${length(data.aws_availability_zones.all)}"
+  count = "${length(data.aws_availability_zones.all.names)}"
   
   provisioner "file" {
     source = "tmp/nat-monitor.sh"
