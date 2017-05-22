@@ -127,7 +127,7 @@ TFEOF
   connection {
     user = "ec2-user"
     host = "${element(aws_eip.eip.*.public_ip, count.index)}"
-    private_key = "${file(${path.module}/scripts/bjskey.pem)}"
+    private_key = "${file("${path.module}/scripts/bjskey.pem")}"
   }
 
   depends_on = ["null_resource.generate-nat-monitor-sh", "aws_instance.nat","aws_route_table.rt-private-nat"]  
