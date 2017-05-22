@@ -36,6 +36,7 @@ module "natgateways" {
   sg_nat_id ="${module.securities.sg_nat_id}"
   ec2_keyname = "${var.ec2keyname["${var.region}"]}"
   instance_profile_name = "${module.securities.role_nat_profile_name}"
+  aws_region = "${var.region}"
 }
 
 # model : demo for PHP app(public subnet) + MySql db(private subnet)

@@ -1,113 +1,130 @@
-data "template_file" "userdata_nat1" {
-  template = "${file("${path.module}/user_data.tpl")}"
+# Resources for NAT Nodes
 
-  vars {
-    nat2_id = "${aws_instance.nat2.id}" #The instance ID of the NAT Node #2 instance that this script will be monitoring.
-    nat2_rt_id = "${aws_route_table.rt-private-nat2.id}" #The ID of the route table routing Internet-bound traffic through the NAT Node #2 instance that this script will be monitoring.
-    nat1_rt_id = "${aws_route_table.rt-private-nat1.id}" #The ID of the route table routing Internet-bound traffic through this instance, NAT Node #1.
-    num_pings = 3 #This is the number of times the health check will ping NAT Node #2. The default is 3 pings. NAT Node #2 will only be considered unhealthy if all pings fail.
-    ping_timeout = 1 # The number of seconds to wait for each ping response before determining that the ping has failed. The default is one second.
-    wait_between_pings = 2 #The number of seconds to wait between health checks. The default is two seconds. Therefore, by default, the health check will perfrom 3 pings with 1 second timeouts and a 2 second break between checks -- resulting in a total time of 5 seconds between each aggregete health check.
-    wait_for_instance_stop = 60 #The number of seconds to wait for NAT Node #2 to stop before attempting to stop it again (if it hasn't stopped already). The default is 60 seconds.
-    wait_for_instance = 300 #The number of seconds to wait for NAT Node #2 to restart before resuming health checks again. The default is 300 seconds.
-    
-  }
-}
-
-data "template_file" "userdata_nat2" {
-  template = "${file("${path.module}/user_data.tpl")}"
-
-  vars {
-    nat2_id = "${aws_instance.nat1.id}"
-    nat2_rt_id = "${aws_route_table.rt-private-nat1.id}"
-    nat1_rt_id = "${aws_route_table.rt-private-nat2.id}"
-    num_pings = 3 
-    wait_between_pings = 2 
-    wait_for_instance_stop = 60 
-    wait_for_instance = 300   
-  }
-}
-
-# Resources for NAT Node 1
-
-resource "aws_instance" "nat1" {
+resource "aws_instance" "nat" {
+    count = "${length(data.aws_availability_zones.all)}"
     ami = "ami-0534fc68" # this is a special ami preconfigured to do NAT
     iam_instance_profile = "${var.instance_profile_name}"
-    availability_zone = "${data.aws_availability_zones.all.names[0]}"
+    availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
     instance_type = "m3.large"
     key_name = "${var.ec2_keyname}"
     vpc_security_group_ids = ["${var.sg_nat_id}"]
-    subnet_id = "${var.public_subnet1_id}"
+    subnet_id = "${element(var.public_subnets,count.index)}"
     associate_public_ip_address = true
     source_dest_check = false
+    monitoring = true
+    disable_api_termination = "${var.ec2_termination_protection}"
     user_data = "${data.template_file.userdata_nat1.rendered}"
 
     tags {
-        Name = "VPC NAT1"
+        Name = "VPC NAT #${count.index + 1}"
     }
 }
 
-resource "aws_eip" "nat1" {
-    instance = "${aws_instance.nat1.id}"
+resource "aws_eip" "eip" {
+    count = "${length(data.aws_availability_zones.all)}"
+    
+    instance = "${element(aws_instance.nat.*.id,count.index)}"
     vpc = true
 }
 
-resource "aws_route_table" "rt-private-nat1" {
+resource "aws_route_table" "rt-private-nat" {
+    count = "${length(data.aws_availability_zones.all)}"
+    
     vpc_id = "${var.vpc_id}"
 
     route {
         cidr_block = "0.0.0.0/0"
-        instance_id = "${aws_instance.nat1.id}"
+        instance_id = "${element(aws_instance.nat.*.id,count.index)}"
     }
 
     tags {
-        Name = "NAT Route 1"
+        Name = "NAT Route #${count.index + 1}"
     }
 }
 
-resource "aws_route_table_association" "ass-rt-private-1" {
-    subnet_id = "${var.private_subnet1_id}"
-    route_table_id = "${aws_route_table.rt-private-nat1.id}"
+resource "aws_route_table_association" "ass-rt-private" {
+    count = "${length(data.aws_availability_zones.all)}"
+    
+    subnet_id = "${element(var.private_subnets, count.index)}"
+    route_table_id = "${element(aws_route_table.rt-private-nat.*.id,count.index)}"
 }
 
-# Resources for NAT Node 2
+# Actions for nat moinitor script
 
-resource "aws_instance" "nat2" {
-    ami = "ami-0534fc68" # this is a special ami preconfigured to do NAT
-    iam_instance_profile = "${var.instance_profile_name}"
-    availability_zone = "${data.aws_availability_zones.all.names[1]}"
-    instance_type = "m3.large"
-    key_name = "${var.ec2_keyname}"
-    vpc_security_group_ids = ["${var.sg_nat_id}"]
-    subnet_id = "${var.public_subnet2_id}"
-    associate_public_ip_address = true
-    source_dest_check = false
-    user_data = "${data.template_file.userdata_nat2.rendered}"
-
-    tags {
-        Name = "VPC NAT2"
-    }
+resource "null_resource" "generate-nat-monitor-sh" {
+  provisioner "local-exec" {
+    command = "mkdir -p tmp && cp scripts/nat-monitor.sh tmp/;done"
+  }
 }
 
-resource "aws_eip" "nat2" {
-    instance = "${aws_instance.nat2.id}"
-    vpc = true
+data "template_file" "nat-monitor-default" {
+  count = "${length(data.aws_availability_zones.all)}"
+
+  template = "${file("${path.module}/scripts/nat-monitor.default.template")}"
+
+  vars {
+    NAT_IDS = "${replace(join(" ", aws_instance.nat.*.id), "/\\s*${element(aws_instance.nat.*.id, count.index)}\\s*/", "")}"
+    NAT_RT_IDS = "${replace(join(" ", aws_route_table.private.*.id), "/\\s*${element(aws_route_table.private.*.id, count.index)}\\s*/", "")}"
+    My_RT_ID = "${element(aws_route_table.rt-private-nat.*.id, count.index)}"
+    EC2_REGION = "${var.aws_region}"
+
+    Num_Pings="${var.nat_monitor_num_pings}"
+    Ping_Timeout="${var.nat_monitor_ping_timeout}"
+    Wait_Between_Pings="${var.nat_monitor_wait_between_pings}"
+    Wait_for_Instance_Stop="${var.nat_monitor_wait_for_instance_stop}"
+    Wait_for_Instance_Start="${var.nat_monitor_wait_for_instance_start}"
+  }
 }
 
-resource "aws_route_table" "rt-private-nat2" {
-    vpc_id = "${var.vpc_id}"
+resource "null_resource" "provision" {
+  count = "${length(data.aws_availability_zones.all)}"
+  
+  provisioner "file" {
+    source = "tmp/nat-monitor.sh"
+    destination = "/tmp/nat-monitor.sh"
+  }
 
-    route {
-        cidr_block = "0.0.0.0/0"
-        instance_id = "${aws_instance.nat2.id}"
-    }
+  provisioner "file" {
+    source = "scripts/nat-monitor.init"
+    destination = "/tmp/nat-monitor.init"
+  }
 
-    tags {
-        Name = "NAT Route 2"
-    }
+  provisioner "file" {
+    content = "${element(data.template_file.nat-monitor-default.*.rendered, count.index)}"
+    destination = "/tmp/nat-monitor.default"
+  }
+
+  provisioner "file" {
+    source = "scripts/nat-monitor.log-rotate"
+    destination = "/tmp/nat-monitor.log-rotate"
+  }
+  
+  provisioner "remote-exec" {
+    inline = [
+<<TFEOF
+sudo sh - <<SUDOEOF
+set -e
+cp /tmp/nat-monitor.sh /usr/local/bin/
+cp /tmp/nat-monitor.init /etc/init.d/nat-monitor
+[ -d /etc/sysconfig ] && cp /tmp/nat-monitor.default /etc/sysconfig/nat-monitor
+[ -d /etc/default ] && cp /tmp/nat-monitor.default /etc/default/nat-monitor
+cp /tmp/nat-monitor.log-rotate /etc/logrotate.d/nat-monitor
+chmod +x /usr/local/bin/nat-monitor.sh /etc/init.d/nat-monitor
+chkconfig nat-monitor on
+service nat-monitor restart
+rm -rf /tmp/nat-monitor.*
+SUDOEOF
+TFEOF
+    ]
+  }  
+  
+  connection {
+    user = "ec2-user"
+    host = "${element(aws_eip.eip.*.public_ip, count.index)}"
+    ## private_key = "${file()}"
+  }
+
+  depends_on = ["null_resource.generate-nat-monitor-sh", "aws_instance.nat","aws_route_table.rt-private-nat"]  
 }
 
-resource "aws_route_table_association" "ass-rt-private-2" {
-    subnet_id = "${var.private_subnet2_id}"
-    route_table_id = "${aws_route_table.rt-private-nat2.id}"
-}
+

@@ -1,0 +1,8 @@
+/var/log/nat-monitor.log {
+    compress
+    delaycompress
+    missingok
+    notifempty
+    weekly
+    rotate 12
+}

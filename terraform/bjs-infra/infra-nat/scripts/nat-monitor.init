@@ -1,0 +1,125 @@
+#!/bin/sh
+#
+# nat-monitor   This shell script monitors an HA-NAT.
+#
+# chkconfig: - 58 74
+# description: nat-monitor is the script to monitor an HA-NAT.
+
+### BEGIN INIT INFO
+# Provides: nat-monitor
+# Required-Start: $network $local_fs $remote_fs
+# Required-Stop: $network $local_fs $remote_fs
+# Should-Start: $syslog $named
+# Should-Stop: $syslog $named
+# Short-Description: start and stop nat-monitor
+# Description: nat-monitor is the script to monitor an HA-NAT.
+### END INIT INFO
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+prog="nat-monitor"
+logfile="/var/log/$prog.log"
+lockfile="/var/lock/subsys/$prog"
+nat_monitor="/usr/local/bin/nat-monitor.sh"
+nat_monitor_sh="$(basename "$nat_monitor")"
+
+# If there exist sysconfig/default variable override files use it...
+[ -f "/etc/sysconfig/$prog" ] && . "/etc/sysconfig/$prog"
+[ -f "/etc/default/$prog" ] && . "/etc/default/$prog"
+
+export SKIP_INIT="true"
+export My_RT_ID="${My_RT_ID}"
+export EC2_REGION="${EC2_REGION}"
+export Num_Pings="${Num_Pings:-3}"
+export Ping_Timeout="${Ping_Timeout:-1}"
+export Wait_Between_Pings="${Wait_Between_Pings:-2}"
+export Wait_for_Instance_Stop="${Wait_for_Instance_Stop:-60}"
+export Wait_for_Instance_Start="${Wait_for_Instance_Start:-300}"
+
+init() {
+    yum -y install aws-cli >> "$logfile" 2>&1
+
+    . /etc/profile.d/aws-apitools-common.sh
+    Instance_ID=`/usr/bin/curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+
+    if [[ "$EC2_REGION" == cn-* ]]; then
+      EC2_URL_SUFFIX=".cn"
+    fi
+    EC2_URL="https://ec2.${EC2_REGION}.amazonaws.com${EC2_URL_SUFFIX}"
+    /opt/aws/bin/ec2-replace-route "$My_RT_ID" -r 0.0.0.0/0 -i "$Instance_ID" -U "$EC2_URL" >> "$logfile" 2>&1
+    # If replace-route failed, then the route might not exist and may need to be created instead
+    if [ "$?" != "0" ]; then
+       /opt/aws/bin/ec2-create-route "$My_RT_ID" -r 0.0.0.0/0 -i "$Instance_ID" -U "$EC2_URL" >> "$logfile" 2>&1
+    fi
+}
+
+start() {
+    [ "$NETWORKING" = "no" ] && return 1
+    [ -x "$nat_monitor" ] || return 5
+    if (("${#NAT_IDS[@]}" != "${#NAT_RT_IDS[@]}")); then
+      echo 'Number of NAT_IDS and number of NAT_RT_IDS differ' >&2
+      return 1
+    fi
+
+    echo -n $"Starting $prog: "
+    init
+    for index in "${!NAT_IDS[@]}"; do
+      NAT_ID="${NAT_IDS[$index]}" \
+      NAT_RT_ID="${NAT_RT_IDS[$index]}" \
+      nohup "$nat_monitor" >> "$logfile" 2>&1 &
+      RETVAL=$?
+      [ $RETVAL -eq 0 ] || break
+    done
+
+    if [ $RETVAL -eq 0 ]; then
+      sleep 1
+      touch "$lockfile"
+      daemon true
+      echo
+    else
+      killall "${nat_monitor_sh}"
+    fi
+
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Shutting down $prog: "
+    killproc "${nat_monitor_sh}"
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f "$lockfile"
+    return $RETVAL
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status "${nat_monitor_sh}"
+        ;;
+  restart|force-reload)
+        stop
+        start
+        ;;
+  try-restart|condrestart)
+        if status "${nat_monitor_sh}" > /dev/null; then
+            stop
+            start
+        fi
+        ;;
+  reload)
+        exit 3
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|status|restart|try-restart|force-reload}"
+        exit 2
+esac

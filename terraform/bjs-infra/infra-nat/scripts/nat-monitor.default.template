@@ -1,0 +1,17 @@
+# NAT instance variables
+# Other instance's IP to ping and route to grab if other node goes down
+NAT_IDS="${NAT_IDS}"
+NAT_RT_IDS="${NAT_RT_IDS}"
+
+# My route to grab when I come back up
+My_RT_ID="${My_RT_ID}"
+
+# Specify the EC2 region that this will be running in (e.g. us-east-1)
+EC2_REGION="${EC2_REGION}"
+
+# Health Check variables
+Num_Pings="${Num_Pings}"
+Ping_Timeout="${Ping_Timeout}"
+Wait_Between_Pings="${Wait_Between_Pings}"
+Wait_for_Instance_Stop="${Wait_for_Instance_Stop}"
+Wait_for_Instance_Start="${Wait_for_Instance_Start}"
