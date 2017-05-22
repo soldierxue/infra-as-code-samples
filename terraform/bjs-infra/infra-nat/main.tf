@@ -12,8 +12,7 @@ resource "aws_instance" "nat" {
     associate_public_ip_address = true
     source_dest_check = false
     monitoring = true
-    disable_api_termination = "${var.ec2_termination_protection}"
-    user_data = "${data.template_file.userdata_nat1.rendered}"
+    disable_api_termination = true
 
     tags {
         Name = "VPC NAT #${count.index + 1}"
