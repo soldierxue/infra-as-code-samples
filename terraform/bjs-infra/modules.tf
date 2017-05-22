@@ -31,7 +31,7 @@ module "natgateways" {
   vpc_id          = "${module.aws-vpc.vpc_id}"
   public_subnets = ["${module.aws-vpc.public_subnet1_id}","${module.aws-vpc.public_subnet2_id}"]
   private_subnets = ["${module.aws-vpc.private_subnet1_id}","${module.aws-vpc.private_subnet2_id}"]
-  private_routes = "${module.aws-vpc.private_route_ids}"
+  private_routes = ["${module.aws-vpc.private_route1_id}","${module.aws-vpc.private_route2_id}"]
   sg_nat_id ="${module.securities.sg_nat_id}"
   ec2_keyname = "${var.ec2keyname["${var.region}"]}"
   instance_profile_name = "${module.securities.role_nat_profile_name}"
