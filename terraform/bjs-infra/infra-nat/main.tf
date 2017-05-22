@@ -56,7 +56,7 @@ data "template_file" "nat-monitor-default" {
 
   vars {
     NAT_IDS = "${replace(join(" ", aws_instance.nat.*.id), "/\\s*${element(aws_instance.nat.*.id, count.index)}\\s*/", "")}"
-    NAT_RT_IDS = "${replace(join(" ", aws_route_table.rt-private-nat.*.id), "/\\s*${element(data.aws_route_table.selected.*.id, count.index)}\\s*/", "")}"
+    NAT_RT_IDS = "${replace(join(" ", data.aws_route_table.selected.*.id), "/\\s*${element(data.aws_route_table.selected.*.id, count.index)}\\s*/", "")}"
     My_RT_ID = "${element(data.aws_route_table.selected.*.id, count.index)}"
     EC2_REGION = "${var.aws_region}"
 
