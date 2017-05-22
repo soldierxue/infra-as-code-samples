@@ -4,8 +4,8 @@ data "aws_availability_zones" "all" {
 variable ec2_keyname {}
 variable sg_nat_id {}
 variable vpc_id {}
-variable private_subnets {}
-variable public_subnets {}
+variable private_subnets {type="list"}
+variable public_subnets {type="list"}
 variable instance_profile_name {}
 variable aws_region {}
 variable nat_monitor_num_pings {
