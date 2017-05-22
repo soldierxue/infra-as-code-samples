@@ -52,7 +52,7 @@ resource "aws_route_table_association" "ass-rt-private" {
 
 resource "null_resource" "generate-nat-monitor-sh" {
   provisioner "local-exec" {
-    command = "mkdir -p tmp && cp scripts/nat-monitor.sh tmp/;"
+    command = "mkdir -p tmp && cp ${path.module}/scripts/nat-monitor.sh tmp/;"
   }
 }
 

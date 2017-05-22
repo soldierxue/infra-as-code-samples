@@ -39,7 +39,7 @@ resource "aws_iam_role_policy" "nat_instance_policy" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "NAT_Takeover",
+      "Sid": "NATTakeover",
       "Effect": "Allow",
       "Action": [
 			"ec2:DescribeInstances",
