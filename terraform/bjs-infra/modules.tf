@@ -29,8 +29,8 @@ module "securities" {
 module "natgateways" {
   source          = "./infra-nat"
   vpc_id          = "${module.aws-vpc.vpc_id}"
-  public_subnets = ["${var.public_subnet1_id}","${var.public_subnet2_id}"]
-  private_subnets = ["${var.private_subnet1_id}","${var.private_subnet2_id}"]
+  public_subnets = ["${module.aws-vpc.public_subnet1_id}","${module.aws-vpc.public_subnet2_id}"]
+  private_subnets = ["${module.aws-vpc.private_subnet1_id}","${module.aws-vpc.private_subnet2_id}"]
   sg_nat_id ="${module.securities.sg_nat_id}"
   ec2_keyname = "${var.ec2keyname["${var.region}"]}"
   instance_profile_name = "${module.securities.role_nat_profile_name}"
