@@ -28,7 +28,7 @@ resource "aws_eip" "eip" {
 
 
 resource "aws_route" "nat" {
-  count = "${length(var.private_routes)}"
+  count = "${length(data.aws_availability_zones.all.names)}"
 
   route_table_id = "${element(var.private_routes, count.index)}"
   destination_cidr_block = "0.0.0.0/0"
