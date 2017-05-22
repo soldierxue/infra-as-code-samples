@@ -8,16 +8,16 @@ variable private_subnet1_id {}
 variable private_subnet2_id {}
 variable private_subnets {
    default = [
-     private_subnet1_id,
-     private_subnet2_id
+     "${var.private_subnet1_id}",
+     "${var.private_subnet2_id}"
    ]
 }
 variable public_subnet1_id {}
 variable public_subnet2_id {}
 variable public_subnets {
    default =[
-     public_subnet1_id,
-     public_subnet2_id
+     "${var.public_subnet1_id}",
+     "${var.public_subnet2_id}"
    ]
 }
 variable instance_profile_name {}
