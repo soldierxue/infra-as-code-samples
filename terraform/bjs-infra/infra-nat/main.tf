@@ -50,7 +50,7 @@ data "aws_route_table" "selected" {
 resource "aws_route" "nat" {
   count = "${length(data.aws_availability_zones.all.names)}"
 
-  route_table_id = "${element(aws_route_table.selected.*.id, count.index)}"
+  route_table_id = "${element(data.aws_route_table.selected.*.id, count.index)}"
   destination_cidr_block = "0.0.0.0/0"
   instance_id = "${element(aws_instance.nat.*.id, count.index)}"
 }
