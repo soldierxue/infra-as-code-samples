@@ -19,7 +19,7 @@ resource "aws_vpc_dhcp_options" "mydhcp" {
 }
 
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-    vpc_id = "${aws_vpc.id}"
+    vpc_id = "${aws_vpc.main.id}"
     dhcp_options_id = "${aws_vpc_dhcp_options.mydhcp.id}"
 }
 
