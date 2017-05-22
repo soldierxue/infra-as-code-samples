@@ -36,5 +36,3 @@ module "natgateways" {
   instance_profile_name = "${module.securities.role_nat_profile_name}"
   aws_region = "${var.region}"
 }
-
-
