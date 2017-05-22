@@ -55,12 +55,29 @@ module "public_subnet2" {
  * For private subnet, by default instances within it can't acess internat
  */
 
+# To Create a route table for ec2 in private subnet to access internet from IGW
+resource "aws_route_table" "private1" {
+  vpc_id = "${aws_vpc.main.id}"
+  tags {
+        Name = "terraform-route-private-1"
+        Owner = "Jason"
+  }  
+}
+
+resource "aws_route_table" "private2" {
+  vpc_id = "${aws_vpc.main.id}"
+  tags {
+        Name = "terraform-route-private-2"
+        Owner = "Jason"
+  }  
+}
+
 module "private_subnet2" {
   source            = "./subnet"
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${var.subnet_private1_cidr}"
   availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  route_tb_id ="${aws_vpc.main.default_route_table_id}"
+  route_tb_id ="${aws_route_table.private2.id}"
   subnet_name = "private_subnet2"
 }
 
@@ -69,6 +86,6 @@ module "private_subnet1" {
   vpc_id            = "${aws_vpc.main.id}"
   cidr_block_subnet = "${var.subnet_private2_cidr}"
   availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  route_tb_id ="${aws_vpc.main.default_route_table_id}"
+  route_tb_id ="${aws_route_table.private1.id}"
   subnet_name = "private_subnet1"
 }

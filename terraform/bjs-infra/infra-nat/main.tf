@@ -41,11 +41,18 @@ resource "aws_route_table" "rt-private-nat" {
     }
 }
 
-resource "aws_route_table_association" "ass-rt-private" {
-    count = "${length(data.aws_availability_zones.all.names)}"
-    
-    subnet_id = "${element(var.private_subnets, count.index)}"
-    route_table_id = "${element(aws_route_table.rt-private-nat.*.id,count.index)}"
+data "aws_route_table" "selected" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+  
+  subnet_id = "${element(var.private_subnets, count.index)}"
+}
+
+resource "aws_route" "nat" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+
+  route_table_id = "${element(aws_route_table.selected.*.id, count.index)}"
+  destination_cidr_block = "0.0.0.0/0"
+  instance_id = "${element(aws_instance.nat.*.id, count.index)}"
 }
 
 # Actions for nat moinitor script
@@ -120,7 +127,7 @@ TFEOF
   connection {
     user = "ec2-user"
     host = "${element(aws_eip.eip.*.public_ip, count.index)}"
-    ## private_key = "${file()}"
+    private_key = "${file(${path.module}/scripts/bjskey.pem)}"
   }
 
   depends_on = ["null_resource.generate-nat-monitor-sh", "aws_instance.nat","aws_route_table.rt-private-nat"]  
