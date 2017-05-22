@@ -6,6 +6,7 @@ variable sg_nat_id {}
 variable vpc_id {}
 variable private_subnets {type="list"}
 variable public_subnets {type="list"}
+variable private_routes {type="list"}
 variable instance_profile_name {}
 variable aws_region {}
 variable nat_monitor_num_pings {

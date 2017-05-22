@@ -24,3 +24,7 @@ output "subnet_private_ids" {
 output "subnet_public_ids" {
   value = "${module.public_subnet1.subnet_id},${module.public_subnet2.subnet_id}"
 }
+
+output "private_route_ids" {
+  value = ["${aws_route_table.private1.id},${aws_route_table.private2.id}"]
+}
