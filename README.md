@@ -72,6 +72,8 @@ resource "aws_instance" "example" {
 ```sh
 sudo git clone https://github.com/soldierxue/infra-as-code-samples
 cd ./infra-as-code-samples/terraform/bjs-infra
+sudo cp [PATH]/bjskey.pem ./infra-nat/scripts/
+sudo chmod 600 ./infra-nat/scripts/bjskey.pem
 sudo terraform get --update
 sudo terraform plan --var-file bjs.tfvars
 ```
