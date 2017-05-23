@@ -16,6 +16,15 @@ module "aws-vpc" {
   subnet_pub1_cidr = "${var.subnet_pub1_cidr}"
 }
 
+module "aws-vpc2" {
+  source          = "./infra-vpc2"
+  region          = "${var.region}"
+  base_cidr_block = "${var.base_cidr_block}"
+  ec2keyname = "${var.ec2keyname}"
+  private_subnets_cidr = ["${var.subnet_private1_cidr}","${var.subnet_private2_cidr}",]
+  public_subnets_cidr = ["${var.subnet_pub1_cidr}","${var.subnet_pub2_cidr}"]
+}
+
 # model: securities like Security Groups, IAM roles
 
 module "securities" {
