@@ -4,9 +4,9 @@ Samples for AWS infra as a code
 Currently, there are 3 categories:
 - **aws-cli**: frequent aws cli sample commands
 - **terraform**
--- [**bjs-infra**](#bjs-infra): terraform sample for AWS BJS(China) region
--- **devops-codex**: terraform sample for usage of AWS code pipeline,code deploy & code build (it depends on **ecs-infra**)
--- ecs-infra : terraform sample for AWS ECS global region
+  - [**bjs-infra**](#bjs-infra): terraform sample for AWS BJS(China) region
+  - **devops-codex**: terraform sample for usage of AWS code pipeline,code deploy & code build (it depends on **ecs-infra**)
+  - **ecs-infra** : terraform sample for AWS ECS global region
 
 
 bjs-infra
@@ -23,7 +23,7 @@ For BJS(China) region samples, we build a sample for managing BJS :
 NAT HA Architect
 -------------------
 
-[NAT HA Architect](images/bjs-nat.jpg)
+![NAT HA Architect](images/bjs-nat.jpg)
 
 - 假定我们有两个 NAT 实例，NAT#1 和 NAT#2；两个私有子网，private subnet#1和private subnet#2；两个子网路由route1 和route2，route1 关联到private subnet#1，route2关联到private subnet#2；
 - 初始化route1的外网路由，0.0.0.0/0 转发到 NAT#1；
