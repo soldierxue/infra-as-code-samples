@@ -5,10 +5,9 @@ variable "region" {
 data "aws_availability_zones" "all" {
 }
 variable "base_cidr_block" {}
-variable "subnet_pub1_cidr"{}
-variable "subnet_pub2_cidr"{}
-variable "subnet_private1_cidr"{}
-variable "subnet_private2_cidr"{}
+variable "private_subnets_cidr"{type="list"}
+variable "public_subnets_cidr"{type="list"}
+
 variable "ec2keyname"  {}
 
 variable "DnsZoneName" {
