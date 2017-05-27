@@ -75,7 +75,7 @@ resource "aws_codepipeline" "spring-ecs-demo" {
       input_artifacts  = ["spring-image"]
       version          = "1"
       configuration {
-        FunctionName = "UpdateECService"
+        FunctionName = "${aws_lambda_function.ecs-rollingupdate.function_name}"
       }
     }
   }   
