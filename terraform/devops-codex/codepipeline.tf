@@ -64,4 +64,19 @@ resource "aws_codepipeline" "spring-ecs-demo" {
       }
     }
   }  
+  stage {
+    name = "UpdateECSTask-RollingUpdate"
+
+    action {
+      name             = "spring-docker"
+      category         = "Invoke"
+      owner            = "AWS"
+      provider         = "Lambda"
+      input_artifacts  = ["spring-image"]
+      version          = "1"
+      configuration {
+        FunctionName = "UpdateECService"
+      }
+    }
+  }   
 }
