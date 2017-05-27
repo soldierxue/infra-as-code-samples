@@ -16,6 +16,10 @@ resource "aws_iam_role" "iam_for_lambda" {
   ]
 }
 EOF
+
+  policy = "${file("${path.module}/policies/lambda-policy.json")}"
+
+  lifecycle { create_before_destroy = true }
 }
 
 resource "aws_lambda_function" "ecs-rollingupdate" {
