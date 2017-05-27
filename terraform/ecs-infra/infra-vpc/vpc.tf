@@ -9,6 +9,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+
 # To Create a IGW binding with the above VPC
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
@@ -32,67 +33,55 @@ resource "aws_route_table" "public" {
   }  
 }
 
-# Definition for 4 Subnets: 2 public subnets/2 private subnets across two AZs
-module "public_subnet1" {
-  source            = "./subnet"
-  vpc_id            = "${aws_vpc.main.id}"
-  cidr_block_subnet = "${var.subnet_pub1_cidr}"
-  availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  route_tb_id = "${aws_route_table.public.id}"
-  subnet_name = "public_subnet1"
+resource "aws_subnet" "public" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+  
+  cidr_block = "${element(var.public_subnets_cidr, count.index)}"
+  vpc_id     = "${aws_vpc.main.id}"
+  availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
+  tags {
+        Name = "pub subnet #${count.index+1}"
+        Owner = "Jason"
+    }
 }
 
-module "public_subnet2" {
-  source            = "./subnet"
-  vpc_id            = "${aws_vpc.main.id}"
-  cidr_block_subnet = "${var.subnet_pub2_cidr}"
-  availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  route_tb_id = "${aws_route_table.public.id}"
-  subnet_name = "public_subnet2"
+resource "aws_route_table_association" "public" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+   
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
+  route_table_id = "${aws_route_table.public.id}"
 }
 
 /*
- * For private subnet, create a route with NAT gateway for ec2 instances to access the internet
+ * For private subnet, by default instances within it can't acess internat
  */
 
-# To Create a NAT Gateway
-
-resource "aws_eip" "fornat" {
-  vpc      = true 
-}
-
-resource "aws_nat_gateway" "natgw" {
-  allocation_id = "${aws_eip.fornat.id}"
-  subnet_id     = "${module.public_subnet1.subnet_id}"
-  depends_on = ["aws_internet_gateway.main","module.public_subnet1"] 
-}
-
+# To Create a route table for ec2 in private subnet to access internet from IGW
 resource "aws_route_table" "private" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+ 
   vpc_id = "${aws_vpc.main.id}"
-  route {
-        cidr_block =  "0.0.0.0/0"
-        gateway_id = "${aws_nat_gateway.natgw.id}"
-  }
   tags {
-        Name = "terraform-route-nat-public"
+        Name = "route-private #${count.index}"
         Owner = "Jason"
-  }    
+  }  
 }
 
-module "private_subnet2" {
-  source            = "./subnet"
-  vpc_id            = "${aws_vpc.main.id}"
-  cidr_block_subnet = "${var.subnet_private1_cidr}"
-  availability_zone = "${data.aws_availability_zones.all.names[0]}"
-  route_tb_id = "${aws_route_table.private.id}"
-  subnet_name = "private_subnet2"
+resource "aws_subnet" "private" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+  
+  cidr_block = "${element(var.private_subnets_cidr, count.index)}"
+  vpc_id     = "${aws_vpc.main.id}"
+  availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
+  tags {
+        Name = "private subnet #${count.index+1}"
+        Owner = "Jason"
+    }
 }
 
-module "private_subnet1" {
-  source            = "./subnet"
-  vpc_id            = "${aws_vpc.main.id}"
-  cidr_block_subnet = "${var.subnet_private2_cidr}"
-  availability_zone = "${data.aws_availability_zones.all.names[1]}"
-  route_tb_id = "${aws_route_table.private.id}"
-  subnet_name = "private_subnet1"
+resource "aws_route_table_association" "private" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+   
+  subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
+  route_table_id = "${element(aws_route_table.private.*.id,count.index)}"
 }
