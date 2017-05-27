@@ -92,7 +92,7 @@ sudo terraform apply --var-file bjs.tfvars -target module.securities
 sudo terraform apply --var-file bjs.tfvars -target module.natgateways
 ```
 
-通过 Terraform ：
+通过 Terraform 销毁整个 Terraform 管理的环境：
 
 ```sh
 sudo terraform destroy --var-file bjs.tfvars
