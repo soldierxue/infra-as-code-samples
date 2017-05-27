@@ -17,6 +17,12 @@ resource "aws_iam_role" "iam_for_lambda" {
 }
 EOF
 
+}
+
+resource "aws_iam_role_policy" "lambda_role_policy" {
+  name = "lambda_role_policy"
+  role = "${aws_iam_role.iam_for_lambda.name}"
+  
   policy = "${file("${path.module}/policies/lambda-policy.json")}"
 
   lifecycle { create_before_destroy = true }
