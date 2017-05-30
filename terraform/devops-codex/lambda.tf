@@ -29,8 +29,6 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
 }
 
 resource "aws_lambda_function" "ecs-rollingupdate" {
-
-
   filename         = "${path.module}/functions/UpdateECService.zip"
   function_name    = "ecs-rollingupdate"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
@@ -44,7 +42,7 @@ resource "aws_lambda_function" "ecs-rollingupdate" {
       ECS_REGION = "${var.ecs_region}"
       ECR_REGION = "${var.ecr_region}"
       ECR_REPO = "${var.ecr_rep}"
-      ECS_CLUSTER = "${var.ecr_cluster}"
+      ECS_CLUSTER = "${var.ecs_cluster}"
       SERVICE_NAME = "${var.ecs_service}"
       TASK_NAME = "${var.ecs_service}"
       ECS_TASK_CPU = "${var.ecs_task_cpu}"
