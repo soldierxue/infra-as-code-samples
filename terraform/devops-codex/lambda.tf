@@ -47,10 +47,10 @@ resource "aws_lambda_function" "ecs-rollingupdate" {
       ECS_CLUSTER = "${var.ecr_cluster}"
       SERVICE_NAME = "${var.ecs_service}"
       TASK_NAME = "${var.ecs_service}"
-      ECS_TASK_CPU = ${var.ecs_task_cpu}
-      ECS_TASK_MEMORY = ${var.ecs_task_memory}
-      ECS_TASK_PORT = ${var.ecs_task_port}
-      DESIRED_COUNT = ${var.ecs_task_desiredcount}
+      ECS_TASK_CPU = "${var.ecs_task_cpu}"
+      ECS_TASK_MEMORY = "${var.ecs_task_memory}"
+      ECS_TASK_PORT = "${var.ecs_task_port}"
+      DESIRED_COUNT = "${var.ecs_task_desiredcount}"
       
     }
   }
