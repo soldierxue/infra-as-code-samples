@@ -1,3 +1,6 @@
+data "aws_billing_service_account" "main" {}
+data "aws_canonical_user_id" "current" {}
+
 resource "aws_codebuild_project" "spring-ecs-jar" {  
   name         = "spring-jar"
   description  = "builds spring-ecs jar file"

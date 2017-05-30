@@ -29,10 +29,29 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
 }
 
 resource "aws_lambda_function" "ecs-rollingupdate" {
-  filename         = "${path.module}/functions/UpdateECService-rollingupdate.zip"
+
+
+  filename         = "${path.module}/functions/UpdateECService.zip"
   function_name    = "ecs-rollingupdate"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
   handler          = "lambda_function.lambda_handler"
   source_code_hash = "${base64sha256(file("${path.module}/functions/UpdateECService-rollingupdate.zip"))}"
   runtime          = "python3.6"
+  
+  
+  environment {
+    variables = {
+      ECS_REGION = "${var.ecs_region}"
+      ECR_REGION = "${var.ecr_region}"
+      ECR_REPO = "${var.ecr_rep}"
+      ECS_CLUSTER = "${var.ecr_cluster}"
+      SERVICE_NAME = "${var.ecs_service}"
+      TASK_NAME = "${var.ecs_service}"
+      ECS_TASK_CPU = ${var.ecs_task_cpu}
+      ECS_TASK_MEMORY = ${var.ecs_task_memory}
+      ECS_TASK_PORT = ${var.ecs_task_port}
+      DESIRED_COUNT = ${var.ecs_task_desiredcount}
+      
+    }
+  }
 }
