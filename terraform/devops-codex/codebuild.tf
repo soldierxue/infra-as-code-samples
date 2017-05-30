@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 resource "aws_codebuild_project" "spring-ecs-jar" {  
   name         = "spring-jar"
   description  = "builds spring-ecs jar file"
@@ -46,7 +44,7 @@ resource "aws_codebuild_project" "spring-docker" {
     }
     environment_variable {
       "name"  = "ECR_REPO_URI"
-      "value" = "${var.aws_accountid}.dkr.ecr.${var.ecr_region}.amazonaws.com/${var.ecr_repo}"
+      "value" = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.ecr_region}.amazonaws.com/${var.ecr_repo}"
     }    
   }
 

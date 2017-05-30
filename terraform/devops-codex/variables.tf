@@ -38,3 +38,5 @@ variable ecr_repo{
 variable codex_region{
    default = "us-east-1"
 }
+
+data "aws_caller_identity" "current" {}
