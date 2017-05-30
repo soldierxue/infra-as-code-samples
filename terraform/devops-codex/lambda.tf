@@ -42,7 +42,7 @@ resource "aws_lambda_function" "ecs-rollingupdate" {
     variables = {
       ECS_REGION = "${var.ecs_region}"
       ECR_REGION = "${var.ecr_region}"
-      ECR_REPO = "${var.ecr_rep}"
+      ECR_REPO = "${var.ecr_repo}"
       ECS_CLUSTER = "${var.ecs_cluster}"
       SERVICE_NAME = "${var.ecs_service}"
       TASK_NAME = "${var.ecs_service}"
