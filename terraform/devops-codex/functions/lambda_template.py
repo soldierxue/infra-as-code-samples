@@ -20,8 +20,6 @@ ECS_TASK_MEMORY = int(os.environ.get("ECS_TASK_MEMORY"))
 ECS_TASK_PORT = int(os.environ.get("ECS_TASK_PORT"))
 DESIRED_COUNT = int(os.environ.get("DESIRED_COUNT"))
 
-ACCOUNT_ID = context.invoked_function_arn.split(":")[4]
-
 ecs_client = boto3.client('ecs',region_name=ECS_REGION)
 code_pipeline = boto3.client('codepipeline')
 
@@ -47,13 +45,13 @@ def setup_s3_client(job_data):
         aws_session_token=session_token)
     return session.client('s3', config=botocore.client.Config(signature_version='s3v4'))
 
-def updateECService(imageTag):
+def updateECService(imageTag,accountId):
     response = ecs_client.register_task_definition(
        family=TASK_NAME,
        containerDefinitions=[
           {
             "name": TASK_NAME,
-            "image": ACCOUNT_ID+".dkr.ecr."+ECR_REGION+".amazonaws.com/jasonreg:"+imageTag,
+            "image": accountId+".dkr.ecr."+ECR_REGION+".amazonaws.com/jasonreg:"+imageTag,
             "cpu": ECS_TASK_CPU,
             "memory": ECS_TASK_MEMORY,
             "essential": True,
@@ -120,6 +118,7 @@ def lambda_handler(event, context):
         event: The event passed from code pipeline
     """    
     print("Received event: " + json.dumps(event, indent=2))
+    ACCOUNT_ID = context.invoked_function_arn.split(":")[4]
     
     try:
         # Extract the Job ID
@@ -147,7 +146,7 @@ def lambda_handler(event, context):
                     
             print("Downloaded Image Tab  : " + json.dumps(imageTagData, indent=2))
             imageTag = imageTagData['tag']
-            updateECService(imageTag)
+            updateECService(imageTag,ACCOUNT_ID)
             put_job_success(job_id, 'Update ecs serivce using the new docker image tag'+imageTag)
             
     except Exception as e:
