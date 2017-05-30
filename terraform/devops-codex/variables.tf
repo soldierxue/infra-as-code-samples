@@ -27,9 +27,24 @@ variable ecs_task_memory{
 variable ecs_task_port{
    default = 8080
 }
+
 variable ecs_task_desiredcount{
    default = 4
 }
+variable deployment_policy {
+   type = "map"
+   default = {
+      "InPlaceDoubling" = {
+          "maximumPercent" = 200
+          "minimumHealthyPercent" = 100
+      }
+      "InPlaceRolling" = {
+          "maximumPercent" = 100
+          "minimumHealthyPercent" = 50
+      }
+   }
+}
+
 variable ecr_repo{
   default = "jasonreg"
 }
