@@ -19,6 +19,8 @@ ECS_TASK_CPU = int(os.environ.get("ECS_TASK_CPU"))
 ECS_TASK_MEMORY = int(os.environ.get("ECS_TASK_MEMORY"))
 ECS_TASK_PORT = int(os.environ.get("ECS_TASK_PORT"))
 DESIRED_COUNT = int(os.environ.get("DESIRED_COUNT"))
+MAX_HEALTHY_PERCENT = int(os.environ.get("MAX_HEALTHY_PERCENT"))
+MIN_HEALTH_PERCENT = int(os.environ.get("MIN_HEALTH_PERCENT"))
 
 ecs_client = boto3.client('ecs',region_name=ECS_REGION)
 code_pipeline = boto3.client('codepipeline')
@@ -79,7 +81,11 @@ def updateECService(imageTag,accountId):
         cluster=ECS_CLUSTER,
         service=SERVICE_NAME,
         desiredCount=DESIRED_COUNT,
-        taskDefinition=TASK_NAME+':'+str(revision)
+        taskDefinition=TASK_NAME+':'+str(revision),
+        deploymentConfiguration={
+          'maximumPercent': MAX_HEALTHY_PERCENT,
+          'minimumHealthyPercent': MIN_HEALTH_PERCENT
+        }
     )
 
 def put_job_success(job, message):

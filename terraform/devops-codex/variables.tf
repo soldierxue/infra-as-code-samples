@@ -31,6 +31,23 @@ variable ecs_task_port{
 variable ecs_task_desiredcount{
    default = 4
 }
+
+
+variable ecr_repo{
+  default = "jasonreg"
+}
+
+
+variable codex_region{
+   default = "us-east-1"
+}
+
+data "aws_caller_identity" "current" {}
+
+variable deployment_option {
+   default = "InPlaceDoubling"
+}
+
 variable deployment_policy {
    type = "map"
    default = {
@@ -44,14 +61,3 @@ variable deployment_policy {
       }
    }
 }
-
-variable ecr_repo{
-  default = "jasonreg"
-}
-
-
-variable codex_region{
-   default = "us-east-1"
-}
-
-data "aws_caller_identity" "current" {}
