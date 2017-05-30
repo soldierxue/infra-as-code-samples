@@ -51,7 +51,7 @@ resource "aws_lambda_function" "ecs-rollingupdate" {
       ECS_TASK_PORT = "${var.ecs_task_port}"
       DESIRED_COUNT = "${var.ecs_task_desiredcount}"
       MAX_HEALTHY_PERCENT ="${var.deployment_policy[var.deployment_option]}['maximumPercent']"
-      MIN_HEALTH_PERCENT = "${var.deployment_policy[var.deployment_option]}"["minimumHealthyPercent"]
+      MIN_HEALTH_PERCENT = "${var.deployment_policy[var.deployment_option]}['minimumHealthyPercent']"
     }
   }
 }
