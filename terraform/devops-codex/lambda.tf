@@ -33,8 +33,8 @@ resource "aws_lambda_function" "ecs-rollingupdate" {
   function_name    = "ecs-rollingupdate"
   description = "Function for ECS service updates by policy:rolling, canary,etc"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
-  handler          = "lambda_function.lambda_handler"
-  source_code_hash = "${base64sha256(file("${path.module}/functions/UpdateECService-rollingupdate.zip"))}"
+  handler          = "lambda_template.lambda_handler"
+  source_code_hash = "${base64sha256(file("${path.module}/functions/UpdateECService.zip"))}"
   runtime          = "python3.6"
   
   

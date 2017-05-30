@@ -5,6 +5,7 @@ provider "aws" {
 variable ecr_region{
    default = "us-east-1"
 }
+
 variable ecr_rep{
    default = "jasonreg"
 }
@@ -27,7 +28,7 @@ variable ecs_task_port{
    default = 8080
 }
 variable ecs_task_desiredcount{
-   default = 8080
+   default = 4
 }
 variable ecr_repo{
   default = "jasonreg"
@@ -37,6 +38,3 @@ variable ecr_repo{
 variable codex_region{
    default = "us-east-1"
 }
-
-
-variable aws_accountid {}
