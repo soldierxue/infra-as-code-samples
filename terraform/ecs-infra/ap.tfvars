@@ -17,7 +17,7 @@ ec2keyname= {
 
 cluster_name ="ecs-jason-demo"
 ecs_instance_type = "t2.micro"
-asg_min = "1"
+asg_min = "2"
 asg_max = "4"
 
 # Spring Hello World ECS Demo
