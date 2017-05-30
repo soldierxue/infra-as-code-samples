@@ -51,13 +51,9 @@ variable deployment_option {
 variable deployment_policy {
    type = "map"
    default = {
-      "InPlaceDoubling" = {
-          "maximumPercent" = 200
-          "minimumHealthyPercent" = 100
-      }
-      "InPlaceRolling" = {
-          "maximumPercent" = 100
-          "minimumHealthyPercent" = 50
-      }
+      maximumPercent.InPlaceDoubling = 200
+      minimumHealthyPercent.InPlaceDoubling = 100
+      maximumPercent.InPlaceRolling = 100
+      minimumHealthyPercent.InPlaceRolling = 50
    }
 }
