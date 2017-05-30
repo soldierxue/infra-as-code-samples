@@ -2,7 +2,7 @@
 deployment_option="InPlaceDoubling"
 
 ecr_region ="us-east-1"
-ecr_rep = "jasonreg"
+ecr_repo = "jasonreg"
 ecs_region = "ap-northeast-1"
 ecs_cluster ="ecs-jason-demo"
 ecs_service="spring-hw-demo"

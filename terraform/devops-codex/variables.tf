@@ -6,7 +6,7 @@ variable ecr_region{
    default = "us-east-1"
 }
 
-variable ecr_rep{
+variable ecr_repo{
    default = "jasonreg"
 }
 variable ecs_region{
