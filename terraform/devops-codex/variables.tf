@@ -32,12 +32,6 @@ variable ecs_task_desiredcount{
    default = 4
 }
 
-
-variable ecr_repo{
-  default = "jasonreg"
-}
-
-
 variable codex_region{
    default = "us-east-1"
 }
