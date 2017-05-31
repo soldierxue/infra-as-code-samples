@@ -63,12 +63,61 @@ resource "aws_codepipeline" "spring-ecs-demo" {
         ProjectName = "${aws_codebuild_project.spring-docker.name}"
       }
     }
-  }  
+  }
   stage {
-    name = "UpdateECSTask-RollingUpdate"
+    count ="${lookup(var.deployment_policy,"countInplace.${var.deployment_option}")}"
+    
+    name = "InplaceUpdateECSTask"
 
     action {
-      name             = "spring-docker"
+      name             = "InplaceUpdate"
+      category         = "Invoke"
+      owner            = "AWS"
+      provider         = "Lambda"
+      input_artifacts  = ["spring-image"]
+      version          = "1"
+      configuration {
+        FunctionName = "${aws_lambda_function.ecs-rollingupdate.function_name}"
+      }
+    }    
+  }  
+  stage {
+    count ="${lookup(var.deployment_policy,"countCanary.${var.deployment_option}")}"
+    
+    name = "CanaryTestDeploy"
+
+    action {
+      name             = "CanaryTestDeploy"
+      category         = "Invoke"
+      owner            = "AWS"
+      provider         = "Lambda"
+      input_artifacts  = ["spring-image"]
+      version          = "1"
+      configuration {
+        FunctionName = "${aws_lambda_function.ecs-rollingupdate.function_name}"
+      }
+    } 
+  } 
+  stage {
+    count ="${lookup(var.deployment_policy,"countCanary.${var.deployment_option}")}"
+    
+    name = "CanaryApproval"
+
+    action {
+      name             = "GotoProductionApproval"
+      category         = "Approval"
+      owner            = "AWS"
+      provider         = "Manual"
+      version          = "1"
+    } 
+  }  
+  stage {
+    count ="${lookup(var.deployment_policy,"countCanary.${var.deployment_option}")}"
+    
+    name = "CanaryOnProductionDeploy"
+
+    action {
+      name             = "CanaryOnProductionDeploy"
       category         = "Invoke"
       owner            = "AWS"
       provider         = "Lambda"
@@ -78,5 +127,17 @@ resource "aws_codepipeline" "spring-ecs-demo" {
         FunctionName = "${aws_lambda_function.ecs-rollingupdate.function_name}"
       }
     }
-  }   
+    action {
+      name             = "RemoveCanaryService"
+      category         = "Invoke"
+      owner            = "AWS"
+      provider         = "Lambda"
+      input_artifacts  = ["spring-image"]
+      version          = "1"
+      configuration {
+        FunctionName = "${aws_lambda_function.ecs-rollingupdate.function_name}"
+      }
+    }     
+  }
+ 
 }

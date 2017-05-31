@@ -49,5 +49,12 @@ variable deployment_policy {
       minimumHealthyPercent.InPlaceDoubling = 100
       maximumPercent.InPlaceRolling = 100
       minimumHealthyPercent.InPlaceRolling = 50
+      countInplace.InPlaceDoubling = 1
+      countInplace.InPlaceRolling = 1
+      countInplace.Canary = 0
+      countCanary.InPlaceDoubling = 0
+      countCanary.InPlaceRolling = 0
+      countCanary.Canary = 1
+      
    }
 }
