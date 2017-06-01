@@ -1,4 +1,4 @@
-## Options for ECS Deployment: InPlaceDoubling|InPlaceRolling
+## Options for ECS Deployment: InPlaceDoubling|InPlaceRolling|Canary
 deployment_option="InPlaceDoubling"
 
 ecr_region ="us-east-1"
