@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "spring-pipeline" {
-  bucket = "devops-jason"
+  bucket = "devops-jason-${var.name}"
   acl    = "private"
 }
 
