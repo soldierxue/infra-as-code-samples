@@ -2,6 +2,9 @@ variable name{
    default = "spring-ecs-demo"
 }
 
+variable codecommit_repo {
+   default = "cctest"
+}
 variable ecr_region{
    default = "us-east-1"
 }

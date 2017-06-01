@@ -26,7 +26,7 @@ resource "aws_codepipeline" "spring-ecs-demo-inplaceupdate" {
       output_artifacts = ["spring-source"]
 
       configuration {
-        RepositoryName   = "jasoncc"
+        RepositoryName   = "${var.codecommit_repo}"
         BranchName     = "master"
       }
     }
@@ -108,7 +108,7 @@ resource "aws_codepipeline" "spring-ecs-demo-canary" {
       output_artifacts = ["spring-source"]
 
       configuration {
-        RepositoryName   = "jasoncc"
+        RepositoryName   = "${var.codecommit_repo}"
         BranchName     = "master"
       }
     }
