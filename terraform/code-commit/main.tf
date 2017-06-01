@@ -1,6 +1,19 @@
+/**
+ * The code commit module aims to create a code commit repo when needed
+ *
+ * Usage:
+ *
+ *    module "m_code_commit" {
+ *      source      = "github.com/soldierxue/infra-as-code-samples/terraform/code-commit"
+ *      name        = "my-repo"
+ *    }
+ *
+ */
+
 variable name {
    default ="cm-repo"
 }
+
 
 resource "aws_codecommit_repository" "cm-repo" {
   repository_name = "${var.name}"
