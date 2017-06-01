@@ -1,5 +1,5 @@
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
+  name = "iam_for_lambda-${var.name_codepipeline_prefix}"
 
   assume_role_policy = <<EOF
 {
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "lambda_role_policy" {
-  name = "lambda_role_policy"
+  name = "lambda_role_policy-${var.name_codepipeline_prefix}"
   role = "${aws_iam_role.iam_for_lambda.name}"
   
   policy = "${file("${path.module}/policies/lambda-policy.json")}"
