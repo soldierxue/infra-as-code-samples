@@ -1,8 +1,4 @@
-provider "aws" {
-  region = var.codex_region
-}
-
-variable name_codepipeline_prefix{
+variable name{
    default = "spring-ecs-demo-"
 }
 
