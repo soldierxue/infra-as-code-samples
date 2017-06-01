@@ -1,5 +1,5 @@
 variable name{
-   default = "spring-ecs-demo-"
+   default = "spring-ecs-demo"
 }
 
 variable ecr_region{
