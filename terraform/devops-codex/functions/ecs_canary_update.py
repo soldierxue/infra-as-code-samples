@@ -86,7 +86,7 @@ def createCancaryService(imageTag,desiredCount):
          cancarySrvName
        ]
     )
-    if len(cancarySrvRes['services']) > 0 then:
+    if len(cancarySrvRes['services']) > 0 :
         # update cancary service
         srvUpdatResponse = ecs_client.update_service(
             cluster=ECS_CLUSTER,
