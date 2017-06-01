@@ -20,7 +20,7 @@ FAMILY_NAME = os.environ.get("FAMILY_NAME")
 DESIRED_COUNT = int(os.environ.get("DESIRED_COUNT"))
 MAX_HEALTHY_PERCENT = int(os.environ.get("MAX_HEALTHY_PERCENT"))
 MIN_HEALTH_PERCENT = int(os.environ.get("MIN_HEALTH_PERCENT"))
-CANCARY_SERVICE_SUFFIX = os.environ.get("CANCARY_SERVICE_SUFFIX")
+
 
 ecs_client = boto3.client('ecs',region_name=ECS_REGION)
 code_pipeline = boto3.client('codepipeline')
