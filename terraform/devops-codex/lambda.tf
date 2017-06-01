@@ -42,13 +42,9 @@ resource "aws_lambda_function" "ecs-inplace-update" {
     variables = {
       ECS_REGION = "${var.ecs_region}"
       ECR_REGION = "${var.ecr_region}"
-      ECR_REPO = "${var.ecr_repo}"
       ECS_CLUSTER = "${var.ecs_cluster}"
       SERVICE_NAME = "${var.ecs_service}"
       FAMILY_NAME = "${var.ecs_family_name}"
-      ECS_TASK_CPU = "${var.ecs_task_cpu}"
-      ECS_TASK_MEMORY = "${var.ecs_task_memory}"
-      ECS_TASK_PORT = "${var.ecs_task_port}"
       DESIRED_COUNT = "${var.ecs_task_desiredcount}"
       MAX_HEALTHY_PERCENT ="${lookup(var.deployment_policy,"maximumPercent.${var.deployment_option}")}"
       MIN_HEALTH_PERCENT = "${lookup(var.deployment_policy,"minimumHealthyPercent.${var.deployment_option}")}"
