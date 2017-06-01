@@ -29,7 +29,7 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
 }
 
 resource "aws_lambda_function" "ecs-inplace-update" {
-  filename         = "${path.module}/functions/UpdateECService.zip"
+  filename         = "${path.module}/functions/ecs_inplace_update.py.zip"
   function_name    = "ecs-inplace-update"
   description = "Function for ECS service updates by policy:rolling, canary,etc"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
