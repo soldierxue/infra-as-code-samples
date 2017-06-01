@@ -39,6 +39,7 @@ resource "aws_lambda_function" "ecs-inplace-update" {
   source_code_hash = "${base64sha256(file("${path.module}/functions/ecs_inplace_update.py.zip"))}"
   runtime          = "python3.6"
   publish = true 
+  timeout = 180
   
   environment {
     variables = {
@@ -63,6 +64,7 @@ resource "aws_lambda_function" "ecs-canary-update" {
   source_code_hash = "${base64sha256(file("${path.module}/functions/ecs_canary_update.py.zip"))}"
   runtime          = "python3.6"
   publish = true 
+  timeout = 180
   
   environment {
     variables = {
