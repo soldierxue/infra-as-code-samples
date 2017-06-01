@@ -18,6 +18,9 @@ variable ecs_cluster{
 variable ecs_service{
    default = "spring-hw-demo"
 }
+variable ecs_family_name{
+   default = "spring-hw-demo"
+}
 variable ecs_task_cpu{
    default = 500
 }
