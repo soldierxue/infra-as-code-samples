@@ -160,7 +160,8 @@ resource "aws_codepipeline" "spring-ecs-demo-canary" {
       input_artifacts  = ["spring-image"]
       version          = "1"
       configuration {
-        FunctionName = "${aws_lambda_function.ecs-inplace-update.function_name}"
+        FunctionName = "${aws_lambda_function.ecs-canary-update.function_name}"
+        UserParameters = "1"
       }
     } 
   } 
@@ -197,7 +198,8 @@ resource "aws_codepipeline" "spring-ecs-demo-canary" {
       input_artifacts  = ["spring-image"]
       version          = "1"
       configuration {
-        FunctionName = "${aws_lambda_function.ecs-inplace-update.function_name}"
+        FunctionName = "${aws_lambda_function.ecs-canary-update.function_name}"
+        UserParameters = "0"
       }
     }     
   }

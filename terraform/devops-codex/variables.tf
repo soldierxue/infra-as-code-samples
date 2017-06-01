@@ -6,9 +6,6 @@ variable ecr_region{
    default = "us-east-1"
 }
 
-variable ecr_repo{
-   default = "jasonreg"
-}
 variable ecs_region{
    default = "ap-northeast-1"
 }
@@ -41,6 +38,7 @@ variable codex_region{
 
 data "aws_caller_identity" "current" {}
 
+# Options for Deployement policy: "InPlaceDoubling"|"InPlaceRolling"|"Canary"
 variable deployment_option {
    default = "InPlaceDoubling"
 }
@@ -52,12 +50,16 @@ variable deployment_policy {
       minimumHealthyPercent.InPlaceDoubling = 100
       maximumPercent.InPlaceRolling = 100
       minimumHealthyPercent.InPlaceRolling = 50
+      maximumPercent.Canary = 200
+      minimumHealthyPercent.Canary = 100      
       countInplace.InPlaceDoubling = 1
       countInplace.InPlaceRolling = 1
       countInplace.Canary = 0
       countCanary.InPlaceDoubling = 0
       countCanary.InPlaceRolling = 0
       countCanary.Canary = 1
-      
+      suffix.Canary = "_Canary"
+      suffix.InPlaceRolling =""
+      suffix.InPlaceDoubling = ""
    }
 }

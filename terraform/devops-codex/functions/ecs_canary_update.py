@@ -11,14 +11,15 @@ import os
 
 ECS_REGION = os.environ.get("ECS_REGION")
 ECR_REGION = os.environ.get("ECR_REGION")
-ECR_REPO = os.environ.get("ECR_REPO")
+#ECR_REPO = os.environ.get("ECR_REPO")
 ECS_CLUSTER = os.environ.get("ECS_CLUSTER")
 SERVICE_NAME = os.environ.get("SERVICE_NAME")
-TASK_NAME = os.environ.get("TASK_NAME")
-ECS_TASK_CPU = int(os.environ.get("ECS_TASK_CPU"))
-ECS_TASK_MEMORY = int(os.environ.get("ECS_TASK_MEMORY"))
-ECS_TASK_PORT = int(os.environ.get("ECS_TASK_PORT"))
-DESIRED_COUNT = int(os.environ.get("DESIRED_COUNT"))
+FAMILY_NAME = os.environ.get("FAMILY_NAME")
+CANARY_SUFFIX = os.environ.get("CANARY_SUFFIX")
+#ECS_TASK_CPU = int(os.environ.get("ECS_TASK_CPU"))
+#ECS_TASK_MEMORY = int(os.environ.get("ECS_TASK_MEMORY"))
+#ECS_TASK_PORT = int(os.environ.get("ECS_TASK_PORT"))
+#DESIRED_COUNT = int(os.environ.get("DESIRED_COUNT"))
 MAX_HEALTHY_PERCENT = int(os.environ.get("MAX_HEALTHY_PERCENT"))
 MIN_HEALTH_PERCENT = int(os.environ.get("MIN_HEALTH_PERCENT"))
 
@@ -47,47 +48,91 @@ def setup_s3_client(job_data):
         aws_session_token=session_token)
     return session.client('s3', config=botocore.client.Config(signature_version='s3v4'))
 
-def updateECService(imageTag,accountId):
+def createCancaryService(imageTag,desiredCount):
+    # Get the latest task definition
+    response = ecs_client.describe_task_definition(
+        taskDefinition=FAMILY_NAME
+    )
+    familyName = response['taskDefinition']['family']
+    canaryFamilyName = familyName+CANARY_SUFFIX
+    revision = response['taskDefinition']['revision']
+    task_def = response['taskDefinition']['containerDefinitions'][0]
+    preImage = task_def['image']
+    tagStart = preImage.find(':')+1
+    tagEnd = len(preImage)
+    tag = preImage[tagStart:tagEnd]
+    imageRepo = preImage[:tagStart]
+    print("Image Old Tag:"+tag+",Image New Tag:"+imageTag)
+    print("imageRepo:"+imageRepo)
+    task_def['image']=imageRepo+imageTag
+    
+    
+    
     response = ecs_client.register_task_definition(
-       family=TASK_NAME,
+       family=canaryFamilyName,
        containerDefinitions=[
-          {
-            "name": TASK_NAME,
-            "image": accountId+".dkr.ecr."+ECR_REGION+".amazonaws.com/jasonreg:"+imageTag,
-            "cpu": ECS_TASK_CPU,
-            "memory": ECS_TASK_MEMORY,
-            "essential": True,
-            "portMappings": [
-              {
-                "containerPort": ECS_TASK_PORT
-              }
-            ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": TASK_NAME,
-                    "awslogs-region": ECS_REGION
-                }
-            },
-            "environment": [
-              { "name": "SERVICE_NAME", "value": SERVICE_NAME}
-            ]
-          }      
+          task_def     
        ]
     ) 
-    print("Task New Response: " + json.dumps(response, indent=2))
-    revision = response['taskDefinition']['revision']
-    srvUpdatResponse = ecs_client.update_service(
-        cluster=ECS_CLUSTER,
-        service=SERVICE_NAME,
-        desiredCount=DESIRED_COUNT,
-        taskDefinition=TASK_NAME+':'+str(revision),
-        deploymentConfiguration={
-          'maximumPercent': MAX_HEALTHY_PERCENT,
-          'minimumHealthyPercent': MIN_HEALTH_PERCENT
-        }
+    print("Register Task Response: " + json.dumps(response, indent=2))
+    revisionNew = response['taskDefinition']['revision']
+    # create a canary service based on current running service
+    
+    ## Check Whether or not the canary service is exist or not
+    cancarySrvName = SERVICE_NAME+CANARY_SUFFIX
+    cancarySrvRes = ecs_client.describe_services(
+       cluster=ECS_CLUSTER,
+       services=[
+         cancarySrvName
+       ]
     )
+    if len(cancarySrvRes['services']) > 0 then:
+        # update cancary service
+        srvUpdatResponse = ecs_client.update_service(
+            cluster=ECS_CLUSTER,
+            service=cancarySrvName,
+            desiredCount=desiredCount,
+            taskDefinition=canaryFamilyName+':'+str(revisionNew),
+            deploymentConfiguration={
+              'maximumPercent': MAX_HEALTHY_PERCENT,
+              'minimumHealthyPercent': MIN_HEALTH_PERCENT
+            }
+        )
+    else:    
+        # Create the cancary service
+        srvRes = ecs_client.describe_services(
+           cluster=ECS_CLUSTER,
+           services=[
+             SERVICE_NAME
+           ]
+         )
 
+        curSrv = srvRes['services'][0]
+        cluster = curSrv['clusterArn']
+        lb = curSrv['loadBalancers'][0]
+        #lb['containerName']=cancarySrvName
+        newTaskDefName = canaryFamilyName+":"+str(revisionNew)
+        role = curSrv['roleArn']
+        placementConstraints = curSrv['placementConstraints']
+        placementStrategy = curSrv['placementStrategy']
+
+        canaryCreateRes = ecs_client.create_service(
+            cluster=cluster,
+            serviceName=cancarySrvName,
+            taskDefinition=newTaskDefName,
+            loadBalancers=[
+                lb
+            ],
+            desiredCount=desiredCount,
+            role=role,
+            deploymentConfiguration={
+                'maximumPercent': MAX_HEALTHY_PERCENT,
+                'minimumHealthyPercent': MIN_HEALTH_PERCENT
+            },
+            placementConstraints=placementConstraints,
+            placementStrategy=placementStrategy
+        )        
+    
 def put_job_success(job, message):
     """Notify CodePipeline of a successful job
     
@@ -125,7 +170,8 @@ def lambda_handler(event, context):
     """    
     print("Received event: " + json.dumps(event, indent=2))
     ACCOUNT_ID = context.invoked_function_arn.split(":")[4]
-    
+    # Get The Canary task desired count from user parameter
+    var desiredCount = int(event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters); 
     try:
         # Extract the Job ID
         job_id = event['CodePipeline.job']['id']
@@ -152,7 +198,7 @@ def lambda_handler(event, context):
                     
             print("Downloaded Image Tab  : " + json.dumps(imageTagData, indent=2))
             imageTag = imageTagData['tag']
-            updateECService(imageTag,ACCOUNT_ID)
+            createCancaryService(imageTag,desiredCount)
             put_job_success(job_id, 'Update ecs serivce using the new docker image tag'+imageTag)
             
     except Exception as e:
