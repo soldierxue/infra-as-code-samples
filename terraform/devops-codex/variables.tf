@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.codex_region
 }
 
 variable name_codepipeline_prefix{

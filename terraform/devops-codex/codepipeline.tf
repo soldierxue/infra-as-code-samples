@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "spring-pipeline" {
 resource "aws_codepipeline" "spring-ecs-demo-inplaceupdate" {  
   count ="${lookup(var.deployment_policy,"countInplace.${var.deployment_option}")}"
  
-  name     = "${var.name_codepipeline_prefix}-inplaceupdate"
+  name     = "${var.name}-inplaceupdate"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
   artifact_store {
@@ -88,7 +88,7 @@ resource "aws_codepipeline" "spring-ecs-demo-inplaceupdate" {
 resource "aws_codepipeline" "spring-ecs-demo-canary" {  
   count ="${lookup(var.deployment_policy,"countCanary.${var.deployment_option}")}"
  
-  name     = "${var.name_codepipeline_prefix}-canary"
+  name     = "${var.name}-canary"
   role_arn = "${aws_iam_role.codepipeline_role.arn}"
 
   artifact_store {

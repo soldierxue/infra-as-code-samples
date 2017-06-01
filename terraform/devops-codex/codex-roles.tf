@@ -2,7 +2,7 @@
 
 # An IAM role for codebuild service access
 resource "aws_iam_role" "codebuild_role" {
-  name = "codebuild-role-${var.name_codepipeline_prefix}"
+  name = "codebuild-role-${var.name}"
   
   assume_role_policy = <<HEREDOC
 {
@@ -23,7 +23,7 @@ resource "aws_iam_role" "codebuild_role" {
 }
 
 resource "aws_iam_role_policy" "codebuild_role_policy" {
-  name = "codebuild_role_policy-${var.name_codepipeline_prefix}"
+  name = "codebuild_role_policy-${var.name}"
   role = "${aws_iam_role.codebuild_role.name}"
   policy = "${file("${path.module}/policies/codebuild-policy.json")}"
 
@@ -34,7 +34,7 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
 
 # An IAM role for codedeploy service access
 resource "aws_iam_role" "codedeploy_role" {
-  name = "codedeploy-role-${var.name_codepipeline_prefix}"
+  name = "codedeploy-role-${var.name}"
   
   assume_role_policy = <<HEREDOC
 {
@@ -64,7 +64,7 @@ resource "aws_iam_role_policy_attachment" "codedeploy_role_policy" {
 
 # An IAM role for codebuild service access
 resource "aws_iam_role" "codepipeline_role" {
-  name = "codepipeline-role-${var.name_codepipeline_prefix}"
+  name = "codepipeline-role-${var.name}"
   
   assume_role_policy = <<HEREDOC
 {
@@ -85,7 +85,7 @@ resource "aws_iam_role" "codepipeline_role" {
 }
 
 resource "aws_iam_role_policy" "codepipeline_role_policy" {
-  name = "codepipeline_role_policy-${var.name_codepipeline_prefix}"
+  name = "codepipeline_role_policy-${var.name}"
   role = "${aws_iam_role.codepipeline_role.name}"
   policy = "${file("${path.module}/policies/codepipeline-policy.json")}"
 
