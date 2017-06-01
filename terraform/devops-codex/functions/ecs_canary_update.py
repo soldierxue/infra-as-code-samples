@@ -170,14 +170,17 @@ def lambda_handler(event, context):
     """    
     print("Received event: " + json.dumps(event, indent=2))
     ACCOUNT_ID = context.invoked_function_arn.split(":")[4]
-    # Get The Canary task desired count from user parameter
-    desiredCount = int(event["CodePipeline.job"].data.actionConfiguration.configuration.UserParameters); 
+
     try:
         # Extract the Job ID
         job_id = event['CodePipeline.job']['id']
         # Extract the Job Data 
         job_data = event['CodePipeline.job']['data']
-         # Get the list of artifacts passed to the function
+         
+        # Get The Canary task desired count from user parameter
+        desiredCount = int(job_data['actionConfiguration']['configuration']['UserParameters']);        
+            
+        # Get the list of artifacts passed to the function    
         artifacts = job_data['inputArtifacts']
         imageTabArtifact = artifacts[0]
         imageTagData = {}
