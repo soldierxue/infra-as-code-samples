@@ -1,5 +1,6 @@
 ## Options for ECS Deployment: InPlaceDoubling|InPlaceRolling|Canary
-deployment_option="InPlaceDoubling"
+deployment_option="Canary"
+name_codepipeline_prefix = "ecs-demo-jason"
 
 ecr_region ="us-east-1"
 ecr_repo = "jasonreg"

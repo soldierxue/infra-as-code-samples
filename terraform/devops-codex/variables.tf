@@ -5,9 +5,6 @@ provider "aws" {
 variable name_codepipeline_prefix{
    default = "spring-ecs-demo-"
 }
-variable ecr_region{
-   default = "us-east-1"
-}
 
 variable ecr_region{
    default = "us-east-1"
