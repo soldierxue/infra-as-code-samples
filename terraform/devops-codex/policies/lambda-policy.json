@@ -13,7 +13,11 @@
             "Effect": "Allow",
             "Action": [
                 "codepipeline:*",
-                "ecs:*"
+                "ecs:*",
+                "application-autoscaling:*",
+                "cloudwatch:DescribeAlarms",
+                "cloudwatch:PutMetricAlarm",
+                "elasticloadbalancing:Describe*"
             ],
             "Resource": "*"
         }

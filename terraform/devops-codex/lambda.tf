@@ -28,6 +28,8 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
   lifecycle { create_before_destroy = true }
 }
 
+
+
 resource "aws_lambda_function" "ecs-inplace-update" {
   filename         = "${path.module}/functions/ecs_inplace_update.py.zip"
   function_name    = "ecs-inplace-update"
