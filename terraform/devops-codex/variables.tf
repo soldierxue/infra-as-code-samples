@@ -5,6 +5,9 @@ provider "aws" {
 variable ecr_region{
    default = "us-east-1"
 }
+variable ecr_repo{
+   default = "jasonreg"
+}
 
 variable ecs_region{
    default = "ap-northeast-1"
