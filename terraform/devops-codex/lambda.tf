@@ -32,7 +32,7 @@ resource "aws_iam_role_policy" "lambda_role_policy" {
 
 resource "aws_lambda_function" "ecs-inplace-update" {
   filename         = "${path.module}/functions/ecs_inplace_update.py.zip"
-  function_name    = "ecs-inplace-update"
+  function_name    = "ecs-inplace-update-${var.name}"
   description = "Function for ECS service updates by policy:rolling update or doubling update etc"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
   handler          = "ecs_inplace_update.lambda_handler"
@@ -57,7 +57,7 @@ resource "aws_lambda_function" "ecs-inplace-update" {
 
 resource "aws_lambda_function" "ecs-canary-update" {
   filename         = "${path.module}/functions/ecs_canary_update.py.zip"
-  function_name    = "ecs-canary-update"
+  function_name    = "ecs-canary-update-${var.name}"
   description = "Function for ECS service updates by policy: canary,etc"
   role             = "${aws_iam_role.iam_for_lambda.arn}"
   handler          = "ecs_canary_update.lambda_handler"
