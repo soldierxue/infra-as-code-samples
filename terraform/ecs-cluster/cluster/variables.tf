@@ -1,11 +1,3 @@
-variable "name" {
-   default="jasonxue"
-   description = "Name tag for resources"
-}
-variable "environment" {
-    default="test"
-    description = "Environment tag, e.g prod"
-}
 variable "cluster_name" {
   description = "Name of ECS cluster"
 }
