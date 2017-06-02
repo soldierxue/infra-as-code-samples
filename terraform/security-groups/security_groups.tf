@@ -51,7 +51,7 @@ resource "aws_security_group" "database" {
 # Security group allowing internal traffic (inside VPC)
 resource "aws_security_group" "internal" {
   vpc_id = "${var.vpc_id}"
-  name = "${format("sg-internal-%s-%s", var.name, var.environment)}"
+  name = "internal"
   description = "Allow internal traffic"
 
   ingress {
@@ -69,6 +69,6 @@ resource "aws_security_group" "internal" {
   }
 
   tags {
-    Name = "internal"
+    Name = "${format("sg-internal-%s-%s", var.name, var.environment)}"
   }
 }
