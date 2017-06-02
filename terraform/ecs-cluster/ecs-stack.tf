@@ -13,7 +13,7 @@ module "m_alb" {
   security_group_internal_id = "${module.m_base.sg_internal_id}"
   security_group_inbound_id = "${module.m_base.sg_frontend_id}"
   alb_subnet_ids = "${module.m_base.subnet_public_ids}"
-  vpc_id = "${module.m_alb.vpc_id}"  
+  vpc_id = "${module.m_base.vpc_id}"  
 }
 
 module "m_ecs_cluster" {

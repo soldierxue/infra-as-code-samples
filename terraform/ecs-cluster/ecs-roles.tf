@@ -4,7 +4,7 @@
 # 此策略允许 Amazon ECS 容器实例代表您调用 AWS
 
 resource "aws_iam_instance_profile" "ecs_instance" {
-  name = "role-ec2profile-${var.name}-${var.environment}"
+  name = "role-ec2profile-${var.stack_name}-${var.environment}"
   role = "${aws_iam_role.ecs_instance.name}"
 
   lifecycle { create_before_destroy = true }
@@ -12,7 +12,7 @@ resource "aws_iam_instance_profile" "ecs_instance" {
 
 # An IAM role that we attach to the EC2 Instances in the cluster
 resource "aws_iam_role" "ecs_instance" {
-  name = "role-ecs-ec2-${var.name}-${var.environment}"
+  name = "role-ecs-ec2-${var.stack_name}-${var.environment}"
   assume_role_policy = "${file("${path.module}/policies/ecs-instance.json")}"
 
   lifecycle { create_before_destroy = true }
@@ -21,7 +21,7 @@ resource "aws_iam_role" "ecs_instance" {
 # IAM policy we add to ECS cluster instances that allows them to do their thing
 
 resource "aws_iam_role_policy" "ecs_instance_policy" {
-  name = "role-policy-ec2-${var.name}-${var.environment}"
+  name = "role-policy-ec2-${var.stack_name}-${var.environment}"
   role = "${aws_iam_role.ecs_instance.id}"
   policy = "${file("${path.module}/policies/ecs-instance-policy.json")}"
 
@@ -32,7 +32,7 @@ resource "aws_iam_role_policy" "ecs_instance_policy" {
 # 此策略允许 Elastic Load Balancing 负载均衡器代表您注册和取消注册 Amazon ECS 容器实例
 
 resource "aws_iam_role" "ecs_service" {
-  name = "role-ecs-srv-${var.name}-${var.environment}"
+  name = "role-ecs-srv-${var.stack_name}-${var.environment}"
   assume_role_policy = "${file("${path.module}/policies/ecs-service.json")}"
 }
 
@@ -47,7 +47,7 @@ resource "aws_iam_role_policy_attachment" "ecs_service" {
 # 此策略允许 Application Auto Scaling 代表您增加和减少您的 Amazon ECS 服务的预期数量以响应 CloudWatch 警报
 
 resource "aws_iam_role" "ecs_service_autoscale" {
-  name = "ecs-srv-asg-${var.name}-${var.environment}"
+  name = "ecs-srv-asg-${var.stack_name}-${var.environment}"
   assume_role_policy = "${file("${path.module}/policies/ecs-service-autoscale.json")}"
 }
 

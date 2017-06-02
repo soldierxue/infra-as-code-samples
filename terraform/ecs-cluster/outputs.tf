@@ -11,5 +11,5 @@ output "ecs_service_autoscale_role_arn" {
 }
 
 output "cluster_name" {
-  value = "${module.m_ecs_cluster.name}"
+  value = "${module.m_ecs_cluster.cluster_name}"
 }
