@@ -31,7 +31,7 @@ resource "aws_alb_target_group" "instance_tg" {
 # ALB listener that checks for connection requests from clients using the port/protocol specified
 # These requests are then forwarded to one or more target groups, based on the rules defined
 resource "aws_alb_listener" "instance_listener" {
-  load_balancer_arn = "${aws_alb.ecs-alb.arn}"
+  load_balancer_arn = "${aws_alb.dmz-alb.arn}"
   port = "${var.port_listen}"
   protocol = "HTTP"
 
