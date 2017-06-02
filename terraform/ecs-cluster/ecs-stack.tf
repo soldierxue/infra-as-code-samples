@@ -22,6 +22,9 @@ module "m_ecs_cluster" {
   environment  = "${module.m_base.environment}"
   
   cluster_name = "${var.cluster_name}"
+  asg_min = "${var.asg_min}"
+  asg_max = "${var.asg_max}"
+  asg_desired_size = "${var.asg_desired_size}"
   key_pair_name = "${var.key_pair_name}"
   instance_profile_name = "${aws_iam_instance_profile.ecs_instance.name}"
   security_group_ecs_instance_id = "${module.m_base.sg_internal_id}"
