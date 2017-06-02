@@ -40,7 +40,7 @@ resource "aws_subnet" "public" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "${format("public-subnet-%s-%s-%s", var.name, var.environment,count.index+1)}"
+        Name = "${format("public-subnet-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
     }
 }
@@ -62,7 +62,7 @@ resource "aws_route_table" "private" {
  
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "${format("private-route-table-%s-%s-%s", var.name, var.environment,count.index+1)}"
+        Name = "${format("private-route-table-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
   }  
 }
@@ -74,9 +74,9 @@ resource "aws_subnet" "private" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "${format("private-subnet-%s-%s-%s", var.name, var.environment,count.index+1)}"
+        Name = "${format("private-subnet-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
-    }
+  }
 }
 
 resource "aws_route_table_association" "private" {
