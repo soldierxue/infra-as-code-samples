@@ -27,7 +27,8 @@ variable "security_group_inbound_id" {
 }
 
 variable "alb_subnet_ids" {
-  description = "Comma-separated list of subnets where ALB should be deployed"
+  description = "list of subnets where ALB should be deployed"
+  type = "list"
 }
 
 variable "vpc_id" {
