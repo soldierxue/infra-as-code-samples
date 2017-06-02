@@ -55,12 +55,26 @@ resource "aws_route_table_association" "public" {
 /*
  * For private subnet, by default instances within it can't acess internat
  */
+resource "aws_eip" "nat" {
+  count = "${length(data.aws_availability_zones.all.names)}"
+  vpc      = true
+} 
+resource "aws_nat_gateway" "ngw" {
+  allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
+  subnet_id     = "${element(aws_subnet.private.*.id, count.index)}"
+  depends_on = ["aws_internet_gateway.main"]
+}
 
-# To Create a route table for ec2 in private subnet to access internet from IGW
+# To Create a route table for ec2 in private subnet to access internet from NAT GW
 resource "aws_route_table" "private" {
   count = "${length(data.aws_availability_zones.all.names)}"
  
   vpc_id = "${aws_vpc.main.id}"
+  route {
+        cidr_block =  "0.0.0.0/0"
+        gateway_id = "${element(aws_nat_gateway.ngw.*.id, count.index)}"
+  }
+  
   tags {
         Name = "${format("private-route-table-%s-%s-%03d", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
