@@ -35,10 +35,6 @@ data "aws_ami" "amazonlinux_ami" {
 ###
 ### Demo: PHPAPP(public subnet) + MySQL(private subnet)
 ###
-variable "DnsZoneName" {
-  default = "jasondemo.internal"
-  description = "the internal dns name"
-}
 
 variable "mysqlPrefix" {
   default = "mysqldb"

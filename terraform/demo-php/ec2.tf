@@ -27,7 +27,7 @@ resource "aws_instance" "phpapp" {
   service httpd start
   chkconfig httpd on
   echo "<?php" >> /var/www/html/calldb.php
-  echo "\$conn = new mysqli('${var.mysqlPrefix}.${var.DnsZoneName}', 'root', 'secret', 'test');" >> /var/www/html/calldb.php
+  echo "\$conn = new mysqli('${var.mysqlPrefix}.${var.name}.internal', 'root', 'secret', 'test');" >> /var/www/html/calldb.php
   echo "\$sql = 'SELECT * FROM mytable'; " >> /var/www/html/calldb.php
   echo "\$result = \$conn->query(\$sql); " >>  /var/www/html/calldb.php
   echo "while(\$row = \$result->fetch_assoc()) { echo 'the value is: ' . \$row['mycol'] ;} " >> /var/www/html/calldb.php
