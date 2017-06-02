@@ -36,3 +36,6 @@ output "private_route1_id" {
 output "private_route2_id" {
   value = "${aws_route_table.private.*.id[1]}"
 }
+output "base_cidr_block" {
+  value = "${var.base_cidr_block}"
+}

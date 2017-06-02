@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   enable_dns_support = true
   tags {
-        Name = "${var.name}"
+        Name = "${format("vpc-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }
 }
@@ -14,7 +14,7 @@ resource "aws_vpc" "main" {
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "igw-${var.name}"
+        Name = "${format("igw-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }
 }
@@ -28,7 +28,7 @@ resource "aws_route_table" "public" {
         gateway_id = "${aws_internet_gateway.main.id}"
   }
   tags {
-        Name = "route-table-${var.name}"
+        Name = "${format("pub-route-table-%s-%s", var.name, var.environment)}"
         Environment = "${var.environment}"
   }  
 }
@@ -40,7 +40,7 @@ resource "aws_subnet" "public" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "pub subnet#${count.index+1}-${var.name}"
+        Name = "${format("public-subnet-%s-%s-%s", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
     }
 }
@@ -62,7 +62,7 @@ resource "aws_route_table" "private" {
  
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "route-private #${count.index}-${var.name}"
+        Name = "${format("private-route-table-%s-%s-%s", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
   }  
 }
@@ -74,7 +74,7 @@ resource "aws_subnet" "private" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "private subnet #${count.index+1}-${var.name}"
+        Name = "${format("private-subnet-%s-%s-%s", var.name, var.environment,count.index+1)}"
         Environment = "${var.environment}"
     }
 }
