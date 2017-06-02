@@ -8,7 +8,7 @@ resource "aws_alb" "dmz-alb" {
     "${var.security_group_inbound_id}",
   ]
 
-  subnets = ["${var.alb_subnet_ids[*]}"]
+  subnets = ["${var.alb_subnet_ids.*}"]
   tags {
     Name        = "${var.name}-balancer"
     Service     = "${var.name}"
