@@ -19,6 +19,7 @@ For BJS(China) region samples, we build a sample for managing BJS :
 - IAM : how to create and use IAM roles
 - IGW : internet gateway for instances in public subnets access internet
 - NAT Instances(ec2): because BJS region has no managed NAT Gateway service, so this sample demos how to create a HA NAT instances for two private subnets
+- PHP Demo: php website with a db call to backend mysql , use this website to verify the VPC resources are created correctly
 
 NAT HA Architect
 -------------------
@@ -69,27 +70,32 @@ resource "aws_instance" "example" {
 
 参考以下步骤来体验 BJS 的 Terraform 样例：
 
+BJS-LAB1：在 AWS BJS 创建一个完整的 PHP stack（包括VPC，Subnet，NAT Instances& PHPdemo），只需按照以下步骤执行：
+----------------------------------------------------------------------------------------------------------
 ```sh
 sudo git clone https://github.com/soldierxue/infra-as-code-samples
-cd ./infra-as-code-samples/terraform/bjs-infra
-sudo cp [PATH]/bjskey.pem ./infra-nat/scripts/
-sudo chmod 600 ./infra-nat/scripts/bjskey.pem
+cd ./infra-as-code-samples/bjs/phpdemo-full
+
+sudo cp [PATH]/bjskey.pem /home/ec2-user/
+sudo chmod 600 /home/ec2-user/bjsMyKey.pem
 sudo terraform get --update
-sudo terraform plan --var-file bjs.tfvars
+sudo terraform plan 
+sudo terraform apply
 ```
 
-执行所有的模块的创建：
-
-```sh
-sudo terraform apply --var-file bjs.tfvars
-```
-
-执行指定模块的创建：
-
-```sh
-sudo terraform apply --var-file bjs.tfvars -target module.aws-vpc
-sudo terraform apply --var-file bjs.tfvars -target module.securities
-sudo terraform apply --var-file bjs.tfvars -target module.natgateways
+该实验的样例代码如下：
+```hcl
+module "bjs-vpc" {
+  source          = "github.com/soldierxue/terraformlib/bjs-infra"
+  region          = "cn-north-1"
+  base_cidr_block = "10.0.0.0/16"
+  stack_name = "bjsdemo"
+  environment = "test"
+  ec2keyname = "bjsMyKey"
+  keyfile = "~/bjsMyKey.pem"
+  subnet_private_cidrs = ["10.0.48.0/20","10.0.112.0/20"]
+  subnet_public_cidrs = ["10.0.0.0/20","10.0.16.0/20"]
+}
 ```
 
 通过 Terraform 销毁整个 Terraform 管理的环境：
