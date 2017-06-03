@@ -36,10 +36,6 @@ variable "asg_desired_size" {
   default = "2"
 }
 
-variable "instance_profile_name" {
-  description = "Name of IAM instance profile for ECS instances"
-}
-
 variable "security_group_ecs_instance_id" {
   description = "Id of security group allowing internal traffic"
 }
