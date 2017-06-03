@@ -36,7 +36,7 @@ resource "aws_autoscaling_group" "ecs_cluster" {
   desired_capacity = "${var.asg_desired_size}"
   
   launch_configuration = "${aws_launch_configuration.ecs_instance.name}"
-  vpc_zone_identifier = ["${split(",", var.ecs_cluster_subnet_ids)}"]
+  vpc_zone_identifier = ["${var.ecs_cluster_subnet_ids}"]
   
   health_check_grace_period = 30
   health_check_type         = "ELB"

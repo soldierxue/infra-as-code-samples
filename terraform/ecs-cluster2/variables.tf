@@ -41,7 +41,8 @@ variable "security_group_ecs_instance_id" {
 }
 
 variable "ecs_cluster_subnet_ids" {
-  description = "Comma-separated list of subnets where EC2 instances should be deployed"
+  description = " List of subnets where EC2 instances should be deployed"
+  type = "list"
 }
 
 variable "target_group_arn" {
