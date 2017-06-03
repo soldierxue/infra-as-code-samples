@@ -71,7 +71,7 @@ resource "aws_instance" "example" {
 参考以下步骤来体验 BJS 的 Terraform 样例：
 
 BJS-LAB1
----------
+--------
 
 在 AWS BJS 创建一个完整的 PHP stack（包括VPC，Subnet，NAT Instances& PHPdemo），只需按照以下步骤执行：
 
@@ -107,7 +107,7 @@ module "bjs-vpc" {
 sudo terraform destroy --var-file bjs.tfvars
 ```
 BJS-LAB2
----------
+--------
 
 BJS-LAB3
----------
+--------
