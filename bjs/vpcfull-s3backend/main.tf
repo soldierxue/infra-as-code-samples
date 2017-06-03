@@ -64,7 +64,7 @@ output base_cidr_block {
 }
 
 output sg_database_id {
-  value = "$module.bjs-vpc.sg_database_id}"
+  value = "${module.bjs-vpc.sg_database_id}"
 }
 
 output sg_frontend_id {
