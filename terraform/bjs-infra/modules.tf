@@ -8,9 +8,11 @@ module "aws-vpc" {
   source          = "./infra-vpc"
   region          = "${var.region}"
   base_cidr_block = "${var.base_cidr_block}"
-  ##ec2keyname = "${var.ec2keyname}"
+  
   private_subnets_cidr = ["${var.subnet_private_cidrs}"]
   public_subnets_cidr = ["${var.subnet_public_cidrs}"]
+  stack_name = "${var.stack_name}"
+  environment = "${var.environment}"
 }
 
 # model: securities like Security Groups, IAM roles
@@ -19,6 +21,8 @@ module "securities" {
   source          = "./infra-security"
   vpc_id          = "${module.aws-vpc.vpc_id}"
   vpc_cidr_block  = "${var.base_cidr_block}"
+  stack_name = "${var.stack_name}"
+  environment = "${var.environment}"  
 }
 
 # model: NAT Gateway instances
@@ -36,4 +40,6 @@ module "natgateways" {
   ec2_keyname = "${var.ec2keyname}"
   instance_profile_name = "${module.securities.role_nat_profile_name}"
   aws_region = "${var.region}"
+  stack_name = "${var.stack_name}"
+  environment = "${var.environment}" 
 }

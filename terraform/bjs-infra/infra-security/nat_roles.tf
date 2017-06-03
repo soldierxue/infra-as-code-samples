@@ -2,7 +2,7 @@
 # 此策略允许 Amazon EC2 NAT 实例代表您调用 AWS
 
 resource "aws_iam_instance_profile" "nat_profile" {
-  name = "nat-profile"
+  name = "nat-profile-${var.stack_name}"
   role = "${aws_iam_role.nat_assume_role.name}"
 
   lifecycle { create_before_destroy = true }
@@ -10,7 +10,7 @@ resource "aws_iam_instance_profile" "nat_profile" {
 
 # An IAM role that we attach to the EC2 Instances 
 resource "aws_iam_role" "nat_assume_role" {
-  name = "nat-role"
+  name = "nat-role-${var.stack_name}"
   assume_role_policy = <<HEREDOC
 {
   "Version": "2012-10-17",
@@ -32,7 +32,7 @@ resource "aws_iam_role" "nat_assume_role" {
 # IAM policy we add to NAT instances that allows them to do their thing
 
 resource "aws_iam_role_policy" "nat_instance_policy" {
-  name = "nat-instance-policy"
+  name = "nat-instance-policy-${var.stack_name}"
   role = "${aws_iam_role.nat_assume_role.id}"
   policy = <<HEREDOC
 {

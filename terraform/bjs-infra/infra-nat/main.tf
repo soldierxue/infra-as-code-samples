@@ -19,7 +19,8 @@ resource "aws_instance" "nat" {
     }
 
     tags {
-        Name = "VPC NAT #${count.index + 1}"
+        Name = "NAT-EC2-${var.stack_name}#${count.index + 1}"
+        Environment = "${var.environment}"         
     }
 }
 

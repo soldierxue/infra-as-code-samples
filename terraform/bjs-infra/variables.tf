@@ -3,6 +3,14 @@ variable "region" {
   type = "string"
   description = "the region where to create the VPC networking resources"
 }
+variable "stack_name"{
+  type = "string"
+  description = "the name of the stack"  
+}
+variable "environment"{
+  type = "string"
+  description = "the purpose of the stack,like prod,test,pilot,etc"  
+}
 
 ## The VPC CIDR option
 variable "base_cidr_block" {

@@ -24,3 +24,12 @@ variable nat_monitor_wait_for_instance_stop {
 variable nat_monitor_wait_for_instance_start {
     default=300
 }
+
+variable "stack_name"{
+  type = "string"
+  description = "the name of the stack"  
+}
+variable "environment"{
+  type = "string"
+  description = "the purpose of the stack,like prod,test,pilot,etc"  
+}

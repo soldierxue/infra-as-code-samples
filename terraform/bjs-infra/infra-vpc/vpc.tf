@@ -4,8 +4,8 @@ resource "aws_vpc" "main" {
   enable_dns_hostnames = true
   enable_dns_support = true
   tags {
-        Name = "terraform-aws-vpc"
-        Owner = "Jason"
+        Name = "vpc-${var.stack_name}"
+        Environment = "${var.environment}"
   }
 }
 
@@ -13,8 +13,8 @@ resource "aws_vpc_dhcp_options" "mydhcp" {
     domain_name = "${var.DnsZoneName}"
     domain_name_servers = ["AmazonProvidedDNS"]
     tags {
-      Name = "Demo internal name"
-      Owner = "Jason"
+        Name = "dhcp-internal-${var.stack_name}"
+        Environment = "${var.environment}"
     }
 }
 
@@ -27,8 +27,8 @@ resource "aws_vpc_dhcp_options_association" "dns_resolver" {
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "terraform-aws-igw"
-        Owner = "Jason"
+        Name = "igw-${var.stack_name}"
+        Environment = "${var.environment}"
   }
 }
 
@@ -41,8 +41,8 @@ resource "aws_route_table" "public" {
         gateway_id = "${aws_internet_gateway.main.id}"
   }
   tags {
-        Name = "terraform-route-public-igw"
-        Owner = "Jason"
+        Name = "rt-igw-${var.stack_name}"
+        Environment = "${var.environment}"
   }  
 }
 
@@ -53,8 +53,8 @@ resource "aws_subnet" "public" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "pub subnet #${count.index+1}"
-        Owner = "Jason"
+        Name = "subnet-pub-${var.stack_name}#${count.index+1}"
+        Environment = "${var.environment}"        
     }
 }
 
@@ -75,8 +75,8 @@ resource "aws_route_table" "private" {
  
   vpc_id = "${aws_vpc.main.id}"
   tags {
-        Name = "route-private #${count.index}"
-        Owner = "Jason"
+        Name = "rt-private-${var.stack_name}#${count.index+1}"
+        Environment = "${var.environment}"    
   }  
 }
 
@@ -87,8 +87,8 @@ resource "aws_subnet" "private" {
   vpc_id     = "${aws_vpc.main.id}"
   availability_zone = "${data.aws_availability_zones.all.names[count.index]}"
   tags {
-        Name = "private subnet #${count.index+1}"
-        Owner = "Jason"
+        Name = "subnet-private-${var.stack_name}#${count.index+1}"
+        Environment = "${var.environment}"  
     }
 }
 

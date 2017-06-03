@@ -1,10 +1,10 @@
 resource "aws_security_group" "frontend" {
-  name        = "dmz-sg"
+  name        = "dmz-sg-${var.stack_name}"
   description = "Open access for Internet HTTP/SSH connection inbound"
   vpc_id      = "${var.vpc_id}"
   tags{
-     Name = "terraform-sg-dmz"
-     Owner = "Jason"
+        Name = "sg-dmz-${var.stack_name}"
+        Environment = "${var.environment}"  
   }
   
   ingress {
@@ -29,10 +29,10 @@ resource "aws_security_group" "frontend" {
 }
 
 resource "aws_security_group" "database" {
-  name = "db-sg"
+  name = "db-sg-${var.stack_name}"
   tags {
-        Name = "terraform-sg-database"
-        Owenr = "Jason"
+        Name = "sg-db-${var.stack_name}"
+        Environment = "${var.environment}" 
   }
   description = "SG for db access from internal tcp CONNECTION INBOUND"
   vpc_id = "${var.vpc_id}"
@@ -53,7 +53,7 @@ resource "aws_security_group" "database" {
 # Security group allowing internal traffic (inside VPC)
 resource "aws_security_group" "internal" {
   vpc_id = "${var.vpc_id}"
-  name = "internal"
+  name = "internal-${var.stack_name}"
   description = "Allow internal traffic"
 
   ingress {
@@ -71,7 +71,8 @@ resource "aws_security_group" "internal" {
   }
 
   tags {
-    Name = "internal"
+        Name = "sg-internal-${var.stack_name}"
+        Environment = "${var.environment}" 
   }
 }
 
@@ -79,7 +80,7 @@ resource "aws_security_group" "internal" {
   NAT Instance
 */
 resource "aws_security_group" "natsg" {
-    name = "vpc_nat"
+    name = "vpc_nat-${var.stack_name}"
     description = "Allow traffic to pass from the private subnet to the internet"
 
     ingress {
@@ -135,6 +136,7 @@ resource "aws_security_group" "natsg" {
     vpc_id = "${var.vpc_id}"
 
     tags {
-        Name = "NATSG_Terraform"
+        Name = "sg-nat-${var.stack_name}"
+        Environment = "${var.environment}" 
     }
 }
