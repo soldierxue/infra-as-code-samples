@@ -8,7 +8,7 @@ variable "base_cidr_block" {}
 variable "private_subnets_cidr"{type="list"}
 variable "public_subnets_cidr"{type="list"}
 
-variable "ec2keyname"  {}
+##variable "ec2keyname"  {}
 
 variable "DnsZoneName" {
   default = "jasondemo.internal"

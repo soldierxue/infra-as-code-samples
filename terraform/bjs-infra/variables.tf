@@ -9,25 +9,14 @@ variable "base_cidr_block" {
   type = "string"
   description = "the CIDR block for the VPC >= 16 <=28"  
 }
-
-variable "subnet_pub1_cidr"{
-  type = "string"
-  description = "The CIDR block for the public subnet1"
+variable "subnet_private_cidrs"{
+  type = "list"
+  description = "The CIDR block for the private subnets" 
 }
-variable "subnet_pub2_cidr"{
-  type = "string"
-  description = "The CIDR block for the public subnet2"
+variable "subnet_public_cidrs"{
+  type = "list"
+  description = "The CIDR block for the public subnets" 
 }
-variable "subnet_private1_cidr"{
-  type = "string"
-  description = "The CIDR block for the private subnet1"
-}
-variable "subnet_private2_cidr"{
-  type = "string"
-  description = "The CIDR block for the private subnet2" 
-}
-
 variable "ec2keyname"  {
   description = "key name to login to the ec2"
-  type = "map"
 }
