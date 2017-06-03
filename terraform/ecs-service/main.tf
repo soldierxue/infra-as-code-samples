@@ -13,7 +13,7 @@ data "template_file" "task_definition" {
     container_memory = "${var.container_memory}"
     container_port = "${var.container_port}"
     log_group_name = "${aws_cloudwatch_log_group.spring_hw_service_lg.name}"
-    log_group_region = "${var.region}"
+    log_group_region = "${data.aws_region.current.name}"
   }
 }
 

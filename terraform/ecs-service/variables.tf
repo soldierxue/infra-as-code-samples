@@ -1,3 +1,6 @@
+data "aws_region" "current" {
+  current = true
+}
 variable "service_name" {
   description = "Name of service"
 }
@@ -20,10 +23,6 @@ variable "container_memory" {
 
 variable "container_port" {
   description = "Port that service will listen on"
-}
-
-variable "region" {
-  description = "AWS region to deploy to (e.g. ap-southeast-2)"
 }
 
 variable "cluster_name" {
