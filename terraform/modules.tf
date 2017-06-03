@@ -1,3 +1,7 @@
+# For AWS Cloud
+provider "aws" {
+  region = "${var.region}"
+}
 # module to create a new vpc with at least two private subnets & two public subnets
 # for global vpc, IGW & NGW will also be created
 module "m_global_vpc" {
