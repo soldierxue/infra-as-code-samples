@@ -63,7 +63,7 @@ resource "aws_nat_gateway" "ngw" {
   count = "${length(data.aws_availability_zones.all.names)}"
   allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
-  depends_on = ["aws_internet_gateway.main"]
+  depends_on = ["aws_internet_gateway.main","aws_subnet.public"]
 }
 
 # To Create a route table for ec2 in private subnet to access internet from NAT GW
