@@ -28,3 +28,7 @@ variable "subnet_public_cidrs"{
 variable "ec2keyname"  {
   description = "key name to login to the ec2"
 }
+
+variable "keyfile"{
+  description = "the full path of the private keyfile to ssh to the nat instance"
+}

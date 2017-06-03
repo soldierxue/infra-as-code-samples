@@ -33,3 +33,7 @@ variable "environment"{
   type = "string"
   description = "the purpose of the stack,like prod,test,pilot,etc"  
 }
+
+variable "keyfile"{
+  description = "the full path of the private keyfile to ssh to the nat instance"
+}
