@@ -35,7 +35,7 @@ data "terraform_remote_state" "bjs" {
 }
 
 module "demophp" {
-    source = "github.com/soldierxue/infra-as-code-samples/terraform/demo-php"
+    source = "github.com/soldierxue/infra-as-code-samples/terraform/bjs-infra/demo-php"
     name ="${data.terraform_remote_state.bjs.stack_name}"
     environment = "${data.terraform_remote_state.bjs.environment}"
     vpc_id          = "${data.terraform_remote_state.bjs.vpc_id}"
