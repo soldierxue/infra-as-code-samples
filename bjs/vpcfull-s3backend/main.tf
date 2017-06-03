@@ -20,7 +20,7 @@
 terraform {
   backend "s3" {
     bucket = "terraform"
-    key    = "state"
+    key    = "network/terraform.tfstate"
     region = "cn-north-1"
   }
 }
