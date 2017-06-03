@@ -26,6 +26,7 @@ resource "aws_alb_target_group" "instance_tg" {
   health_check {
     path = "/"
   }
+  depends_on = ["alb.dmz-alb"]
 }
 
 # ALB listener that checks for connection requests from clients using the port/protocol specified
