@@ -13,10 +13,6 @@ resource "aws_instance" "nat" {
     source_dest_check = false
     monitoring = true
     disable_api_termination = false
-    
-    description {
-    
-    }
 
     tags {
         Name = "NAT-EC2-${var.stack_name}#${count.index + 1}"
