@@ -16,12 +16,21 @@
  *      terraform plan
  *      terraform apply
  */
-
 terraform {
   backend "s3" {
     bucket = "terraform"
     key    = "state"
     region = "cn-north-1"
+  }
+}
+
+resource "aws_s3_bucket" "tstate" {
+  bucket = "terraform"
+  acl    = "private"
+
+  tags {
+    Name        = "Bucket to store terraform state"
+    Environment = "Dev"
   }
 }
 
