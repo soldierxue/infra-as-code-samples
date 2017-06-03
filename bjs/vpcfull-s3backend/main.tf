@@ -11,8 +11,9 @@
  * Usage:
  *      git clone https://github.com/soldierxue/infra-as-code-samples
  *      cd ./infra-as-code-samples/bjs/vpcfull-s3backend
- *      terraform get --update
  *      terraform init
+ *      terraform get --update
+ *      
  *      terraform plan
  *      terraform apply
  */
@@ -21,16 +22,6 @@ terraform {
     bucket = "terraform"
     key    = "state"
     region = "cn-north-1"
-  }
-}
-
-resource "aws_s3_bucket" "tstate" {
-  bucket = "terraform"
-  acl    = "private"
-
-  tags {
-    Name        = "Bucket to store terraform state"
-    Environment = "Dev"
   }
 }
 
