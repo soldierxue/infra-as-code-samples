@@ -38,6 +38,7 @@ module "natgateways" {
   #private_routes = ["${module.aws-vpc.private_route1_id}","${module.aws-vpc.private_route2_id}"]
   sg_nat_id ="${module.securities.sg_nat_id}"
   ec2_keyname = "${var.ec2keyname}"
+  keyfile = "${var.keyfile}"
   instance_profile_name = "${module.securities.role_nat_profile_name}"
   aws_region = "${var.region}"
   stack_name = "${var.stack_name}"
