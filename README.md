@@ -3,10 +3,10 @@ Samples for AWS infra as a code
 
 Currently, there are 3 categories:
 - **aws-cli**: frequent aws cli sample commands
-- **terraform**
-  - [**bjs-infra**](#bjs-infra): terraform sample for AWS BJS(China) region
-  - **devops-codex**: terraform sample for usage of AWS code pipeline,code deploy & code build (it depends on **ecs-infra**)
-  - **ecs-infra** : terraform sample for AWS ECS global region
+- **bjs**
+  - [**phpdemo-full**](#BJS-LAB1): Build a full PHP Demo stack from zero in AWS BJS(China) region
+  - [**vpcfull-s3backend**](#BJS-LAB2): Here we demo how to build a solid vpc environment with HA NAT instances in AWS BJS(China) region, besides, we will show a new way to store terraform state(terraform managed aws resource state) in AWS s3 bucket
+  - [**phpdemo-s3backend**](#BJS-LAB3): This lab demos you a situation that, you have built a VPC environment just like [BJS-LAB2](#BJS-LAB2), then you want to creat a PHP/MySQL app within it, then you can get the vpc details from stored S3 terraform state file
 
 
 bjs-infra
@@ -70,8 +70,11 @@ resource "aws_instance" "example" {
 
 参考以下步骤来体验 BJS 的 Terraform 样例：
 
-BJS-LAB1：在 AWS BJS 创建一个完整的 PHP stack（包括VPC，Subnet，NAT Instances& PHPdemo），只需按照以下步骤执行：
-----------------------------------------------------------------------------------------------------------
+BJS-LAB1
+---------
+
+在 AWS BJS 创建一个完整的 PHP stack（包括VPC，Subnet，NAT Instances& PHPdemo），只需按照以下步骤执行：
+
 ```sh
 sudo git clone https://github.com/soldierxue/infra-as-code-samples
 cd ./infra-as-code-samples/bjs/phpdemo-full
@@ -103,3 +106,8 @@ module "bjs-vpc" {
 ```sh
 sudo terraform destroy --var-file bjs.tfvars
 ```
+BJS-LAB2
+---------
+
+BJS-LAB3
+---------
