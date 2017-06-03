@@ -14,7 +14,6 @@ variable name {
    default ="cm-repo"
 }
 
-
 resource "aws_codecommit_repository" "cm-repo" {
   repository_name = "${var.name}"
   description     = "Sample CodeCommit Repository"
