@@ -5,13 +5,34 @@
  *      (2) Security Groups, roles for NAT instances
  *      (3) Scripts to monitor NAT instance healthy and update routes
  *
+ *  This sample diff with "vpcfull" is that, here we try to store the terraform state in s3, by default
+ *  terraform store state file in local file system
+ *
  * Usage:
  *      git clone https://github.com/soldierxue/infra-as-code-samples
- *      cd ./infra-as-code-samples/bjs/vpcfull
+ *      cd ./infra-as-code-samples/bjs/vpcfull-s3backend
  *      terraform get --update
  *      terraform plan
  *      terraform apply
  */
+resource "aws_s3_bucket" "tstate" {
+  bucket = "terraform"
+  acl    = "private"
+
+  tags {
+    Name        = "Bucket to store terraform state"
+    Environment = "Dev"
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = "${aws_s3_bucket.tstate.id}"
+    key    = "state"
+    region = "cn-north-1"
+  }
+}
+
 module "bjs-vpc" {
   source          = "github.com/soldierxue/terraformlib/bjs-infra"
   region          = "cn-north-1"
