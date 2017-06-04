@@ -28,8 +28,8 @@ module "code_ecs_demo" {
    ecr_region ="ap-northeast-1"
    ecr_repo = "${module.ecr_reg.ecr_name}"
    ecs_region = "ap-northeast-1"
-   ecs_cluster ="ecs-jason-demo"
-   ecs_service="spring-hw-demo"
+   ecs_cluster ="ecs_cdemo"
+   ecs_service="hw0603"
    ecs_task_cpu =200
    ecs_task_memory =200
    ecs_task_port=8080
