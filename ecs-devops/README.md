@@ -1,9 +1,7 @@
 Samples for AWS Global Services
 ===============================
-
-- **aws-cli**: frequent aws cli sample commands
-- [**Quick Start for ECS Demo**](#quick-start-ecs)
-  - [**LAB1**](#lab1): This Lab guide you to prepare a necessary repository like Code Commit & Elastic Container Registry, and the demo Spring Boot (java) projects
+- **[Quick Start for ECS Demo](#quick-start-ecs)**
+  - **[LAB1](#lab1)**: This Lab guide you to prepare a necessary repository like Code Commit & Elastic Container Registry, and the demo Spring Boot (java) projects
   - [**LAB2**](#lab2): This Lab followed [LAB1](#lab1) to create a CodePipeline, including retrived source code from CodeCommit, buid the project as Docker Image and store it to ECR, and following by Lambda functions to do ECS service updates
   - [**LAB3**](#lab3): We have completed [LAB2](#lab2) & [LAB3](#lab3), that we have souce code repo, code build, Docker Image Registry, and have a pipeline to automation the whole process. Here is Lab3, we will provision the backend ECS cluster & instances, ALB & target groups, service & tasks.
 
@@ -70,6 +68,7 @@ repo_name = cc_demo_jason
 初始化针对刚刚创建的 CodeCommit 代码库的本地工作目录：
 
 ```sh
+
 git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
 git clone https://git-codecommit.ap-northeast-1.amazonaws.com/v1/repos/cc_demo_jason
@@ -78,7 +77,8 @@ cp -r ./springdemo/* cc_demo_jason/
 cd cc_demo_jason/
 git add *
 git commit -m "spring demo"
-```sh
+
+```
 
 检查SpringDemo 的示例代码已经CheckIn到刚刚创建的 CodeCommit代码库中。
 
@@ -165,3 +165,6 @@ Canary Task部署完之后，等待我们确认Canary Task没有问题，我们�
 
 Canary 部署模式下的集群及服务状态：
 ![Canary ECS Cluster](../images/ecs_cluster_services.png)
+
+我们的 Spring Cloud Hello World1 服务：
+![Spring HW1](../images/spring_hw.png)
