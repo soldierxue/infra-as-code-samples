@@ -6,34 +6,60 @@
  *      (3) CodePipeline, CodeBuild
  *      (4) Lambda
  */
+## Required Variables
+
+variable region {
+   description = "The region for which AWS resources will be created"
+}
+variable ecr_region {
+   description = "The region for ECR, so we support ecr from different region with codepipeline"
+}
+
+variable code_pipeline_name_prefix {
+   description = "The name prefix for the code*, to separate different pipelines"
+}
+
+variable ecr_repo {
+   description = "The name of the Docker image registry"
+}
+
+variable esc_cluster_name {
+   description = "The name of the ECS cluster"
+}
+
+variable ecs_service_name {
+   description = "The name of the service, it is the same with task family name in this demo"
+}
+variable ecs_family_name {
+   description = "The faimil name of ecs task"
+}
+variable cc_repo {
+   description = "The name of code commit repository"
+}
+
+variable service_deploy_policy {
+   description = "policy for how to update ecs services in the cluster"
+   default = "InPlaceDoubling"
+}
+
 
 provider "aws" {
-  region = "ap-northeast-1"
-}
-
-module "code_commit" {
-   source = "github.com/soldierxue/terraformlib/code-commit"
-   name = "cc_demo_jason"
-}
-
-module "ecr_reg" {
-   source = "github.com/soldierxue/terraformlib/ecr"
-   name = "ecr_demo_jason"
+  region = "${var.region}"
 }
 
 module "code_ecs_demo" {
    source = "github.com/soldierxue/terraformlib/devops-codex"
-   deployment_option="Canary"
-   name = "ecs-jason3"
-   ecr_region ="ap-northeast-1"
-   ecr_repo = "${module.ecr_reg.ecr_name}"
-   ecs_region = "ap-northeast-1"
-   ecs_cluster ="ecs_cdemo"
-   ecs_service="hw0603"
-   ecs_task_cpu =200
-   ecs_task_memory =200
-   ecs_task_port=8080
-   ecs_task_desiredcount=2
-   codex_region = "ap-northeast-1"
+   name = "${var.code_pipeline_name_prefix}"
+   ecr_region ="${var.ecr_region}"
+   ecr_repo = "${var.ecr_repo}"
+   ecs_region = "${var.region}"
+   ecs_cluster ="${var.esc_cluster_name}"
+   ecs_service="${var.ecs_service_name}"
+   deployment_option="${var.service_deploy_policy}"
+   #ecs_task_cpu =200
+   #ecs_task_memory =200
+   #ecs_task_port=8080
+   #ecs_task_desiredcount=2
+   codex_region = "${var.region}"
    codecommit_repo = "${module.code_commit.repo_name}"
 }
