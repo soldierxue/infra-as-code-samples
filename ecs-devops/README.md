@@ -1,6 +1,6 @@
 Samples for AWS Global Services
 ===============================
-- **[Quick Start for ECS Demo](#quick-start-ecs)**
+- **[Quick Start for ECS Demo](#quick start for ecs demo)**
   - **[LAB1](#lab1)**: This Lab guide you to prepare a necessary repository like Code Commit & Elastic Container Registry, and the demo Spring Boot (java) projects
   - [**LAB2**](#lab2): This Lab followed [LAB1](#lab1) to create a CodePipeline, including retrived source code from CodeCommit, buid the project as Docker Image and store it to ECR, and following by Lambda functions to do ECS service updates
   - [**LAB3**](#lab3): We have completed [LAB2](#lab2) & [LAB3](#lab3), that we have souce code repo, code build, Docker Image Registry, and have a pipeline to automation the whole process. Here is Lab3, we will provision the backend ECS cluster & instances, ALB & target groups, service & tasks.
@@ -8,8 +8,6 @@ Samples for AWS Global Services
 Architect Overview
 ------------------
 - **[ECS Architect](#ecs-architect)**: Architect for ECS demo service
-- **[Codepipeline Snapshot](#codepipeline-snapshot)**: Picture to show the codepipeline result
-- **[ECS Snapshot](#ecs-snapshot)**: Picture to show the ECS result
 
 
 AWS-Global
@@ -168,3 +166,11 @@ Canary 部署模式下的集群及服务状态：
 
 我们的 Spring Cloud Hello World1 服务：
 ![Spring HW1](../images/spring_hw.png)
+
+ECS Architect
+-------------
+![ECS Architect](../images/ecs_architect.png)
+
+CodePiepline Architect
+----------------------
+![CP Architect](../images/codepipeline_architect.png)
