@@ -58,6 +58,7 @@ module "code_ecs_demo" {
    ecs_region = "${var.region}"
    ecs_cluster ="${var.esc_cluster_name}"
    ecs_service="${var.ecs_service_name}"
+   ecs_family_name = "${var.ecs_family_name}"
    deployment_option="${var.service_deploy_policy}"
    #ecs_task_cpu =200
    #ecs_task_memory =200

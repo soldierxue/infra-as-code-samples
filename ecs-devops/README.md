@@ -9,8 +9,9 @@ Samples for AWS Global Services
 
 Architect Overview
 ------------------
-- **[Network Architect](#network-architect)**: Architect for BJS Networking with HA NAT Instances
-- **[PHP Demo Architect](#php-demo-architect)**: Architect for BJS PHP Web Demo
+- **[ECS Architect](#ecs-architect)**: Architect for ECS demo service
+- **[Codepipeline Snapshot](#codepipeline-snapshot)**: Picture to show the codepipeline result
+- **[ECS Snapshot](#ecs-snapshot)**: Picture to show the ECS result
 
 
 AWS-Global
@@ -25,13 +26,13 @@ For AWS global region samples, we build a few sample for managing VPC, ECS, Code
 
 Prerequisite:
 -------------
-To refer to [BJS README](../) for how to prepare your Terraform & AWS environment.
+To refer to [BJS README](https://github.com/soldierxue/infra-as-code-samples) for how to prepare your Terraform & AWS environment.
 
 
 Quick Start for ECS Demo
 ------------------------
 
-参考以下步骤来体验 BJS 的 Terraform 样例：
+参考以下步骤来体验 Global 的 Terraform ECS 样例：
 
 LAB1
 ----
@@ -154,3 +155,10 @@ sudo terraform get --update
 sudo terraform plan --var-file inputs.tfvars --var-file ../devops-demo/inputs.tfvars
 sudo terraform apply --var-file inputs.tfvars --var-file ../devops-demo/inputs.tfvars
 ```
+
+到此我们的整个 ECS demo的组件都已经构建完成，我们再从AWS 控制台回到 [LAB2](#lab2) 创建的 CodePipeline 页面，点击CanaryTestDeploy的 Retry 按钮继续我们的部署：
+
+![Canary Test Deploy](../images/resume_from_canarytest.png)
+
+Canary Task部署完之后，等待我们确认Canary Task没有问题，我们可以审批通过进行生产环境的Task更新以及将在运行的Canary移出Target Group：
+![Canary Approve to Production Deploy](../images/canary_approve_to_prod.png)
