@@ -10,6 +10,8 @@ Samples for AWS infra as a code
 Architect Overview
 ------------------
 - **[Network Architect](#network-architect)**: Architect for BJS Networking with HA NAT Instances
+- **[PHP Demo Architect](#php-demo-architect)**: Architect for BJS PHP Web Demo
+
 
 AWS-BJS
 ---------
@@ -114,3 +116,12 @@ Network Architect
 - 初始化route1的外网路由，0.0.0.0/0 转发到 NAT#1；
 - 初始化route2的外网路由，0.0.0.0/0 转发到 NAT#2；
 - 两个 NAT 实例中配置运行 nat_monitor.sh 脚本；该脚本定时检查另一个 NAT 实例状态；如果发现另外一个NAT实例不工作，那么就会修改本来路由到该NAT（不工作的NAT实例）的路由表记录指向健康的NAT实例（自己）；如果该脚本发现自己恢复了，就会重置关联到自己的私网转发路由记录重新指向自己；
+
+PHP Demo Architect
+------------------
+
+![PHP Demo Architect](images/php-arch.png)
+
+- 通过 Terraform 分别在公有子网和私有子网创建两台EC2
+- 通过 EC2 的 User Data 配置好 PHP 和 MySQL 环境
+- calldb.php 测试和 私有子网的 MySQL 实例的联通性
