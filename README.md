@@ -80,7 +80,8 @@ sudo terraform plan
 sudo terraform apply
 ```
 
-该实验的样例代码如下：
+该实验的部分样例代码（创建一个网络基础设施）如下，用户只需要关注准备的必要参数，通过* stack_name*和*environment*参数设置，用户可以创建不同的环境比如生产环境、测试环境，预生产环境等等。
+
 ```hcl
 module "bjs-vpc" {
   source          = "github.com/soldierxue/terraformlib/bjs-infra"
