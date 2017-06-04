@@ -25,5 +25,5 @@ module "demophp" {
     private_subnet_id = "${module.apstack.subnet_private_ids[0]}"
     database_sgid = "${module.apstack.sg_database_id}"
 
-    ec2keyname = "bjsMyKey"
+    ec2keyname = "ap-north1-key"
 }
