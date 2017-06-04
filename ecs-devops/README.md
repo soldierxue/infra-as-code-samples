@@ -162,3 +162,6 @@ sudo terraform apply --var-file inputs.tfvars --var-file ../devops-demo/inputs.t
 
 Canary Task部署完之后，等待我们确认Canary Task没有问题，我们可以审批通过进行生产环境的Task更新以及将在运行的Canary移出Target Group：
 ![Canary Approve to Production Deploy](../images/canary_approve_to_prod.png)
+
+Canary 部署模式下的集群及服务状态：
+![Canary ECS Cluster](../images/ecs_cluster_services.png)
