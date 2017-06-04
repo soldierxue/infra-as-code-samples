@@ -167,4 +167,4 @@ Canary 部署模式下的集群及服务状态：
 ![Canary ECS Cluster](../images/ecs_cluster_services.png)
 
 我们的 Spring Cloud Hello World1 服务：
-![Spring HW1](../images/spring_hw.png =100x100)
+![Spring HW1](../images/spring_hw.png)
