@@ -42,7 +42,7 @@ This Lab guide you to prepare a necessary repository like Code Commit & Elastic 
 
 ```sh
 sudo git clone https://github.com/soldierxue/infra-as-code-samples
-cd ./infra-as-code-samples/global/repo-prepare
+cd ./infra-as-code-samples/ecs-devops/repo-prepare
 
 sudo terraform get --update
 sudo terraform plan 
@@ -87,7 +87,7 @@ LAB2
 
 **注**：该实验创建一个完整的 DevOps 流水线，但由于我们还未创建 ECS Cluster，故代码并未真正部署和更新
 
-$ cd ./infra-as-code-samples/global/devops-demo
+$ cd ./infra-as-code-samples/ecs-devops/devops-demo
 
 检查该实验的输入参数，如下：
 $ vi inputs.tfvars
@@ -112,7 +112,7 @@ cc_repo="cc_demo_jason" # Code Commit Repository information
 参数检查/设定好之后就可以创建 Code Pipeline 了：
 
 ```sh
-cd ./infra-as-code-samples/global/devops-demo
+cd ./infra-as-code-samples/ecs-devops/devops-demo
 
 sudo terraform get --update
 sudo terraform plan --var-file inputs.tfvars
@@ -126,7 +126,7 @@ LAB3
 
 本实验是创建底层的VPC，ECS群集，Auto Scalling 组以及定义ECS 服务和Task：
 
-$ cd ./infra-as-code-samples/global/ecs-demo
+$ cd ./infra-as-code-samples/ecs-devops/ecs-demo
 
 检查该实验的输入参数，如下：
 $ vi inputs.tfvars
@@ -147,7 +147,7 @@ task_desired_count ="1"
 ```
 
 ```sh
-cd ./infra-as-code-samples/global/ecs-demo
+cd ./infra-as-code-samples/ecs-devops/ecs-demo
 
 sudo terraform get --update
 sudo terraform plan --var-file inputs.tfvars --var-file ../devops-demo/inputs.tfvars
