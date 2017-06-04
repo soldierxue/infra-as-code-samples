@@ -4,9 +4,9 @@ Samples for AWS infra as a code
 Currently, there are 3 categories:
 - **aws-cli**: frequent aws cli sample commands
 - **bjs**
-  - [**BJS-LAB1**](#BJS-LAB1):*phpdemo-full* Build a full PHP Demo stack from zero in AWS BJS(China) region
-  - [**BJS-LAB2**](#BJS-LAB2):*vpcfull-s3backend* Here we demo how to build a solid vpc environment with HA NAT instances in AWS BJS(China) region, besides, we will show a new way to store terraform state(terraform managed aws resource state) in AWS s3 bucket
-  - [**BJS-LAB3**](#BJS-LAB3): This lab demos you a situation that, you have built a VPC environment just like [BJS-LAB2](#BJS-LAB2), then you want to creat a PHP/MySQL app within it, then you can get the vpc details from stored S3 terraform state file
+  - [**BJS-LAB1**](#bjs-lab1):*phpdemo-full* Build a full PHP Demo stack from zero in AWS BJS(China) region
+  - [**BJS-LAB2**](#bjs-lab2):*vpcfull-s3backend* Here we demo how to build a solid vpc environment with HA NAT instances in AWS BJS(China) region, besides, we will show a new way to store terraform state(terraform managed aws resource state) in AWS s3 bucket
+  - [**BJS-LAB3**](#bjs-lab3): This lab demos you a situation that, you have built a VPC environment just like [BJS-LAB2](#bjs-lab2), then you want to creat a PHP/MySQL app within it, then you can get the vpc details from stored S3 terraform state file
 
 
 bjs-infra
