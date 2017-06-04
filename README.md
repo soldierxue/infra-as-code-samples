@@ -1,15 +1,17 @@
 Samples for AWS infra as a code
 ===============================
 
-Currently, there are 3 categories:
 - **aws-cli**: frequent aws cli sample commands
-- **bjs**
+- **[AWS-BJS](#aws-bjs)**
   - [**BJS-LAB1**](#bjs-lab1):*phpdemo-full* Build a full PHP Demo stack from zero in AWS BJS(China) region
   - [**BJS-LAB2**](#bjs-lab2):*vpcfull-s3backend* Here we demo how to build a solid vpc environment with HA NAT instances in AWS BJS(China) region, besides, we will show a new way to store terraform state(terraform managed aws resource state) in AWS s3 bucket
   - [**BJS-LAB3**](#bjs-lab3): This lab demos you a situation that, you have built a VPC environment just like [BJS-LAB2](#bjs-lab2), then you want to creat a PHP/MySQL app within it, then you can get the vpc details from stored S3 terraform state file
 
+Architect Overview
+------------------
+- **[Network Architect](#network-architect)**: Architect for BJS Networking with HA NAT Instances
 
-bjs-infra
+AWS-BJS
 ---------
 For BJS(China) region samples, we build a sample for managing BJS :
 
@@ -20,16 +22,6 @@ For BJS(China) region samples, we build a sample for managing BJS :
 - IGW : internet gateway for instances in public subnets access internet
 - NAT Instances(ec2): because BJS region has no managed NAT Gateway service, so this sample demos how to create a HA NAT instances for two private subnets
 - PHP Demo: php website with a db call to backend mysql , use this website to verify the VPC resources are created correctly
-
-NAT HA Architect
--------------------
-
-![NAT HA Architect](images/bjs-nat.jpg)
-
-- 假定我们有两个 NAT 实例，NAT#1 和 NAT#2；两个私有子网，private subnet#1和private subnet#2；两个子网路由route1 和route2，route1 关联到private subnet#1，route2关联到private subnet#2；
-- 初始化route1的外网路由，0.0.0.0/0 转发到 NAT#1；
-- 初始化route2的外网路由，0.0.0.0/0 转发到 NAT#2；
-- 两个 NAT 实例中配置运行 nat_monitor.sh 脚本；该脚本定时检查另一个 NAT 实例状态；如果发现另外一个NAT实例不工作，那么就会修改本来路由到该NAT（不工作的NAT实例）的路由表记录指向健康的NAT实例（自己）；如果该脚本发现自己恢复了，就会重置关联到自己的私网转发路由记录重新指向自己；
 
 Prerequisite:
 -------------
@@ -111,3 +103,14 @@ BJS-LAB2
 
 BJS-LAB3
 --------
+
+
+Network Architect
+-----------------
+
+![NAT HA Architect](images/bjs-nat.jpg)
+
+- 假定我们有两个 NAT 实例，NAT#1 和 NAT#2；两个私有子网，private subnet#1和private subnet#2；两个子网路由route1 和route2，route1 关联到private subnet#1，route2关联到private subnet#2；
+- 初始化route1的外网路由，0.0.0.0/0 转发到 NAT#1；
+- 初始化route2的外网路由，0.0.0.0/0 转发到 NAT#2；
+- 两个 NAT 实例中配置运行 nat_monitor.sh 脚本；该脚本定时检查另一个 NAT 实例状态；如果发现另外一个NAT实例不工作，那么就会修改本来路由到该NAT（不工作的NAT实例）的路由表记录指向健康的NAT实例（自己）；如果该脚本发现自己恢复了，就会重置关联到自己的私网转发路由记录重新指向自己；
