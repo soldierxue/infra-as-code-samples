@@ -28,6 +28,7 @@ module "bjs-vpc" {
 
 module "demophp" {
     source = "github.com/soldierxue/terraformlib/bjs-infra/demo-php"
+    region          = "${module.bjs-vpc.region}"
     name ="${module.bjs-vpc.stack_name}"
     environment = "${module.bjs-vpc.environment}"
     vpc_id          = "${module.bjs-vpc.vpc_id}"
