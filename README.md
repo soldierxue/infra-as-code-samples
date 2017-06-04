@@ -80,7 +80,7 @@ sudo terraform plan
 sudo terraform apply
 ```
 
-该实验的部分样例代码（创建一个网络基础设施）如下，用户只需要关注准备的必要参数，通过* stack_name*和*environment*参数设置，用户可以创建不同的环境比如生产环境、测试环境，预生产环境等等。
+该实验的部分样例代码（创建一个网络基础设施）如下，用户只需要关注准备的必要参数，通过 *stack_name* 和 *environment* 参数设置，用户可以创建不同的环境比如生产环境、测试环境，预生产环境等等。
 
 ```hcl
 module "bjs-vpc" {
@@ -103,10 +103,90 @@ sudo terraform destroy --var-file bjs.tfvars
 ```
 BJS-LAB2
 --------
+运行该样例之前请准备好：
+- BJS 区域的一个存储桶：默认名字为 terraform
+- BJS 一个keypair，默认是 bjsMyKey.pem
+
+根据以上信息，检查样例代码里面的参数配置是否一致：
+
+```sh
+vi ./infra-as-code-samples/bjs/vpcfull-s3backend/main.tf
+```sh
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket = "terraform"  ## 重点检查
+    key    = "network/terraform.tfstate"
+    region = "cn-north-1"
+  }
+}
+
+module "bjs-vpc" {
+  source          = "github.com/soldierxue/terraformlib/bjs-infra"
+  region          = "cn-north-1"
+  base_cidr_block = "10.0.0.0/16"
+  stack_name = "bjsdemo" 
+  environment = "test" 
+  ec2keyname = "bjsMyKey" ## 重点检查
+  keyfile = "~/bjsMyKey.pem" ## 重点检查
+  subnet_private_cidrs = ["10.0.48.0/20","10.0.112.0/20"]
+  subnet_public_cidrs = ["10.0.0.0/20","10.0.16.0/20"]
+}
+```
+```sh
+cd ./infra-as-code-samples/bjs/vpcfull-s3backend
+
+sudo terraform get --update
+sudo terraform init 
+sudo terraform plan
+sudo terraform apply
+```
 
 BJS-LAB3
 --------
+运行该样例之前请准备好：
+- 你已经成功执行 [BJS-LAB2](#bjs-lab2)
+- 检查 S3 bucket名字和 keypair 名字
 
+根据以上信息，检查样例代码里面的参数配置是否一致：
+
+```sh
+vi ./infra-as-code-samples/bjs/phpdemo-s3backend/main.tf
+```sh
+
+```hcl
+data "terraform_remote_state" "bjs" {
+  backend = "s3"
+  config {
+    bucket = "terraform" ## 重点检查， 和lab2一致
+    key    = "network/terraform.tfstate"
+    region = "cn-north-1"
+  }
+}
+
+module "demophp" {
+    source = "github.com/soldierxue/terraformlib/bjs-infra/demo-php"
+    name ="${data.terraform_remote_state.bjs.stack_name}"
+    environment = "${data.terraform_remote_state.bjs.environment}"
+    vpc_id          = "${data.terraform_remote_state.bjs.vpc_id}"
+    public_subnet_id = "${data.terraform_remote_state.bjs.subnet_public_ids[0]}"
+    fronend_web_sgid = "${data.terraform_remote_state.bjs.sg_frontend_id}"
+
+    private_subnet_id = "${data.terraform_remote_state.bjs.subnet_private_ids[0]}"
+    database_sgid = "${data.terraform_remote_state.bjs.sg_database_id}"
+
+    ec2keyname = "bjsMyKey"  ## 重点检查
+}
+```
+```sh
+cd ./infra-as-code-samples/bjs/phpdemo-s3backend
+
+sudo terraform get --update
+sudo terraform init
+sudo terraform plan 
+sudo terraform apply
+```
 
 Network Architect
 -----------------
