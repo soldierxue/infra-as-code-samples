@@ -99,7 +99,7 @@ module "bjs-vpc" {
 通过 Terraform 销毁整个 Terraform 管理的环境：
 
 ```sh
-sudo terraform destroy --var-file bjs.tfvars
+sudo terraform destroy
 ```
 BJS-LAB2
 --------
