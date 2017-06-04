@@ -41,6 +41,9 @@ variable service_deploy_policy {
    description = "policy for how to update ecs services in the cluster"
    default = "InPlaceDoubling"
 }
+variable project_path {
+   description = "project name to be built and deployed"
+}
 
 
 provider "aws" {

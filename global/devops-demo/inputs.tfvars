@@ -9,7 +9,9 @@ esc_cluster_name="ecs_cdemo"
 ecs_service_name="hw0603"
 ecs_family_name = "f_hw0603"
 
+
 cc_repo="cc_demo_jason"
+project_path = "spring-hw-1"
 
 ## Policy for service deployment: "InPlaceDoubling"|"InPlaceRolling"|"Canary"
 service_deploy_policy = "Canary"
