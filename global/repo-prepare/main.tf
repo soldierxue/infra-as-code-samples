@@ -13,26 +13,26 @@ module "ecr_reg" {
 }
 
 output ecr_repo_url {
-  value = "${module.ecr_reg.repository_url}"
+  value = "${module.ecr_reg.ecr_repo_url}"
 }
 
 output ecr_name {
-  value = "${module.ecr_reg.name}"
+  value = "${module.ecr_reg.ecr_name}"
 }
 
 output ecr_arn {
-  value = "${module.ecr_reg.arn}"
+  value = "${module.ecr_reg.ecr_arn}"
 }
 
 
 output repo_clone_url_http {
-  value = "${module.code_commit.clone_url_http}"
+  value = "${module.code_commit.repo_clone_url_http}"
 }
 
 output repo_clone_url_ssh {
-  value = "${module.code_commit.clone_url_ssh}"
+  value = "${module.code_commit.repo_clone_url_ssh}"
 }
 
 output repo_name {
-  value = "${module.code_commit.repository_name}"
+  value = "${module.code_commit.repo_name}"
 }
