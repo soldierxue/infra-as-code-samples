@@ -10,7 +10,7 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 module "apstack" {
-    source = "github.com/soldierxue/infra-as-code-samples/terraform"
+    source = "github.com/soldierxue/terraformlib"
     stack_name = "jasonstack"
 }
 
