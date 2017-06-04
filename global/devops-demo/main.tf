@@ -65,4 +65,5 @@ module "code_ecs_demo" {
    #ecs_task_desiredcount=2
    codex_region = "${var.region}"
    codecommit_repo = "${var.cc_repo}"
+   project_path="${var.project_path}"
 }
