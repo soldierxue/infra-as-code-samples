@@ -121,8 +121,8 @@ sudo terraform plan --var-file inputs.tfvars
 sudo terraform apply --var-file inputs.tfvars
 ```
 
-BJS-LAB3
---------
+LAB3
+----
 运行该样例之前请准备好：
 - 你已经成功执行 [LAB2](#lab2)
 
@@ -167,4 +167,4 @@ Canary 部署模式下的集群及服务状态：
 ![Canary ECS Cluster](../images/ecs_cluster_services.png)
 
 我们的 Spring Cloud Hello World1 服务：
-![Spring HW1](../images/spring_hw.png)
+![Spring HW1](../images/spring_hw.png =100x100)
