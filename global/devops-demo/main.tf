@@ -61,5 +61,5 @@ module "code_ecs_demo" {
    #ecs_task_port=8080
    #ecs_task_desiredcount=2
    codex_region = "${var.region}"
-   codecommit_repo = "${module.code_commit.repo_name}"
+   codecommit_repo = "${var.cc_repo}"
 }
