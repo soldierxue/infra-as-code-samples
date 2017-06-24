@@ -45,7 +45,7 @@ module "support-alb" {
    alb_rule_hosts = ["${var.support_alb_rule_hosts}"]
 }
 
-module "internal-alb" {
+module "srv-alb" {
    source = "github.com/soldierxue/terraformlib/alb_tgs"
    name ="pet-alb"
    stack_name="${module.apstack.stack_name}"
@@ -57,5 +57,12 @@ module "internal-alb" {
    alb_tg_protocals = ["${var.srv_alb_tg_protocals}"]
    alb_listener_port = "${var.srv_alb_listener_port}"
    alb_rule_hosts = ["${var.srv_alb_rule_hosts}"]
+}
+
+module "support-dns" {
+	source = "github.com/soldierxue/terraformlib/dns"
+	dns_zone_name = "${var.dns_zone_name}"
+	dns_cname_records = ["${var.dns_cname_records}"]
+	dns_names = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}"]
 }
 
