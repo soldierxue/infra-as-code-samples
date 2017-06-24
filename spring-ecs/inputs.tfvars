@@ -1,5 +1,5 @@
 region = "ap-northeast-1"
-ecr_region = "ap-northeast-1
+ecr_region = "ap-northeast-1"
 
 springAppNames = ["spring-config-server","spring-netflix-eureka-ha","spring-petclinic-rest-owner","spring-petclinic-rest-pet","spring-petclinic-rest-vet","spring-petclinic-rest-visit"]
 
