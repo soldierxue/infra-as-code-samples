@@ -6,7 +6,7 @@ variable support_alb_tg_protocals {
    description = "The protocals for each target groups"
    type = "list"
 } 
-variable support_alb_rule_paths {
+variable support_alb_rule_hosts {
    description = "The paths for different target groups within the same listener port"
    type = "list"
 } 
