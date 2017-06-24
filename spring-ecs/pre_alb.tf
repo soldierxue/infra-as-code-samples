@@ -7,19 +7,35 @@ variable alb_subnet_ids {
    description = "The subnets for alb to be deployed"
    type = "list"
 } 
-variable alb_tg_names {
+variable dmz_alb_tg_names {
    description = "The names of the target groups"
    type = "list"
 } 
-variable alb_tg_protocals {
+variable dmz_alb_tg_protocals {
    description = "The protocals for each target groups"
    type = "list"
 } 
-variable alb_rule_paths {
+variable dmz_alb_rule_paths {
    description = "The paths for different target groups within the same listener port"
    type = "list"
 } 
-variable alb_listener_port {
+variable dmz_alb_listener_port {
+   description = "The port to which alb listener listen"
+} 
+
+variable srv_alb_tg_names {
+   description = "The names of the target groups"
+   type = "list"
+} 
+variable srv_alb_tg_protocals {
+   description = "The protocals for each target groups"
+   type = "list"
+} 
+variable srv_alb_rule_paths {
+   description = "The paths for different target groups within the same listener port"
+   type = "list"
+} 
+variable srv_alb_listener_port {
    description = "The port to which alb listener listen"
 } 
 
