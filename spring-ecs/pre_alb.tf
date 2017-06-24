@@ -1,12 +1,3 @@
-
-variable alb_sgs {
-   description = "The name of security groups for the ALB"
-   type = "list"
-} 
-variable alb_subnet_ids {
-   description = "The subnets for alb to be deployed"
-   type = "list"
-} 
 variable dmz_alb_tg_names {
    description = "The names of the target groups"
    type = "list"
