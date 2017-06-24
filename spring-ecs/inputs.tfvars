@@ -25,7 +25,7 @@ srv_alb_listener_port = "8080"
 srv_alb_rule_paths = ["pet","owner","visit","vet"]
 
 # parameters for services and tasks
-docker_tag = "LATEST"
+docker_tag = "latest"
 container_cpu = "200"
 container_memory = "300"
 
