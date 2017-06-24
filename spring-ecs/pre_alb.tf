@@ -1,16 +1,16 @@
-variable dmz_alb_tg_names {
+variable support_alb_tg_names {
    description = "The names of the target groups"
    type = "list"
 } 
-variable dmz_alb_tg_protocals {
+variable support_alb_tg_protocals {
    description = "The protocals for each target groups"
    type = "list"
 } 
-variable dmz_alb_rule_paths {
+variable support_alb_rule_paths {
    description = "The paths for different target groups within the same listener port"
    type = "list"
 } 
-variable dmz_alb_listener_port {
+variable support_alb_listener_port {
    description = "The port to which alb listener listen"
 } 
 
@@ -22,27 +22,27 @@ variable srv_alb_tg_protocals {
    description = "The protocals for each target groups"
    type = "list"
 } 
-variable srv_alb_rule_paths {
-   description = "The paths for different target groups within the same listener port"
+variable srv_alb_rule_hosts {
+   description = "The hostnames for different target groups within the same listener port"
    type = "list"
 } 
 variable srv_alb_listener_port {
    description = "The port to which alb listener listen"
 } 
 
-module "dmz-alb" {
+module "support-alb" {
    source = "github.com/soldierxue/terraformlib/alb_tgs"
-   name ="dmz-admin"
+   name ="support-admin"
    stack_name="${module.apstack.stack_name}"
    environment = "${module.apstack.environment}"
    alb_is_internal = "0"
    alb_sgs = ["${module.apstack.sg_internal_id}","${module.apstack.sg_frontend_id}"]
    alb_subnet_ids = "${module.apstack.subnet_public_ids}"
    vpc_id = "${module.apstack.vpc_id}"
-   alb_tg_names = ["${var.dmz_alb_tg_names}"]
-   alb_tg_protocals = ["${var.dmz_alb_tg_protocals}"]
-   alb_listener_port = "${var.dmz_alb_listener_port}"
-   alb_rule_paths = ["${var.dmz_alb_rule_paths}"]
+   alb_tg_names = ["${var.support_alb_tg_names}"]
+   alb_tg_protocals = ["${var.support_alb_tg_protocals}"]
+   alb_listener_port = "${var.support_alb_listener_port}"
+   alb_rule_hosts = ["${var.support_alb_rule_hosts}"]
 }
 
 module "internal-alb" {
@@ -56,8 +56,6 @@ module "internal-alb" {
    alb_tg_names = ["${var.srv_alb_tg_names}"]
    alb_tg_protocals = ["${var.srv_alb_tg_protocals}"]
    alb_listener_port = "${var.srv_alb_listener_port}"
-   alb_rule_paths = ["${var.srv_alb_rule_paths}"]
+   alb_rule_hosts = ["${var.srv_alb_rule_hosts}"]
 }
 
-#"${lookup(var.deployment_policy,"countInplace.${var.deployment_option}")}"
-# lookup(var.support_srv_params,"config.tg_name")

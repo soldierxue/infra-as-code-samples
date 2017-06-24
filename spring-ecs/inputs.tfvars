@@ -12,17 +12,20 @@ asg_desired_size = "2"
 key_pair_name  = "ap-north1-key"
 
 # parameters for ALB & target groups
-# DMZ ALB for Config & Eureka Services
-dmz_alb_tg_names = ["tg-config","tg-eureka","tg-eureka2"]
-dmz_alb_tg_protocals = ["HTTP","HTTP","HTTP"]
-dmz_alb_listener_port = "8761"
-dmz_alb_rule_paths = ["config","eureka","eureka2"]
+
+# Internal ALB for Config & Eureka Services
+support_alb_tg_names = ["tg-config","tg-eureka","tg-eureka2"]
+support_alb_tg_protocals = ["HTTP","HTTP","HTTP"]
+support_alb_listener_port = "8761"
+#support_alb_rule_paths = ["config","eureka","eureka2"]
+support_alb_rule_hosts = ["config.sasubmit.cc","eureka.sasubmit.cc","eureka2.sasubmit.cc"]
 
 # Internal ALB for Pet clinic related services
 srv_alb_tg_names = ["tg-pet","tg-owner","tg-visit","tg-vet"]
 srv_alb_tg_protocals = ["HTTP","HTTP","HTTP","HTTP"]
 srv_alb_listener_port = "8080"
-srv_alb_rule_paths = ["pet","owner","visit","vet"]
+#srv_alb_rule_paths = ["pet","owner","visit","vet"]
+srv_alb_rule_hosts = ["pet.sasubmit.cc","owner.sasubmit.cc","visit.sasubmit.cc","vet.sasubmit.cc"]
 
 # parameters for services and tasks
 docker_tag = "latest"
