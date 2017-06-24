@@ -30,6 +30,16 @@ variable srv_alb_listener_port {
    description = "The port to which alb listener listen"
 } 
 
+# variables for dns
+variable dns_zone_name {
+   description = "The name for route53 host zone"
+} 
+variable dns_names {
+   description = "The dns names"
+   type = "list"
+} 
+
+
 module "support-alb" {
    source = "github.com/soldierxue/terraformlib/alb_tgs"
    name ="support-admin"
@@ -62,7 +72,7 @@ module "srv-alb" {
 module "support-dns" {
 	source = "github.com/soldierxue/terraformlib/dns"
 	dns_zone_name = "${var.dns_zone_name}"
-	dns_cname_records = ["${var.dns_cname_records}"]
-	dns_names = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}"]
+	dns_names = ["${var.dns_cname_records}"]
+	dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}","${module.rv-alb.alb_public_url_withoutport}"]
 }
 

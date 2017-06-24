@@ -14,7 +14,7 @@ key_pair_name  = "ap-north1-key"
 # parameters for ALB & target groups
 # DNS names
 dns_zone_name = "sasubmit.cc"
-dns_cname_records = ["config.sasubmit.cc","eureka.sasubmit.cc","eureka2.sasubmit.cc","pet.sasubmit.cc","owner.sasubmit.cc","visit.sasubmit.cc","vet.sasubmit.cc"]
+dns_names = ["config.sasubmit.cc","eureka.sasubmit.cc","eureka2.sasubmit.cc","pet.sasubmit.cc","owner.sasubmit.cc","visit.sasubmit.cc","vet.sasubmit.cc"]
 
 # Internal ALB for Config & Eureka Services
 support_alb_tg_names = ["tg-config","tg-eureka","tg-eureka2"]
