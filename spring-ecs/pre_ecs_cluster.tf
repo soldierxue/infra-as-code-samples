@@ -7,6 +7,9 @@ variable region {
 variable stack_name {
    description = "The name of the ecs stack"
 } 
+variable ecs_cluster_name {
+   description = "The name of ecs cluster"
+} 
 variable asg_min {
    description = "The min size of the asg cluster"
 } 
@@ -36,7 +39,7 @@ module "ecscluster1" {
     stack_name ="${module.apstack.stack_name}"
     environment = "${module.apstack.environment}"
 
-    cluster_name ="${var.esc_cluster_name}"
+    cluster_name ="${var.ecs_cluster_name}"
     asg_min = "${var.asg_min}"
     asg_max = "${var.asg_max}"
     asg_desired_size = "${var.asg_desired_size}"
