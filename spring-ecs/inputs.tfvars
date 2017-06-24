@@ -13,13 +13,13 @@ key_pair_name  = "ap-north1-key"
 
 # parameters for ALB & target groups
 # DMZ ALB for Config & Eureka Services
-dmz_alb_tg_names = ["tg_config","tg_eureka","tg_eureka2"]
+dmz_alb_tg_names = ["tg-config","tg-eureka","tg-eureka2"]
 dmz_alb_tg_protocals = ["HTTP","HTTP","HTTP"]
 dmz_alb_listener_port = "8761"
 dmz_alb_rule_paths = ["config","eureka","eureka2"]
 
 # Internal ALB for Pet clinic related services
-srv_alb_tg_names = ["tg_pet","tg_owner","tg_visit","tg_vet"]
+srv_alb_tg_names = ["tg-pet","tg-owner","tg-visit","tg-vet"]
 srv_alb_tg_protocals = ["HTTP","HTTP","HTTP","HTTP"]
 srv_alb_listener_port = "8080"
 srv_alb_rule_paths = ["pet","owner","visit","vet"]
