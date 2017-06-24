@@ -74,5 +74,6 @@ module "support-dns" {
 	dns_names = ["${var.dns_names}"]
 	dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}"]
 	#dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}"]
+	vpc_id = "${module.apstack.vpc_id}"
 }
 
