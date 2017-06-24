@@ -1,3 +1,7 @@
+variable ecr_region {
+   description = "The region for ecr"
+} 
+
 variable docker_tag {
    description = "The common container image tag"
 } 
