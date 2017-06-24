@@ -14,6 +14,7 @@ variable container_memory {
 
 variable support_srv_params {
    description = "The params for support services"
+   type = "map"
 } 
 
 
