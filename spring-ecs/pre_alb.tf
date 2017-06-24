@@ -1,4 +1,27 @@
 
+variable alb_sgs {
+   description = "The name of security groups for the ALB"
+   type = "list"
+} 
+variable alb_subnet_ids {
+   description = "The subnets for alb to be deployed"
+   type = "list"
+} 
+variable alb_tg_names {
+   description = "The names of the target groups"
+   type = "list"
+} 
+variable alb_tg_protocals {
+   description = "The protocals for each target groups"
+   type = "list"
+} 
+variable alb_rule_paths {
+   description = "The paths for different target groups within the same listener port"
+   type = "list"
+} 
+variable alb_listener_port {
+   description = "The port to which alb listener listen"
+} 
 
 module "dmz-alb" {
    source = "github.com/soldierxue/terraformlib/alb_tgs"
