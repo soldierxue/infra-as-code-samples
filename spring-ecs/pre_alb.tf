@@ -58,3 +58,6 @@ module "internal-alb" {
    alb_listener_port = "${var.srv_alb_listener_port}"
    alb_rule_paths = ["${var.srv_alb_rule_paths}"]
 }
+
+#"${lookup(var.deployment_policy,"countInplace.${var.deployment_option}")}"
+# lookup(var.support_srv_params,"config.tg_name")
