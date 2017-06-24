@@ -45,8 +45,8 @@ module "support-alb" {
    name ="support-admin"
    stack_name="${module.apstack.stack_name}"
    environment = "${module.apstack.environment}"
-   alb_sgs = ["${module.apstack.sg_internal_id}","${module.apstack.sg_frontend_id}"]
-   alb_subnet_ids = "${module.apstack.subnet_public_ids}"
+   alb_sgs = ["${module.apstack.sg_internal_id}"]
+   alb_subnet_ids = "${module.apstack.subnet_private_ids}"
    vpc_id = "${module.apstack.vpc_id}"
    alb_tg_names = ["${var.support_alb_tg_names}"]
    alb_tg_protocals = ["${var.support_alb_tg_protocals}"]
