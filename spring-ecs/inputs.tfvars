@@ -27,8 +27,6 @@ srv_alb_rule_paths = ["pet","owner","visit","vet"]
 docker_tag = "LATEST"
 container_cpu = "200"
 container_memory = "300"
-container_port = "8080"
-task_desired_count ="1"
 
 
 support_srv_params = {

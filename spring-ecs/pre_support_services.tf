@@ -1,3 +1,19 @@
+variable docker_tag {
+   description = "The common container image tag"
+} 
+variable container_cpu {
+   description = "The common container cpu value"
+} 
+variable container_memory {
+   description = "The common container memory value"
+} 
+
+variable support_srv_params {
+   description = "The params for support services"
+} 
+
+
+
 module "spring-config" {
   source = "github.com/soldierxue/terraformlib/ecs-service"
 
