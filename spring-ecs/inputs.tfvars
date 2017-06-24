@@ -46,12 +46,14 @@ support_srv_params = {
       eureka.ecr_repo = "spring-netflix-eureka-ha"
       eureka.service_name = "eureka_srv"
       eureka.family_name = "eureka_fname"
-      eureka.tg_name = "tg-eureka" # mapping to find the target group arn   
+      eureka.tg_name = "tg-eureka" # mapping to find the target group arn
+      eureka.spring_profile = "ecs1"   
 
       eureka2.container_port = "8761"
       eureka2.task_desired_count = "1"
       eureka2.ecr_repo = "spring-netflix-eureka-ha"
       eureka2.service_name = "eureka_srv2"
       eureka2.family_name = "eureka_fname2"
-      eureka2.tg_name = "tg-eureka2" # mapping to find the target group arn              
+      eureka2.tg_name = "tg-eureka2" # mapping to find the target group arn    
+      eureka2.spring_profile = "ecs2"             
 }

@@ -53,6 +53,7 @@ module "spring-eureka" {
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka.tg_name")))}"
+  spring_profiles_active = "${lookup(var.support_srv_params,"eureka.spring_profile")}"
 }
 
 module "spring-eureka2" {
@@ -71,4 +72,5 @@ module "spring-eureka2" {
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka2.tg_name")))}"
+  spring_profiles_active = "${lookup(var.support_srv_params,"eureka2.spring_profile")}"
 }
