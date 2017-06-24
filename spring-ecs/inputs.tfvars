@@ -4,6 +4,7 @@ springAppNames = ["spring-config-server","spring-netflix-eureka-ha","spring-petc
 
 # parameters for ecs cluster
 stack_name = "springecs"
+esc_cluster_name = "petcluster"
 asg_min = "2"
 asg_max = "10"
 asg_desired_size = "2"
