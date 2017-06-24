@@ -1,6 +1,4 @@
 ## Required Variables
-
-
 variable stack_name {
    description = "The name of the ecs stack"
 } 
