@@ -73,7 +73,7 @@ module "support-dns" {
 	source = "github.com/soldierxue/terraformlib/dns"
 	dns_zone_name = "${var.dns_zone_name}"
 	dns_names = ["${var.dns_names}"]
-	#dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}"]
-	dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}"]
+	dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}","${module.srv-alb.alb_public_url_withoutport}"]
+	#dns_cname_records = ["${module.support-alb.alb_public_url_withoutport}","${module.support-alb.alb_public_url_withoutport}"]
 }
 
