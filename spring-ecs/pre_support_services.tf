@@ -34,7 +34,7 @@ module "spring-config" {
   desired_count = "${lookup(var.support_srv_params,"config.task_desired_count")}"
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
-  target_group_arn ="${element(module.dmz-alb.target_group_arns,index(var.dmz_alb_tg_names,lookup(var.support_srv_params,"config.tg_name")))}"
+  target_group_arn ="${element(module.support-alb.target_group_arns,index(var.dmz_alb_tg_names,lookup(var.support_srv_params,"config.tg_name")))}"
 }
 
 module "spring-eureka" {
@@ -52,7 +52,7 @@ module "spring-eureka" {
   desired_count = "${lookup(var.support_srv_params,"eureka.task_desired_count")}"
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
-  target_group_arn ="${element(module.dmz-alb.target_group_arns,index(var.dmz_alb_tg_names,lookup(var.support_srv_params,"eureka.tg_name")))}"
+  target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka.tg_name")))}"
 }
 
 module "spring-eureka2" {
@@ -70,5 +70,5 @@ module "spring-eureka2" {
   desired_count = "${lookup(var.support_srv_params,"eureka2.task_desired_count")}"
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
-  target_group_arn ="${element(module.dmz-alb.target_group_arns,index(var.dmz_alb_tg_names,lookup(var.support_srv_params,"eureka2.tg_name")))}"
+  target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka2.tg_name")))}"
 }
