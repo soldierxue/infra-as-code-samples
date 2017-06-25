@@ -17,6 +17,15 @@ variable support_srv_params {
    type = "map"
 } 
 
+variable place_constraint {
+   description = "The params for service placement constraint"
+   type = "map"
+} 
+
+variable place_strategy {
+   description = "The params for service placement strategy"
+   type = "map"
+} 
 
 
 module "spring-config" {
@@ -35,6 +44,11 @@ module "spring-config" {
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"config.tg_name")))}"
+
+  pc_distinctInstanceCount = "${lookup(var.place_constraint,"config.distinctInstanceCount")}"
+  ps_count = "${lookup(var.place_strategy,"config.count")}"
+  ps_type = "${lookup(var.place_strategy,"config.type")}"
+  ps_field = "${lookup(var.place_strategy,"config.field")}"
 }
 
 module "spring-eureka" {
@@ -54,6 +68,8 @@ module "spring-eureka" {
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka.tg_name")))}"
   spring_profile_active = "${lookup(var.support_srv_params,"eureka.spring_profile")}"
+
+  pc_distinctInstanceCount = "${lookup(var.place_constraint,"eureka.distinctInstanceCount")}"
 }
 
 module "spring-eureka2" {
@@ -73,4 +89,6 @@ module "spring-eureka2" {
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"eureka2.tg_name")))}"
   spring_profile_active = "${lookup(var.support_srv_params,"eureka2.spring_profile")}"
+
+  pc_distinctInstanceCount = "${lookup(var.place_constraint,"eureka2.distinctInstanceCount")}"
 }

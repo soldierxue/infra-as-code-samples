@@ -68,3 +68,21 @@ support_srv_params = {
       owner.tg_name = "tg-owner" # mapping to find the target group arn
 
 }
+
+place_constraint = {
+	config.distinctInstanceCount = 1
+	eureka.distinctInstanceCount = 1
+	eureka2.distinctInstanceCount = 1
+	owner.memberOfCount = 1
+	owner.expression = "task:group == service:eureka_srv"
+}
+
+place_strategy = {
+    config.count = 1 # valid values : 0 or 1
+	config.type =  "spread"  #Valid Values: random | spread | binpack
+	config.field = "attribute:ecs.availability-zone" # see http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_PlacementStrategy.html
+
+	owner.count = 1
+	owner.type = "binpack"
+	owner.field = "cpu"
+}
