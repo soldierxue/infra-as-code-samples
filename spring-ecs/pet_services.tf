@@ -13,5 +13,5 @@ module "owenr-service" {
   desired_count = "${lookup(var.support_srv_params,"owner.task_desired_count")}"
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
-  target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"owner.tg_name")))}"
+  target_group_arn ="${element(module.srv-alb.target_group_arns,index(var.srv_alb_tg_names,lookup(var.support_srv_params,"owner.tg_name")))}"
 }
