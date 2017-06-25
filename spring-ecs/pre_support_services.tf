@@ -1,3 +1,5 @@
+# Here We defines the 2 support services like Spring Cloud Config & Spring Cloud Eureka
+
 variable ecr_region {
    description = "The region for ecr"
 } 

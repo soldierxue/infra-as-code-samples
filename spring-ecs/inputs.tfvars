@@ -37,7 +37,7 @@ container_memory = "300"
 
 
 support_srv_params = {
-      config.container_port = "7100"
+      config.container_port = "7001"
       config.task_desired_count = "2"
       config.ecr_repo = "spring-config-server"
       config.service_name = "config_srv"
@@ -67,6 +67,27 @@ support_srv_params = {
       owner.family_name = "owner_fname2"
       owner.tg_name = "tg-owner" # mapping to find the target group arn
 
+      pet.container_port = "8080"
+      pet.task_desired_count = "2"
+      pet.ecr_repo = "spring-petclinic-rest-pet"
+      pet.service_name = "pet_srv"
+      pet.family_name = "pet_fname"
+      pet.tg_name = "tg-pet" # mapping to find the target group arn
+
+      vet.container_port = "8080"
+      vet.task_desired_count = "2"
+      vet.ecr_repo = "spring-petclinic-rest-vet"
+      vet.service_name = "vet_srv"
+      vet.family_name = "vet_fname"
+      vet.tg_name = "tg-vet" # mapping to find the target group arn
+
+      visit.container_port = "8080"
+      visit.task_desired_count = "2"
+      visit.ecr_repo = "spring-petclinic-rest-visit"
+      visit.service_name = "visit_srv"
+      visit.family_name = "visit_fname"
+      visit.tg_name = "tg-visit" # mapping to find the target group arn                  
+
 }
 
 place_constraint = {
@@ -78,7 +99,6 @@ place_constraint = {
 }
 
 place_strategy = {
-    #config.count = 1 # valid values : 0 or 1
 	config.type =  "spread"  #Valid Values: random | spread | binpack
 	config.field = "attribute:ecs.availability-zone" # see http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_PlacementStrategy.html
 
