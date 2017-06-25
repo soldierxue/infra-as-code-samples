@@ -78,11 +78,11 @@ place_constraint = {
 }
 
 place_strategy = {
-    config.count = 1 # valid values : 0 or 1
+    #config.count = 1 # valid values : 0 or 1
 	config.type =  "spread"  #Valid Values: random | spread | binpack
 	config.field = "attribute:ecs.availability-zone" # see http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_PlacementStrategy.html
 
-	owner.count = 1
+	#owner.count = 1
 	owner.type = "binpack"
 	owner.field = "cpu"
 }

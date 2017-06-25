@@ -14,4 +14,10 @@ module "owenr-service" {
 
   ecs_service_role_arn = "${module.ecscluster1.ecs_service_role_arn}"
   target_group_arn ="${element(module.srv-alb.target_group_arns,index(var.srv_alb_tg_names,lookup(var.support_srv_params,"owner.tg_name")))}"
+
+  pc_memberOfCount = "${lookup(var.place_constraint,"owner.memberOfCount")}"
+  pc_memberOf_expression = "${lookup(var.place_constraint,"owner.expression")}"
+
+  ps_type = "${lookup(var.place_strategy,"owner.type")}"
+  ps_field = "${lookup(var.place_strategy,"owner.field")}"
 }

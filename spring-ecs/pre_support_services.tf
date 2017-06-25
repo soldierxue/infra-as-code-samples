@@ -46,7 +46,7 @@ module "spring-config" {
   target_group_arn ="${element(module.support-alb.target_group_arns,index(var.support_alb_tg_names,lookup(var.support_srv_params,"config.tg_name")))}"
 
   pc_distinctInstanceCount = "${lookup(var.place_constraint,"config.distinctInstanceCount")}"
-  ps_count = "${lookup(var.place_strategy,"config.count")}"
+  #ps_count = "${lookup(var.place_strategy,"config.count")}"
   ps_type = "${lookup(var.place_strategy,"config.type")}"
   ps_field = "${lookup(var.place_strategy,"config.field")}"
 }
