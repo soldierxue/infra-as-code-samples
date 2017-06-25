@@ -58,5 +58,13 @@ support_srv_params = {
       eureka2.service_name = "eureka_srv2"
       eureka2.family_name = "eureka_fname2"
       eureka2.tg_name = "tg-eureka2" # mapping to find the target group arn    
-      eureka2.spring_profile = "ecs2"             
+      eureka2.spring_profile = "ecs2"      
+
+      owner.container_port = "8080"
+      owner.task_desired_count = "2"
+      owner.ecr_repo = "spring-petclinic-rest-owner"
+      owner.service_name = "owner_srv"
+      owner.family_name = "owner_fname2"
+      owner.tg_name = "tg-owner" # mapping to find the target group arn
+
 }
