@@ -27,7 +27,7 @@ We have tested and completed the whole labs in Amazon Linux, binding with the ri
 
 - 还需要准备一个 Keypair （密钥对）用来绑定到新启动的 EC2 实例上，进行后续的登陆和操作
 
-**Lab tools: **
+**Lab tools:**
 
 - Terraform version 0.9+
 - Docker version 17.03.1-ce, build 7392c3b/17.03.1-ce  
@@ -37,7 +37,7 @@ We have tested and completed the whole labs in Amazon Linux, binding with the ri
 - maven & java 1.8 runtime to build java projects
 
 
-**Preparing Terraform runtime：**
+**Preparing Terraform runtime:**
 
 1. Download [Terraform 0.9+](https://www.terraform.io/downloads.html)
 2. For Linux system, 
@@ -119,5 +119,5 @@ mvn --version
 Run the samples:
 ----------------
 - For **Spring ECS Demo** : please follow this [guide](https://github.com/soldierxue/infra-as-code-samples/tree/master/spring-ecs) to continue.
-- For **DevOps & ECS HelloWorld Demo ** : please follow this [guide](https://github.com/soldierxue/infra-as-code-samples/tree/master/ecs-devops) to continue.
-- For ** BJS Demos ** : please follow this [guide](https://github.com/soldierxue/infra-as-code-samples/tree/master/bjs) to continue.
+- For **DevOps & ECS HelloWorld Demo** : please follow this [guide](https://github.com/soldierxue/infra-as-code-samples/tree/master/ecs-devops) to continue.
+- For **BJS Demos** : please follow this [guide](https://github.com/soldierxue/infra-as-code-samples/tree/master/bjs) to continue.
