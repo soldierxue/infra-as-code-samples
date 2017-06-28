@@ -14,7 +14,7 @@ module "mysqldb" {
 
    subnets = "${module.apstack.subnet_private_ids}"
    database_port = "3306"
-   private_cidr = "${module.apstack.base_cidr_block}"
+   private_cidr = ["${module.apstack.base_cidr_block}"]
    rds_vpc_id = "${module.apstack.vpc_id}"
 
    tags {
