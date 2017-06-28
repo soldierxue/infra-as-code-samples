@@ -8,7 +8,7 @@ stack_name = "springecs"
 ecs_cluster_name = "petcluster"
 asg_min = "2"
 asg_max = "10"
-asg_desired_size = "2"
+asg_desired_size = "4"
 key_pair_name  = "ap-north1-key"
 
 # parameters for ALB & target groups
