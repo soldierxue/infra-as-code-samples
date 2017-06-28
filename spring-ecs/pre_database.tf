@@ -11,6 +11,7 @@ module "mysqldb" {
    database_name = "petclinicdb"
    database_user = "petdbuser"
    database_password = "petdbpwd"
+   db_parameter_group = "mypet5.6"
 
    subnets = "${module.apstack.subnet_private_ids}"
    database_port = "3306"
