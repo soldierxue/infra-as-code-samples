@@ -14,6 +14,7 @@ aws ecs list-services --cluster ecs-jason-demo --region ap-northeast-1
     ]
 }
 
+aws ecs describe-service 
 aws ecs register-task-definition --cli-input-json file://mnt/sdg/infra-as-code-samples/aws-cli/ecs/demo.json --region ap-northeast-1
 
 aws ecs update-service --cluster ecs-jason-demo --service spring-hw-demo --desired-count 4 --task-definition spring-hw-demo:5 --region ap-northeast-1
