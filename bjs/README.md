@@ -192,7 +192,7 @@ Samples for AWS infra as a code
 Network Architect
 -----------------
 
-![NAT HA Architect](images/bjs-nat.jpg)
+![NAT HA Architect](../images/bjs-nat.jpg)
 
 - 假定我们有两个 NAT 实例，NAT#1 和 NAT#2；两个私有子网，private subnet#1和private subnet#2；两个子网路由route1 和route2，route1 关联到private subnet#1，route2关联到private subnet#2；
 - 初始化route1的外网路由，0.0.0.0/0 转发到 NAT#1；
@@ -202,7 +202,7 @@ Network Architect
 PHP Demo Architect
 ------------------
 
-![PHP Demo Architect](images/php-arch.png)
+![PHP Demo Architect](../images/php-arch.png)
 
 - 通过 Terraform 分别在公有子网和私有子网创建两台EC2
 - 通过 EC2 的 User Data 配置好 PHP 和 MySQL 环境
