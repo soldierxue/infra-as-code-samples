@@ -42,7 +42,7 @@ sudo ln -s [PATH]/terraform
 **准备好 AWS 环境** 
 
 - 一种方式是在 Terraform 的配置文件中 provider 模块显式注明 AWS access_key & secret_key
-```
+```hcl
 provider "aws" {
   access_key = "ACCESS_KEY_HERE"
   secret_key = "SECRET_KEY_HERE"
@@ -111,7 +111,7 @@ BJS-LAB2
 
 ```sh
 vi ./infra-as-code-samples/bjs/vpcfull-s3backend/main.tf
-```sh
+```
 
 ```hcl
 terraform {
@@ -153,7 +153,7 @@ BJS-LAB3
 
 ```sh
 vi ./infra-as-code-samples/bjs/phpdemo-s3backend/main.tf
-```sh
+```
 
 ```hcl
 data "terraform_remote_state" "bjs" {
