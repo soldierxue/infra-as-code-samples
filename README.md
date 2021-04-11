@@ -42,7 +42,7 @@ We have tested and completed the whole labs in Amazon Linux, binding with the ri
 1. Download [Terraform 0.9+](https://www.terraform.io/downloads.html)
 2. For Linux system, 
 ```sh
-wget https://releases.hashicorp.com/terraform/0.9.8/terraform_0.9.8_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.14.10/terraform_0.14.10_linux_amd64.zip
 unzip terraform_*.zip
 sudo mv terraform /usr/local/bin/
 sudo chmod +x /usr/local/bin/terraform
