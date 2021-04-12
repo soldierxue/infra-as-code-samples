@@ -7,8 +7,18 @@
  *      (4) PHP Demo to verify the backend networking infra
  */
 provider "aws" {
-  region = "ap-northeast-1"
+  region = "us-east-2"
 }
+
+data "terraform_remote_state" "s3state" {
+  backend = "s3"
+  config {
+    bucket = "[you_bucket_name]"
+    key    = "network/terraform.tfstate"
+    region = "us-east-2"
+  }
+}
+
 module "apstack" {
     source = "github.com/soldierxue/terraformlib"
     stack_name = "jasonstack"
@@ -25,5 +35,5 @@ module "demophp" {
     private_subnet_id = "${module.apstack.subnet_private_ids[0]}"
     database_sgid = "${module.apstack.sg_database_id}"
 
-    ec2keyname = "ap-north1-key"
+    ec2keyname = "demokey"
 }
