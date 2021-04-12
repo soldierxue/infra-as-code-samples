@@ -83,6 +83,12 @@ module "my-vpc" {
 
 ```
 
+销毁整个实验创建的 AWS 资源：
+
+```sh
+sudo terraform destroy
+```
+
 ### 第二个例子：PHP Demo
 
 PHP Demo Architect
@@ -154,3 +160,9 @@ phpAddress = "ec2-18-222-168-31.us-east-2.compute.amazonaws.com"
 ```
 
 Try http://[Your_PHP_Address]/calldb.php to enjoy it.
+
+销毁整个实验创建的 AWS 资源：
+
+```sh
+sudo terraform destroy
+```
