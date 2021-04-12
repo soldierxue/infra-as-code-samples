@@ -6,7 +6,7 @@
  *      (3) NAT Gateways
  */
 provider "aws" {
-  region = "ap-northeast-1"
+  region = "us-east-1"
 }
 module "apstack" {
     source = "github.com/soldierxue/terraformlib"
