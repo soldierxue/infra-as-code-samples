@@ -57,5 +57,5 @@ terraform --version
 ## 关闭 Cloud 9 演示环境(整个实验完成后)
 
     CLOUD_9_IDS=$(aws cloud9 list-environments | jq -c ".environmentIds | flatten(0)" | sed -E -e 's/\[|\]|\"|//g' | sed 's/,/ /g')
-    CLOUD_9_WORKSHOP_ID=$(aws cloud9 describe-environments --environment-ids $CLOUD_9_IDS | jq '.environments | .[] | select(.name=="workshop-spot-container") | .id ' | sed -e 's/\"//g')
+    CLOUD_9_WORKSHOP_ID=$(aws cloud9 describe-environments --environment-ids $CLOUD_9_IDS | jq '.environments | .[] | select(.name=="workshop-terraform-aws") | .id ' | sed -e 's/\"//g')
     aws cloud9 delete-environment --environment-id $CLOUD_9_WORKSHOP_ID
