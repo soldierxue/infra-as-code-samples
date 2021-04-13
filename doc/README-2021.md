@@ -16,7 +16,7 @@ For AWS global region samples, we build a sample to demo :
 
 ## 准备一个 Cloud 9 的环境作为本次实验的工作机
 
-参考[如下文档](./doc/环境准备/准备%20Cloud%209%20实验环境.md)
+参考[如下文档](./环境准备/准备%20Cloud%209%20实验环境.md)
 
 ## 了解 Terraform AWS provider 的基本认证授权方式
 
